@@ -1,7 +1,6 @@
-package ua.axiom.repository.query;
+package ua.axiom.persistance.query;
 
-import ua.axiom.repository.Fabricable;
-import ua.axiom.repository.database.DBConnectionProvider;
+import ua.axiom.persistance.database.DBConnectionProvider;
 
 /**
  * @param <K> key in the table

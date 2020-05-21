@@ -1,4 +1,4 @@
-package ua.axiom.repository;
+package ua.axiom.persistance;
 
 public interface JDBCConfiguration {
     String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";

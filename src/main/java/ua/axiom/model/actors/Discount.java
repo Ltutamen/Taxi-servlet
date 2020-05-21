@@ -1,7 +1,5 @@
 package ua.axiom.model.actors;
 
-import ua.axiom.repository.Fabricable;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;

@@ -1,7 +1,8 @@
 package ua.axiom.model.actors;
 
+import ua.axiom.model.Role;
 import ua.axiom.model.UserLocale;
-import ua.axiom.repository.Persistent;
+import ua.axiom.persistance.Persistent;
 
 public abstract class User extends Persistent<Long> {
 
@@ -9,11 +10,13 @@ public abstract class User extends Persistent<Long> {
 
     protected String password;
 
+    public abstract Role getRole();
+
     protected UserLocale locale;
 
     protected boolean isBanned;
 
-    protected User(long id) {
+    public User(long id) {
         super(id);
     }
 

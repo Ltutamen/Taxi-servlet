@@ -1,4 +1,4 @@
-package ua.axiom.repository;
+package ua.axiom.persistance;
 
 public abstract class Persistent<K> {
     protected final K id;

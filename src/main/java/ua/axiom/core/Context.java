@@ -1,8 +1,12 @@
 package ua.axiom.core;
 
-import ua.axiom.model.repository.ClientRepository;
+import ua.axiom.model.actors.User;
+import ua.axiom.persistance.repository.AdminRepository;
+import ua.axiom.persistance.repository.ClientRepository;
+import ua.axiom.persistance.repository.MultiTableRepository;
 import ua.axiom.service.GuiService;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,8 +20,13 @@ public class Context {
 
     static {
         try {
-            Context.put(new ClientRepository());
+            ClientRepository clientRepository = new ClientRepository();
+            AdminRepository adminRepository = new AdminRepository();
+
+            Context.put(clientRepository);
+            Context.put(adminRepository);
             Context.put(new GuiService());
+            Context.put(new MultiTableRepository<Long, User>(Arrays.asList(clientRepository, adminRepository)));
 
         } catch (Exception e) {
             e.printStackTrace();

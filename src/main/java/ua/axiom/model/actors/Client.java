@@ -1,5 +1,7 @@
 package ua.axiom.model.actors;
 
+import ua.axiom.model.Role;
+
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
@@ -18,6 +20,11 @@ public class Client extends User {
 
     public Client(long id) {
         super(id);
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.CLIENT;
     }
 
     public Date getBirthDate() {

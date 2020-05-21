@@ -3,7 +3,8 @@ package ua.axiom.controller.api;
 import ua.axiom.core.Context;
 import ua.axiom.model.Role;
 import ua.axiom.model.actors.User;
-import ua.axiom.model.repository.ClientRepository;
+import ua.axiom.persistance.repository.ClientRepository;
+import ua.axiom.persistance.repository.MultiTableRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,17 +29,17 @@ public class LoginPageController extends HttpServlet {
 
         System.out.println("log in: " + usernameParameter + " " + passwordParameter);
 
-        ClientRepository clientRepository = Context.get(ClientRepository.class);
+        MultiTableRepository<Long, User> userRepository = Context.get(MultiTableRepository.class);
 
-        List<? extends User> user = clientRepository.findByUsername(usernameParameter);
+        List<? extends User> userList = userRepository.findByUsername(usernameParameter);
 
-        if(user.size() == 1) {
+        if(userList.size() == 1) {
             System.out.println("logged in as " + usernameParameter);
-            System.out.println("todo decrypt password");
+            System.out.println("todo decrypt password " + passwordParameter);
 
-            User user1 = user.get(0);
+            User user = userList.iterator().next();
 
-            req.getSession().setAttribute("role", Role.CLIENT);
+            req.getSession().setAttribute("role", user.getRole());
 
             resp.sendRedirect("/postloginredirect");
             return;

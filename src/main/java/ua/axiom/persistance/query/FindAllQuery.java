@@ -1,8 +1,8 @@
-package ua.axiom.repository.query;
+package ua.axiom.persistance.query;
 
-import ua.axiom.repository.Fabricable;
-import ua.axiom.repository.Persistent;
-import ua.axiom.repository.database.DBConnectionProvider;
+import ua.axiom.persistance.Fabricable;
+import ua.axiom.persistance.Persistent;
+import ua.axiom.persistance.database.DBConnectionProvider;
 
 public class FindAllQuery<K, T extends Persistent<K>> extends OutQuery<K, T> {
 

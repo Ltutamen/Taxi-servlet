@@ -1,8 +1,8 @@
-package ua.axiom.repository.database;
+package ua.axiom.persistance.database;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import javax.sql.DataSource;
-import ua.axiom.repository.JDBCConfiguration;
+import ua.axiom.persistance.JDBCConfiguration;
 
 public class SimpleDBConnectionProvider extends DBConnectionProvider {
     private static volatile DataSource dataSource;

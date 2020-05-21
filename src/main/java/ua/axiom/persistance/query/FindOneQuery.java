@@ -1,7 +1,7 @@
-package ua.axiom.repository.query;
+package ua.axiom.persistance.query;
 
-import ua.axiom.repository.Fabricable;
-import ua.axiom.repository.database.DBConnectionProvider;
+import ua.axiom.persistance.Fabricable;
+import ua.axiom.persistance.database.DBConnectionProvider;
 
 public class FindOneQuery<K, T> extends OutQuery<K, T> {
     private final String keyName;

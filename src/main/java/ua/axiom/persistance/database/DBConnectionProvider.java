@@ -1,4 +1,4 @@
-package ua.axiom.repository.database;
+package ua.axiom.persistance.database;
 
 import javax.sql.DataSource;
 

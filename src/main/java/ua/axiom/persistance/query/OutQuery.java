@@ -1,7 +1,7 @@
-package ua.axiom.repository.query;
+package ua.axiom.persistance.query;
 
-import ua.axiom.repository.Fabricable;
-import ua.axiom.repository.database.DBConnectionProvider;
+import ua.axiom.persistance.Fabricable;
+import ua.axiom.persistance.database.DBConnectionProvider;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

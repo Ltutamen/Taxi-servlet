@@ -1,11 +1,17 @@
 package ua.axiom.model.actors;
 
-import ua.axiom.repository.Fabricable;
+import ua.axiom.model.Role;
+import ua.axiom.persistance.Fabricable;
 
 public class Driver extends User implements Fabricable<Driver> {
 
-    private Driver(long id) {
+    public Driver(long id) {
         super(id);
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.DRIVER;
     }
 
     @Override
