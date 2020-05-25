@@ -1,12 +1,10 @@
 package ua.axiom.core;
 
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.repository.AdminRepository;
-import ua.axiom.persistance.repository.ClientRepository;
-import ua.axiom.persistance.repository.MultiTableRepository;
+import ua.axiom.persistance.repository.*;
 import ua.axiom.service.GuiService;
+import ua.axiom.service.LocalisationService;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,11 +23,14 @@ public class Context {
 
             Context.put(clientRepository);
             Context.put(adminRepository);
+
+            Context.put(new MultiTableRepository<>(Arrays.asList(clientRepository, adminRepository)));
+            Context.put(new LocalisationService());
             Context.put(new GuiService());
-            Context.put(new MultiTableRepository<Long, User>(Arrays.asList(clientRepository, adminRepository)));
 
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(3);
         }
     }
 
@@ -38,7 +39,7 @@ public class Context {
             throw new RuntimeException("Context is sealed!");
         }
         if(singleton.elements.containsKey(object.getClass())) {
-            throw new IllegalArgumentException("Class " + object.getClass() + "already exists");
+            throw new IllegalArgumentException("Class " + object.getClass() + " already exists");
         }
 
         singleton.elements.put(object.getClass(), object);
@@ -67,9 +68,7 @@ public class Context {
             if (o == null) {
                 throw new IllegalArgumentException("no matching constructor to call on class "
                         + type.toString()
-                        + " with arguments "
-                        + Arrays.toString(constructorParams)
-                        + " aca "
+                        + " with arguments: "
                         + Arrays.toString(constructorParams));
             }
 

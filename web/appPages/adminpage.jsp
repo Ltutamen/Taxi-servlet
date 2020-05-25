@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.Map" %><%--
   Created by IntelliJ IDEA.
   User: myself
   Date: 4/29/20
@@ -11,7 +11,7 @@
     <title>AdminPage</title>
 </head>
 <body>
-    <h1>Admin page</h1>
+    <h1>Admin page <%= ((Map<String, Object>)request.getAttribute("model")).get("hehe")%></h1>
 
 </body>
 </html>
