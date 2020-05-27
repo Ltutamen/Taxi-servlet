@@ -15,9 +15,11 @@
 
     <title>Taxi company</title>
   </head>
+
+  <jsp:include page="../misc/navbar.jsp"/>
+
   <body>
 
-  <jsp:include page="../misc/header.jsp"/>
 
   <h1>
     <%= (String)request.getAttribute("aa") %>

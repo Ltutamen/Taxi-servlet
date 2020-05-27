@@ -35,7 +35,9 @@ public class LoginPageCommand extends Command {
 
             User user = userList.iterator().next();
 
+            //  todo encrypt or palace session id
             request.getSession().setAttribute("role", user.getRole());
+            request.getSession().setAttribute("user_id", user.getId());
 
             return "redirect:/api/postloginredirect";
         } else {

@@ -1,5 +1,6 @@
-package ua.axiom.controller.commands;
+package ua.axiom.controller.commands.mainpage;
 
+import ua.axiom.controller.commands.MultiViewCommand;
 import ua.axiom.controller.commands.mainpage.*;
 import ua.axiom.core.Context;
 import ua.axiom.model.Role;
@@ -16,8 +17,8 @@ public class MainPageCommand extends MultiViewCommand {
     private GuiService guiService;
 
     public MainPageCommand() {
-        super.addCommand((request) -> request.getSession(false) == null || request.getSession(false).getAttribute("role").equals(Role.GUEST), Context.get(GuestMainPageCommand.class));
-        super.addCommand((request) -> request.getSession(false) != null && request.getSession(false).getAttribute("role").equals(Role.GUEST), Context.get(LoggedMainPageCommand.class));
+        super.addCommand((request) -> request.getSession(false) == null || request.getSession(false).getAttribute("role").equals(Role.GUEST), new GuestMainPageCommand());
+        super.addCommand((request) -> request.getSession(false) != null && !request.getSession(false).getAttribute("role").equals(Role.GUEST), new LoggedMainPageCommand());
     }
 
     @Override

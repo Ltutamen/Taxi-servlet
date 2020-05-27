@@ -2,6 +2,7 @@ package ua.axiom.service;
 
 import ua.axiom.controller.commands.*;
 import ua.axiom.controller.commands.Command;
+import ua.axiom.controller.commands.mainpage.MainPageCommand;
 
 import java.util.HashMap;
 
@@ -11,12 +12,13 @@ public class CommandProviderService {
 
     public CommandProviderService() {
         uriToCommand.put("/clientpage", new ClientPageCommand());
-        uriToCommand.put("/driverpage", null);
-        uriToCommand.put("/adminpage", null);
+        uriToCommand.put("/driverpage", new DriverPageCommand());
+        uriToCommand.put("/adminpage", new AdminPageCommand());
 
         uriToCommand.put("/api/postloginredirect", new PostLoginCommand());
 
         uriToCommand.put("/login", new LoginPageCommand());
+        uriToCommand.put("/logout", new LogoutCommand());
         uriToCommand.put("/error", new ErrorCommand());
         uriToCommand.put("/", new MainPageCommand());
         uriToCommand.put("/index", new MainPageCommand());
@@ -24,7 +26,6 @@ public class CommandProviderService {
 
     public Command getCommand(String url) {
         return uriToCommand.get(url);
-
     }
 
 

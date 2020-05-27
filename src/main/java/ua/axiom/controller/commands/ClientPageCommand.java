@@ -27,6 +27,8 @@ public class ClientPageCommand extends Command {
         Map<String, Object> model = new HashMap<>();
         fillLocalisedPageData(model, UserLocale.DEFAULT_LOCALE);
 
+        guiService.setNavbarData(request);
+
         request.setAttribute("model", model);
         return "forward:/appPages/clientpage.jsp";
     }

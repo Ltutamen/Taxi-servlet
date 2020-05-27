@@ -1,5 +1,7 @@
 package ua.axiom.core;
 
+import ua.axiom.controller.commands.mainpage.GuestMainPageCommand;
+import ua.axiom.controller.commands.mainpage.LoggedMainPageCommand;
 import ua.axiom.persistance.repository.AdminRepository;
 import ua.axiom.persistance.repository.ClientRepository;
 import ua.axiom.persistance.repository.MultiTableRepository;
@@ -30,6 +32,7 @@ public class Context {
             Context.put(new LocalisationService());
             Context.put(new GuiService());
             Context.put(new CommandProviderService());
+
             //  Context.put(new PostLoginController());
 
         } catch (Exception e) {
@@ -51,7 +54,8 @@ public class Context {
 
     public static <T> T get(Class<T> type, Object... constructorParams) {
         if (singleton.elements.get(type) == null) {
-            Object o = null;
+            throw new IllegalArgumentException("No such class in context: " + type);
+            /*Object o = null;
             conLoop:
             for (Constructor con : type.getConstructors()) {
                 if (constructorParams.length == con.getParameterCount()) {
@@ -76,7 +80,7 @@ public class Context {
                         + Arrays.toString(constructorParams));
             }
 
-            singleton.elements.put(type, o);
+            singleton.elements.put(type, o);*/
         }
 
         return (T)singleton.elements.get(type);

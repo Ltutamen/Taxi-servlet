@@ -1,13 +1,13 @@
-package ua.axiom.controller.commands.mainpage;
-
-import ua.axiom.controller.commands.Command;
+package ua.axiom.controller.commands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoggedMainPageCommand extends Command {
+public class AdminPageCommand extends Command {
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
-        return "forward:/appPages/loggedindex.jsp";
+
+
+        return "forvard:/appPages/adminpage.jsp";
     }
 }

@@ -9,11 +9,11 @@ import java.util.Locale;
 import java.util.Map;
 
 public class GuiService {
-    private LocalisationService localisationService = (LocalisationService) Context.get(LocalisationService.class);
+    private LocalisationService localisationService; = (LocalisationService) Context.get(LocalisationService.class);
 
     public void setNavbarData(HttpServletRequest request) {
         request.setAttribute("word.company-name", "Cool taxi company!");
-        request.setAttribute("sentence.logged-as", "<todo login>");
+        request.setAttribute("sentence.logged-as", "logged as");
         request.setAttribute("username", "<todo authentication>");
         request.setAttribute("current-locale", "<todo locales>");
     }

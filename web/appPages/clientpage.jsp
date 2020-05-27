@@ -24,43 +24,7 @@
     <%@ page import="java.util.Map" %>
 </head>
 
-<nav class="navbar navbar-dark bg-primary">
-    <a class="navbar-brand" href="/">
-        <img src="./resources/logo.png" height="50px" class="d-inline-block align-top" alt="">
-        <%= ((Map<String, Object>)request.getAttribute("model")).get("word.company-name") %>
-    </a>
-    <div class="col-3">
-        <%= ((Map<String, Object>)request.getAttribute("model")).get("sentence.logged-as") %>
-        <%= ((Map<String, Object>)request.getAttribute("model")).get("username") %>
-    </div>
-    <div class="col-3"></div>
-    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-    <!--    language select -->
-    <div class="col-2">r/
-        <form action="/api/locale" method="post" target="dummyframe">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <%= ((Map<String, Object>)request.getAttribute("model")).get("current-locale") %>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <%--
-                    <c:forEach items= "${locales}" var="locale">
-                        <input type="submit" class="dropdown-item" value="${locale.toString}" name="name" onClick="window.location.reload();"/>
-                    </c:forEach>
-                    --%>
-
-                </div>
-            </div>
-        </form>
-
-    </div>
-    <!--  logout    -->
-    <div class="col-2">
-        <form action="/logout" method="POST">
-            <button class="btn btn-info" type="submit"><%= ((Map<String, Object>)request.getAttribute("model")).get("word.logout") %></button>
-        </form>
-    </div>
-</nav>
+<jsp:include page="../misc/navbar.jsp"/>
 
 <body>
 <div class="container">

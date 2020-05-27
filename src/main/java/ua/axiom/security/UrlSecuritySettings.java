@@ -9,7 +9,7 @@ public interface UrlSecuritySettings {
     String prefix = "/servfv2_war_exploded";
 
     List<String> allAllowedUrls = Stream.of(
-            "/login", "/index", "/"
+            "/login", "/index", "/", "/logout"
     ).map(prefix::concat).collect(Collectors.toList());
 
     List<String> securedUrls = Stream.of(

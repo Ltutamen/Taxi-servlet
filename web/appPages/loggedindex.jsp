@@ -10,6 +10,9 @@
 <head>
     <title>Title</title>
 </head>
+
+<jsp:include page="../misc/navbar.jsp"/>
+
 <body>
 <h1> Logged in! </h1>
 

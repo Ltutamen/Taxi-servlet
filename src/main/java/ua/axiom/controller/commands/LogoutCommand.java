@@ -1,13 +1,14 @@
-package ua.axiom.controller.commands.mainpage;
+package ua.axiom.controller.commands;
 
-import ua.axiom.controller.commands.Command;
+import ua.axiom.model.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoggedMainPageCommand extends Command {
+public class LogoutCommand extends Command {
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
-        return "forward:/appPages/loggedindex.jsp";
+        request.getSession(false).setAttribute("role", Role.GUEST);
+        return "redirect:/";
     }
 }
