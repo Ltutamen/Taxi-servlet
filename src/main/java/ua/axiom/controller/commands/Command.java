@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public abstract class Command {
-    public final String execute(HttpServletRequest request, HttpServletResponse response, String uri)
+    public String execute(HttpServletRequest request, HttpServletResponse response, String uri)
             throws IOException, ServletException {
         if (request.getMethod().equals("POST")) {
             return executePost(request, response);

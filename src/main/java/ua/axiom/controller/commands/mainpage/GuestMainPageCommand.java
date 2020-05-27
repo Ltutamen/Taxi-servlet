@@ -1,11 +1,13 @@
-package ua.axiom.controller.commands;
+package ua.axiom.controller.commands.mainpage;
+
+import ua.axiom.controller.commands.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ErrorCommand extends Command {
+public class GuestMainPageCommand extends Command {
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
-        return "redirect:/misc/error.jsp";
+        return "forward:/appPages/index.jsp";
     }
 }

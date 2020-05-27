@@ -22,6 +22,13 @@
   <h1>
     <%= (String)request.getAttribute("aa") %>
   </h1>
+  <br/>
+  <form method="get" action="/login">
+    <button type="submit"> Log in </button>
+  </form>
+  <h1>
+
+  </h1>
 
 
 
