@@ -3,10 +3,8 @@ package ua.axiom.controller.commands;
 import ua.axiom.core.Context;
 import ua.axiom.service.GuiService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class MainPageCommand extends Command {
     {
@@ -16,11 +14,11 @@ public class MainPageCommand extends Command {
     private GuiService guiService;
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response, String uri) throws ServletException, IOException {
+    protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         guiService.setNavbarData(request);
         request.setAttribute("aa", "Company-name");
 
         return "forward:/appPages/index.jsp";
-
     }
+
 }

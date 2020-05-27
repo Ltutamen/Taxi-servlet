@@ -4,30 +4,28 @@ import ua.axiom.core.Context;
 import ua.axiom.model.actors.User;
 import ua.axiom.persistance.repository.MultiTableRepository;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 public class LoginPageCommand extends Command {
+    MultiTableRepository<Long, User> userRepository;
 
-    @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response, String uri) throws ServletException, IOException {
-        if (request.getMethod().equals("POST")) {
-            return servePost(request, response);
-        } else {
-            return "forward:/misc/login.jsp";
-        }
+    {
+        userRepository = Context.get(MultiTableRepository.class);
     }
 
-    private String servePost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @Override
+    protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
+        return "forward:/misc/login.jsp";
+    }
+
+    @Override
+    protected String executePost(HttpServletRequest request, HttpServletResponse response) {
         String usernameParameter = request.getParameter("username");
         String passwordParameter = request.getParameter("password");
 
         System.out.println("log in: " + usernameParameter + " " + passwordParameter);
-
-        MultiTableRepository<Long, User> userRepository = Context.get(MultiTableRepository.class);
 
         List<? extends User> userList = userRepository.findByUsername(usernameParameter);
 
@@ -45,4 +43,5 @@ public class LoginPageCommand extends Command {
             return "/misc/login.jsp";
         }
     }
+
 }

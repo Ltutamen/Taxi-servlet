@@ -6,10 +6,8 @@ import ua.axiom.persistance.repository.ClientRepository;
 import ua.axiom.service.GuiService;
 import ua.axiom.service.LocalisationService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,14 +23,17 @@ public class ClientPageCommand extends Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response, String uri) throws IOException, ServletException {
+    protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> model = new HashMap<>();
         fillLocalisedPageData(model, UserLocale.DEFAULT_LOCALE);
 
         request.setAttribute("model", model);
-
         return "forward:/appPages/clientpage.jsp";
-        //  request.getRequestDispatcher("").forward(request, response);
+    }
+
+    @Override
+    protected String executePost(HttpServletRequest request, HttpServletResponse response) {
+        return null;
     }
 
     protected void fillLocalisedPageData(Map<String, Object> model, UserLocale userLocale) {

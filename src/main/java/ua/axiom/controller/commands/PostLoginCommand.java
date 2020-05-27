@@ -1,12 +1,9 @@
 package ua.axiom.controller.commands;
 
-import ua.axiom.controller.commands.Command;
 import ua.axiom.model.Role;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,8 +18,15 @@ public class PostLoginCommand extends Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response, String uri) throws IOException, ServletException {
+    protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         Role role = (Role)request.getSession(false).getAttribute("role");
         return postLoginRedirectMapping.get(role);
     }
+
+
+/*    @Override
+    public String execute(HttpServletRequest request, HttpServletResponse response, String uri) throws IOException, ServletException {
+        Role role = (Role)request.getSession(false).getAttribute("role");
+        return postLoginRedirectMapping.get(role);
+    }*/
 }
