@@ -1,9 +1,7 @@
 package ua.axiom.controller.api;
 
 import ua.axiom.core.Context;
-import ua.axiom.model.Role;
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.repository.ClientRepository;
 import ua.axiom.persistance.repository.MultiTableRepository;
 
 import javax.servlet.ServletException;
@@ -14,11 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(value = "/login", name = "login")
+//  @WebServlet(value = "/login", name = "login")
 public class LoginPageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         getServletContext().getRequestDispatcher("/misc/login.jsp").forward(req, resp);
     }
 

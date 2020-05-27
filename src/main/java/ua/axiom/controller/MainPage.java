@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(value = "/index", name = "mainPage")
+//  @WebServlet(value = "/index", name = "mainPage")
 public class MainPage extends HttpServlet {
     private GuiService guiService = Context.get(GuiService.class);
 

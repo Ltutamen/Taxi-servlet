@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/adminpage")
+//  @WebServlet("/adminpage")
 public class AdminPageController extends HttpServlet {
 
     @Override

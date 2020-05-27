@@ -1,7 +1,9 @@
 package ua.axiom.core;
 
-import ua.axiom.model.actors.User;
-import ua.axiom.persistance.repository.*;
+import ua.axiom.persistance.repository.AdminRepository;
+import ua.axiom.persistance.repository.ClientRepository;
+import ua.axiom.persistance.repository.MultiTableRepository;
+import ua.axiom.service.CommandProviderService;
 import ua.axiom.service.GuiService;
 import ua.axiom.service.LocalisationService;
 
@@ -27,6 +29,8 @@ public class Context {
             Context.put(new MultiTableRepository<>(Arrays.asList(clientRepository, adminRepository)));
             Context.put(new LocalisationService());
             Context.put(new GuiService());
+            Context.put(new CommandProviderService());
+            //  Context.put(new PostLoginController());
 
         } catch (Exception e) {
             e.printStackTrace();

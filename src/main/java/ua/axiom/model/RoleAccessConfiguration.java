@@ -9,9 +9,9 @@ public class RoleAccessConfiguration {
 
     static {
         accessConfig.put(Role.GUEST, new HashSet<>(Arrays.asList("/", "/login", "/error", "/register")));
-        accessConfig.put(Role.ADMIN, new HashSet<>(Arrays.asList("/adminpage", "/logout", "/postloginredirect")));
-        accessConfig.put(Role.CLIENT, new HashSet<>(Arrays.asList("/clientpage", "/logout", "/postloginredirect")));
-        accessConfig.put(Role.DRIVER, new HashSet<>(Arrays.asList("/driverpage", "/logout", "/postloginredirect")));
+        accessConfig.put(Role.ADMIN, new HashSet<>(Arrays.asList("/adminpage", "/logout", "/api/postloginredirect")));
+        accessConfig.put(Role.CLIENT, new HashSet<>(Arrays.asList("/clientpage", "/logout", "/api/postloginredirect")));
+        accessConfig.put(Role.DRIVER, new HashSet<>(Arrays.asList("/driverpage", "/logout", "/api/postloginredirect")));
 
         accessConfig.entrySet()
                 .forEach(e -> e
