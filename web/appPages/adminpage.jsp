@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.Map" %><%--
   Created by IntelliJ IDEA.
   User: myself
@@ -22,42 +23,6 @@
     <title>Taxi company</title>
 </head>
 
-<%--
-<nav class="navbar navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">
-        <img src="./resources/logo.png" height="50px" class="d-inline-block align-top" alt="">
-        {{word.company-name}}
-    </a>
-    <div class="col-3">
-        {{sentence.logged-as}}
-        {{username}}
-    </div>
-    <div class="col-3"></div>
-    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-    <!--    language select -->
-    <div class="col-2">
-        <form action="/api/locale" method="post" target="dummyframe">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{current-locale}}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    {{#locales}}
-                    <input type="submit" class="dropdown-item" value="{{toString}}" name="name" onClick="window.location.reload();"/>
-                    {{/locales}}
-                </div>
-            </div>
-        </form>
-
-    </div>
-    <!--  logout    -->
-    <div class="col-2">
-        <form action="/logout" method="POST">
-            <button class="btn btn-info my-2 my-sm-0" type="submit">{{word.logout}}</button>
-        </form>
-    </div>
-</nav>
---%>
 <jsp:include page="../misc/navbar.jsp"/>
 
 <body>
@@ -79,17 +44,15 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group">
-                            <%--
-                            {{#clients-list}}
-                            <li class="list-group-item">
-                                <p>name: {{username}}</p>
-                                <p>balance: {{money}}</p>
-                                <form method="post" action="adminpage/ban">
-                                    <button class="btm btn-danger" type="submit" name="bannedId" value={{id}}>ban</button>
-                                </form>
-                            </li>
-                            {{/clients-list}}
-                            --%>
+                            <c:forEach items="${requestScope.client-lists}" var="client">
+                                <li class="list-group-item">
+                                    <p>name: ${client.username}</p>
+                                    <p>balance: ${client.money}</p>
+                                    <form method="post" action="adminpage/ban">
+                                        <button class="btm btn-danger" type="submit" name="bannedId" value=${client.id}>ban</button>
+                                    </form>
+                                </li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>

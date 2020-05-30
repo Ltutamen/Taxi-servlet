@@ -1,13 +1,8 @@
 
 <nav class="navbar navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
         <img src="./resources/logo.png" height="50px" class="d-inline-block align-top" alt="">
         <%= request.getAttribute("word.company-name") %>
-        <h1>
-            <c:forEach var="var" items="${request.getAttributeNames()}" >
-                <h1>${var}</h1>
-            </c:forEach>
-        </h1>
     </a>
     <div class="col-3">
         <%= request.getAttribute("sentence.logged-as") %>
@@ -23,18 +18,17 @@
                     <%= request.getAttribute("current-locale") %>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    {{#locales}}
-                    <input type="submit" class="dropdown-item" value="{{name}}" name="name" onClick="window.location.reload();"/>
-                    {{/locales}}
+                    <c:forEach items="${requestScope.locales}" var="locale">
+                        <input type="submit" class="dropdown-item" value="${locale}" name="name" onClick="window.location.reload();"/>
+                    </c:forEach>
                 </div>
             </div>
         </form>
-
     </div>
     <!--  logout    -->
     <div class="col-2">
         <form action="/logout" method="POST">
-            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"><%= request.getAttribute("word.logout") %>></button>
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"><%= request.getAttribute("word.logout") %></button>
         </form>
     </div>
 </nav>

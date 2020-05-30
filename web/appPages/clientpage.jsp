@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.Map" %><%--
   Created by IntelliJ IDEA.
   User: myself
   Date: 4/29/20
@@ -21,55 +21,54 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <title>Taxi company</title>
-    <%@ page import="java.util.Map" %>
 </head>
 
-<jsp:include page="../misc/navbar.jsp"/>
+<%@ include file="../misc/navbar.jsp" %>
 
 <body>
 <div class="container">
     <div class="row">
         <div class="card col-4">
             <div class="card-header">
-                <p><%= ((Map<String, Object>)request.getAttribute("model")).get("sentence.your-balance") %> <%= ((Map<String, Object>)request.getAttribute("model")).get("balance") %></p>
+                <p><%= request.getAttribute("sentence.your-balance")%> <%= request.getAttribute("client-balance") %></p>
             </div>
             <div class="card-body">
                 <div class="list-group">
-                    <a href="/api/neworder" class="list-group-item list-group-item-action"><%= ((Map<String, Object>)request.getAttribute("model")).get("sentence.new-order") %></a>
-                    <a href="/api/orderHistory" class="list-group-item list-group-item-action"><%= ((Map<String, Object>)request.getAttribute("model")).get("sentence.order-history") %></a>
-                    <a href="#" class="list-group-item list-group-item-action"><%= ((Map<String, Object>)request.getAttribute("model")).get("sentence.promocodes") %></a>
-                    <a href="/api/replenish" class="list-group-item list-group-item-action"><%= ((Map<String, Object>)request.getAttribute("model")).get("sentence.replenish-balance") %></a>
-                    <a href="#" class="list-group-item list-group-item-action"><%= ((Map<String, Object>)request.getAttribute("model")).get("sentence.delete-account") %></a>
+                    <a href="/neworder" class="list-group-item list-group-item-action"> <%= request.getAttribute("sentence.new-order") %> </a>
+                    <a href="/api/orderHistory" class="list-group-item list-group-item-action"> <%= request.getAttribute("sentence.order-history") %> </a>
+                    <a href="#" class="list-group-item list-group-item-action"> <%= request.getAttribute("sentence.promocodes") %> </a>
+                    <a href="/api/replenish" class="list-group-item list-group-item-action"> <%= request.getAttribute("sentence.replenish-balance") %></a>
+                    <a href="#" class="list-group-item list-group-item-action"> <%= request.getAttribute("sentence.delete-account") %></a>
                 </div>
             </div>
         </div>
         <div class="card col-8">
             <div class="card-header">
-                <h1> <%= ((Map<String, Object>)request.getAttribute("model")).get("sentence.your-orders") %></h1>
+                <h1> <%= request.getAttribute("sentence.your-orders") %></h1>
                 <label>
-                    <%=((Map<String, Object>)request.getAttribute("model")).get("word.balance") %>:<%= ((Map<String, Object>)request.getAttribute("model")).get("client-balance") %>
+                    <%= request.getAttribute("word.balance") %> : <%= request.getAttribute("client-balance") %>
                 </label>
             </div>
             <div class="card-body">
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <%--
-                        <c:forEach items="${pending-orders}" var="order">
+
+                        <c:forEach items="${requestScope.pending_orders}" var="order">
                             <div class="card-body">
                                 <div class="row">
-                                    <label class="card-text col-3"><%= ((Map<String, Object>)request.getAttribute("model")).get("word.from") %>: <%= ((Map<String, Object>)request.getAttribute("model")).get("departure") %></label>
-                                    <label class="card-text col-3"><%= ((Map<String, Object>)request.getAttribute("model")).get("word.to") %>: <%= ((Map<String, Object>)request.getAttribute("model")).get("destination") %></label>
-                                    <label class="card-text col-3"><%= ((Map<String, Object>)request.getAttribute("model")).get("word.class") %>: <%= ((Map<String, Object>)request.getAttribute("model")).get("cClass") %></label>
-                                    <label class="card-text col-3"><%= ((Map<String, Object>)request.getAttribute("model")).get("word.fee") %>: <%= ((Map<String, Object>)request.getAttribute("model")).get("price") %></label>
+                                    <label class="card-text col-3"><%= request.getAttribute("word.from") %>: "${order.departure} </label>
+                                    <label class="card-text col-3"><%= request.getAttribute("word.to") %>: "${order.destination} </label>
+                                    <label class="card-text col-3"><%= request.getAttribute("word.class") %>: "${order.cClass} </label>
+                                    <label class="card-text col-3"><%= request.getAttribute("word.fee") %>: "${order.price} </label>
                                 </div>
                                 <div class="row">
                                     <form method="post" action="/clientpage/cancelorder">
-                                        <button type="submit" class="btn btn-warning" value="${order.id}" name="orderId"><%= ((Map<String, Object>)request.getAttribute("model")).get("word.cancel") %></button>
+                                        <button type="submit" class="btn btn-warning" value="${order.id}" name="orderId"><%= request.getAttribute("word.cancel") %></button>
                                     </form>
                                 </div>
                             </div>
                         </c:forEach>
-                        --%>
+
                     </li>
                     <li class="list-group-item">
                         <%--
@@ -93,7 +92,7 @@
                         --%>
                     </li>
                     <li class="list-group-item align-content-center">
-                        <p><%= ((Map<String, Object>)request.getAttribute("model")).get("word.page") %>:<%= page %>}} / <%= ((Map<String, Object>)request.getAttribute("model")).get("max-pages") %></p>
+                        <p> <%= request.getAttribute("word.page") %> : <%= request.getAttribute("page") %> / <%= request.getAttribute("max-pages") %> </p>
                         <div class="row text-center">
                             <form action="/clientpage/prevpage" method="post">
                                 <button type="submit" class="btn btn-light btn-lg">

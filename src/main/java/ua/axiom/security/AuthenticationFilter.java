@@ -2,6 +2,7 @@ package ua.axiom.security;
 
 import ua.axiom.model.Role;
 import ua.axiom.model.RoleAccessConfiguration;
+import ua.axiom.service.SessionContextService;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -14,7 +15,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
 @WebFilter("/*")
 public class AuthenticationFilter extends HttpFilter {
 
@@ -22,14 +22,14 @@ public class AuthenticationFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         System.out.println("auth filter:" + request.getRequestURI());
 
-        if(RoleAccessConfiguration.accessConfig.get(Role.GUEST).contains(request.getRequestURI())) {
+        if (RoleAccessConfiguration.accessConfig.get(Role.GUEST).contains(request.getRequestURI())) {
             chain.doFilter(request, response);
             return;
         }
 
         HttpSession session = request.getSession(false);
         //  todo remove refactor, never true
-        if(session == null || session.getAttribute("role") == null) {
+        if (session == null || SessionContextService.getCurrentUserRole(session) == null) {
             request.getSession(true).setAttribute("role", Role.GUEST);
             response.sendRedirect("/login");
             return;
@@ -46,13 +46,12 @@ public class AuthenticationFilter extends HttpFilter {
                 .collect(Collectors.toSet());
 
 
-        if(urlAllowedRoles.contains((Role)session.getAttribute("role"))) {
+        if (urlAllowedRoles.contains(SessionContextService.getCurrentUserRole(session))) {
             chain.doFilter(request, response);
             return;
         }
 
         response.sendRedirect("/login");
-
     }
 
     @Override

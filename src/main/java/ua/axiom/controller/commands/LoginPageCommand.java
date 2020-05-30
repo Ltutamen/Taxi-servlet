@@ -17,7 +17,7 @@ public class LoginPageCommand extends Command {
 
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
-        return "forward:/misc/login.jsp";
+        return getView();
     }
 
     @Override
@@ -35,6 +35,7 @@ public class LoginPageCommand extends Command {
 
             User user = userList.iterator().next();
 
+
             //  todo encrypt or palace session id
             request.getSession().setAttribute("role", user.getRole());
             request.getSession().setAttribute("user_id", user.getId());
@@ -42,8 +43,13 @@ public class LoginPageCommand extends Command {
             return "redirect:/api/postloginredirect";
         } else {
             //  todo throw error
-            return "/misc/login.jsp";
+            return getView();
         }
     }
+
+    protected String getView() {
+        return "forward:/misc/login.jsp";
+    }
+
 
 }

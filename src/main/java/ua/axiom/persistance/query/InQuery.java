@@ -11,6 +11,4 @@ public abstract class InQuery<K, T extends Persistent<K> & Fabricable<T>> extend
 
     public abstract void execute(T object);
 
-    //  protected abstract
-
 }

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
-  <head>
+<head>
     <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
     <meta charset="utf-8">
@@ -14,26 +14,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <title>Taxi company</title>
-  </head>
+</head>
 
-  <jsp:include page="../misc/navbar.jsp"/>
+<jsp:include page="../../misc/navbar.jsp"/>
 
-  <body>
+<body>
+<h1> Logged in! </h1>
 
-
-  <h1>
-    <%= (String)request.getAttribute("aa") %>
-  </h1>
-  <br/>
-  <form method="get" action="/login">
-    <button type="submit"> Log in </button>
-  </form>
-  <h1>
-
-  </h1>
-
-
-
-
-  </body>
+</body>
 </html>

@@ -1,15 +1,14 @@
 package ua.axiom.core;
 
-import ua.axiom.controller.commands.mainpage.GuestMainPageCommand;
-import ua.axiom.controller.commands.mainpage.LoggedMainPageCommand;
+import ua.axiom.persistance.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.repository.AdminRepository;
 import ua.axiom.persistance.repository.ClientRepository;
+import ua.axiom.persistance.repository.DriverRepository;
 import ua.axiom.persistance.repository.MultiTableRepository;
 import ua.axiom.service.CommandProviderService;
 import ua.axiom.service.GuiService;
 import ua.axiom.service.LocalisationService;
 
-import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,13 +21,15 @@ public class Context {
 
     static {
         try {
+            Context.put(new SimpleDBConnectionProvider());
             ClientRepository clientRepository = new ClientRepository();
             AdminRepository adminRepository = new AdminRepository();
+            DriverRepository driverRepository = new DriverRepository();
 
             Context.put(clientRepository);
             Context.put(adminRepository);
 
-            Context.put(new MultiTableRepository<>(Arrays.asList(clientRepository, adminRepository)));
+            Context.put(new MultiTableRepository<>(Arrays.asList(clientRepository, adminRepository, driverRepository)));
             Context.put(new LocalisationService());
             Context.put(new GuiService());
             Context.put(new CommandProviderService());
@@ -52,7 +53,7 @@ public class Context {
         singleton.elements.put(object.getClass(), object);
     }
 
-    public static <T> T get(Class<T> type, Object... constructorParams) {
+    public static <T> T get(Class<T> type/*, Object... constructorParams*/) {
         if (singleton.elements.get(type) == null) {
             throw new IllegalArgumentException("No such class in context: " + type);
             /*Object o = null;
@@ -115,9 +116,7 @@ public class Context {
             return true;
         }
         else if(conObj instanceof Boolean) {
-            if(paramClass == boolean.class) {
-                return false;
-            }
+            return paramClass != boolean.class;
         }
 
         return true;

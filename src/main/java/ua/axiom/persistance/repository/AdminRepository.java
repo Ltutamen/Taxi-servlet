@@ -1,5 +1,6 @@
 package ua.axiom.persistance.repository;
 
+import ua.axiom.core.Context;
 import ua.axiom.model.actors.Admin;
 import ua.axiom.model.actors.factories.AdminFactory;
 import ua.axiom.persistance.database.SimpleDBConnectionProvider;
@@ -10,9 +11,9 @@ public class AdminRepository extends AbstractRepository<Long, Admin> {
 
     public AdminRepository() {
         super(
-                new FindAllQuery<>(new AdminFactory(), "admins", new SimpleDBConnectionProvider()),
-                new FindOneQuery<>(new AdminFactory(), "admins", "id", new SimpleDBConnectionProvider()),
-                new FindOneQuery<>(new AdminFactory(), "admins", "username", new SimpleDBConnectionProvider()));
+                new FindAllQuery<>(new AdminFactory(), "admins", Context.get(SimpleDBConnectionProvider.class)),
+                new FindOneQuery<>(new AdminFactory(), "admins", "id", Context.get(SimpleDBConnectionProvider.class)),
+                new FindOneQuery<>(new AdminFactory(), "admins", "username", Context.get(SimpleDBConnectionProvider.class)));
     }
 
     @Override

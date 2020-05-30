@@ -23,7 +23,6 @@ public class PostLoginCommand extends Command {
         return postLoginRedirectMapping.get(role);
     }
 
-
 /*    @Override
     public String execute(HttpServletRequest request, HttpServletResponse response, String uri) throws IOException, ServletException {
         Role role = (Role)request.getSession(false).getAttribute("role");

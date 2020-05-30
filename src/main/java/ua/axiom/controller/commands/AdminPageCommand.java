@@ -5,9 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AdminPageCommand extends Command {
     @Override
-    protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
+    protected String processGet(HttpServletRequest request, HttpServletResponse response) {
+        return getView();
+    }
 
-
+    protected String getView() {
         return "forvard:/appPages/adminpage.jsp";
     }
 }

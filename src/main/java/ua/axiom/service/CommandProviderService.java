@@ -1,8 +1,8 @@
 package ua.axiom.service;
 
 import ua.axiom.controller.commands.*;
-import ua.axiom.controller.commands.Command;
 import ua.axiom.controller.commands.mainpage.MainPageCommand;
+import ua.axiom.model.actors.User;
 
 import java.util.HashMap;
 
@@ -15,6 +15,8 @@ public class CommandProviderService {
         uriToCommand.put("/driverpage", new DriverPageCommand());
         uriToCommand.put("/adminpage", new AdminPageCommand());
 
+        uriToCommand.put("/neworder", new NewOrderCommand());
+
         uriToCommand.put("/api/postloginredirect", new PostLoginCommand());
 
         uriToCommand.put("/login", new LoginPageCommand());
@@ -24,7 +26,7 @@ public class CommandProviderService {
         uriToCommand.put("/index", new MainPageCommand());
     }
 
-    public Command getCommand(String url) {
+    public Command<? extends User> getCommand(String url) {
         return uriToCommand.get(url);
     }
 

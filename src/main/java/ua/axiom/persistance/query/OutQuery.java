@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class OutQuery<K, T> extends Query<K, T>  {
+public abstract class OutQuery<K, T> extends Query<K, T> {
     protected Fabricable<T> objectFactory;
 
     public OutQuery(Fabricable<T> factory, String table, DBConnectionProvider provider) {
@@ -21,11 +21,12 @@ public abstract class OutQuery<K, T> extends Query<K, T>  {
 
     public List<T> execute(K key) {
         List<T> result;
-        try {
-            Connection connection = provider.getConnection().getConnection();
-            Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(constructQueryString(key));
+        try (
+                Connection connection = provider.getConnection().getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(constructQueryString(key))
+        ) {
             result = new ArrayList<>();
 
             int columnCount = resultSet.getMetaData().getColumnCount() + 1;
@@ -37,7 +38,7 @@ public abstract class OutQuery<K, T> extends Query<K, T>  {
                 }
                 result.add(objectFactory.fabricate(row));
             }
-        } catch (SQLException  exception) {
+        } catch (SQLException exception) {
             throw new RuntimeException(exception.getMessage());
         }
 
@@ -46,20 +47,4 @@ public abstract class OutQuery<K, T> extends Query<K, T>  {
 
     //  todo autowire - singe responsibility violation
     protected abstract String constructQueryString(K key);
-
-    /**
-     * DOESNT WORK
-     * @param resultSet
-     * @return
-     * @throws SQLException
-     */
-    private int getResultSetSize(ResultSet resultSet) throws SQLException {
-        int size = 0;
-        if(resultSet != null) {
-            resultSet.last();
-            size = resultSet.getRow();
-            resultSet.first();
-        }
-        return size;
-    }
 }

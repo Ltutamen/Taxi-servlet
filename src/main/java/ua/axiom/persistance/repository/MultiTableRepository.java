@@ -21,10 +21,10 @@ public class MultiTableRepository<K, T> {
                 .collect(Collectors.toList());
     }
 
-    public List<T> findOne(K id) {
+    public List<T> findOne(final K id) {
         return repositories
                 .stream()
-                .map(AbstractRepository::findAll)
+                .map(ar -> ar.findOne(id))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
