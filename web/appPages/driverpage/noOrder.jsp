@@ -24,6 +24,7 @@
 </head>
 
 <%@ include file="../../misc/navbar.jsp" %>
+
 <body>
 <div class="container">
     <div class="row">

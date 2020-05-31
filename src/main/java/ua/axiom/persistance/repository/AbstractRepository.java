@@ -13,12 +13,12 @@ public abstract class AbstractRepository<K, T> {
     private final OutQuery<K, T> findQuery;
     private final OutQuery<K, T> selectQuery;
     //  maps field names to set of queries, that take unknown Key and produce T
-    private final Map<String, OutQuery<String, T>> findByFieldMapping = new HashMap<>();
+    private final Map<List<String>, OutQuery<List<String>, T>> findByFieldMapping = new HashMap<>();
 
     protected AbstractRepository(
             OutQuery<K, T> findQuery,
             OutQuery<K, T> selectQuery,
-            Map.Entry<String, OutQuery<String, T>> ... byFieldsQuery
+            Map.Entry<List<String>, OutQuery<List<String>, T>> ... byFieldsQuery
     ) {
         this.findQuery = findQuery;
         this.selectQuery = selectQuery;
@@ -53,14 +53,14 @@ public abstract class AbstractRepository<K, T> {
 
     /**
      * Finds all rows, where
-     * @param fieldName equals to the
-     * @param key, that represents field value
+     * @param fieldNames equals to the
+     * @param keys, that represents field value
      */
-    public List<T> findByField(String fieldName, String key) {
-        if(findByFieldMapping.containsKey(fieldName)) {
-            return findByFieldMapping.get(fieldName).execute(key);
+    public List<T> findByFields(List<String> fieldNames, List<String> keys) {
+        if(findByFieldMapping.containsKey(fieldNames)) {
+            return findByFieldMapping.get(fieldNames).execute(keys);
         } else {
-            throw new IllegalArgumentException("No query for field <" + fieldName + ">");
+            throw new IllegalArgumentException("No query for field <" + fieldNames + ">");
         }
     }
 

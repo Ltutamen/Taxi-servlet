@@ -6,6 +6,8 @@ import ua.axiom.persistance.repository.MultiTableRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class LoginPageCommand extends Command {
@@ -27,7 +29,7 @@ public class LoginPageCommand extends Command {
 
         System.out.println("log in: " + usernameParameter + " " + passwordParameter);
 
-        List<? extends User> userList = userRepository.findByField("username", usernameParameter);
+        List<? extends User> userList = userRepository.findByFields(Collections.singletonList("username"), Collections.singletonList(usernameParameter));
 
         if (userList.size() == 1) {
             System.out.println("logged in as " + usernameParameter);

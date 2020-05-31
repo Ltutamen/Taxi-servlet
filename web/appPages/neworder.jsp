@@ -38,45 +38,40 @@
                             <label>
                                 <p><%= request.getAttribute("word.class")%></p>
                             </label>
-                            <%--
-                            {{#car-classes}}
-                            <div class="radio">
-                                <label><input type="radio" name="aClass" checked value="{{toString}}">{{toString}}</label>
-                            </div>
-                            {{/car-classes}}
-                            --%>
+                            <c:forEach items="${requestScope.car_classes}" var="car_class">
+                                <div class="radio">
+                                    <label><input type="radio" name="aClass" checked value="${car_class.toString()}">${car_class.toString()}</label>
+                                </div>
+                            </c:forEach>
                         </li>
                         <li class="list-group-item pagination-centered">
                             <button type="submit" class="btn btn-primary"><%= request.getAttribute("word.submit")%></button>
                         </li>
-                        <%--
-                        {{#error}}
-                        <div class="alert alert-danger" role="alert">
-                            {{error}}
-                        </div>
-                        {{/error}}
-                        --%>
+                        <c:if test="${requestScope.error != null}">
+                            <div class="alert alert-danger" role="alert">
+                                <%= request.getAttribute("error")%>
+                            </div>
+                        </c:if>
                     </ul>
                 </form>
             </div>
         </div>
         <!--    right part of the screen, balance and orders    -->
         <div class="card col-8">
-       <%--     {{#promos-list}}
-            <div class="card text-white bg-primary">
-                <div class="card-header">Discount - {{multiplier}} percent off!</div>
-                <div class="card-body">
-                    <div class="row">
-                        <form action="/api/neworder/discount">
-                            <button class="btn btn-secondary" type="submit" value="{{id}}" name="discountId">
-                                Use
-                            </button>
-                        </form>
+            <c:forEach items="${requestScope.promos_list}" var="promo">
+                <div class="card text-white bg-primary">
+                    <div class="card-header">Discount - "${promo.multiplier} percent off!</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <form action="/api/neworder/discount">
+                                <button class="btn btn-secondary" type="submit" value="${promo.id}" name="discountId">
+                                    Use
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            {{/promos-list}}
-            --%>
+            </c:forEach>
         </div>
     </div>
 </div>

@@ -29,13 +29,15 @@ public class MultiTableRepository<K, T> {
                 .collect(Collectors.toList());
     }
 
-    public List<T> findByField(final String field, final String key) {
+    public List<T> findByFields(final List<String> fields, final List<String> keys) {
         return repositories
                 .stream()
-                .map(r ->r.findByField(field, key))
+                .map(r ->r.findByFields(fields, keys))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
+
+
 
     public void save(T object) {
         repositories
