@@ -52,7 +52,6 @@
             <div class="card-body">
                 <ul class="list-group">
                     <li class="list-group-item">
-
                         <c:forEach items="${requestScope.pending_orders}" var="order">
                             <div class="card-body">
                                 <div class="row">
@@ -71,19 +70,18 @@
 
                     </li>
                     <li class="list-group-item">
-                        <%--
-                        <c:forEach items="${taken-orders}" var="order">
+                        <c:forEach items="${requestScope.taken_orders}" var="order">
                             <div class="card text-white bg-success">
                                 <div class="card-body">
                                     <div class="row">
-                                        <label class="card-text col-3"><%= ((Map<String, Object>)request.getAttribute("model")).get("word.from") %>: <%= ((Map<String, Object>)request.getAttribute("model")).get("departure") %></label>
-                                        <label class="card-text col-3"><%= ((Map<String, Object>)request.getAttribute("model")).get("word.to") %>: <%= ((Map<String, Object>)request.getAttribute("model")).get("destination") %></label>
-                                        <label class="card-text col-3"><%= ((Map<String, Object>)request.getAttribute("model")).get("word.class") %>: <%= ((Map<String, Object>)request.getAttribute("model")).get("cClass") %></label>
-                                        <label class="card-text col-3"><%= ((Map<String, Object>)request.getAttribute("model")).get("word.fee") %>: <%= ((Map<String, Object>)request.getAttribute("model")).get("price") %></label>
+                                        <label class="card-text col-3"><%= request.getAttribute("word.from") %>: ${order.departure} </label>
+                                        <label class="card-text col-3"><%= request.getAttribute("word.to") %>: ${order.destination} </label>
+                                        <label class="card-text col-3"><%= request.getAttribute("word.class") %>: ${order.cClass} </label>
+                                        <label class="card-text col-3"><%= request.getAttribute("word.fee") %>: ${order.price} </label>
                                     </div>
                                     <div class="row">
                                         <form method="post" action="/clientpage/confirm">
-                                            <button type="submit" class="btn btn-warning" value="${order.id}" name="orderId"><%= ((Map<String, Object>)request.getAttribute("model")).get("sentence.sentence-confirm-msg") %></button>
+                                            <button type="submit" class="btn btn-warning" value="${order.id}" name="orderId"><%= request.getAttribute("sentence.sentence-confirm-msg") %></button>
                                         </form>
                                     </div>
                                 </div>

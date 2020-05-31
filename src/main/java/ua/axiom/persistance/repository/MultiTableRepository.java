@@ -29,10 +29,10 @@ public class MultiTableRepository<K, T> {
                 .collect(Collectors.toList());
     }
 
-    public List<T> findByUsername(String username) {
+    public List<T> findByField(final String field, final String key) {
         return repositories
                 .stream()
-                .map(r ->r.findByUsername(username))
+                .map(r ->r.findByField(field, key))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }

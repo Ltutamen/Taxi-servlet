@@ -56,6 +56,8 @@ public class ClientPageCommand extends Command<Client> {
     @Override
     protected void userSpecificDataFill(Map<String, Object> model, Client user) {
         model.put("client_balance", user.getMoney());
+//        model.put("taken_orders", );
+//        model.put("pending_orders", );
         guiService.userSpecificModelPopulation(model, user);
     }
 }

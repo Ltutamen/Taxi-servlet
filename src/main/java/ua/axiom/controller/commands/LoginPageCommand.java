@@ -27,7 +27,7 @@ public class LoginPageCommand extends Command {
 
         System.out.println("log in: " + usernameParameter + " " + passwordParameter);
 
-        List<? extends User> userList = userRepository.findByUsername(usernameParameter);
+        List<? extends User> userList = userRepository.findByField("username", usernameParameter);
 
         if (userList.size() == 1) {
             System.out.println("logged in as " + usernameParameter);
