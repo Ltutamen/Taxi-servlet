@@ -30,7 +30,7 @@
     <div class="row">
         <div class="card col-4">
             <div class="card-header">
-                <p><%= request.getAttribute("sentence.your-balance")%> <%= request.getAttribute("client-balance") %></p>
+                <p><%= request.getAttribute("sentence.your-balance")%> <%= request.getAttribute("client_balance") %></p>
             </div>
             <div class="card-body">
                 <div class="list-group">
@@ -46,7 +46,7 @@
             <div class="card-header">
                 <h1> <%= request.getAttribute("sentence.your-orders") %></h1>
                 <label>
-                    <%= request.getAttribute("word.balance") %> : <%= request.getAttribute("client-balance") %>
+                    <%= request.getAttribute("word.balance") %> : <%= request.getAttribute("client_balance") %>
                 </label>
             </div>
             <div class="card-body">
@@ -87,7 +87,6 @@
                                 </div>
                             </div>
                         </c:forEach>
-                        --%>
                     </li>
                     <li class="list-group-item align-content-center">
                         <p> <%= request.getAttribute("word.page") %> : <%= request.getAttribute("page") %> / <%= request.getAttribute("max-pages") %> </p>

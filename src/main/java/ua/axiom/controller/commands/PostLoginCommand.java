@@ -1,5 +1,6 @@
 package ua.axiom.controller.commands;
 
+import ua.axiom.controller.Command;
 import ua.axiom.model.Role;
 
 import javax.servlet.http.HttpServletRequest;

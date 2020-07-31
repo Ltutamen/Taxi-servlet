@@ -5,11 +5,11 @@ import ua.axiom.persistance.database.DBConnectionProvider;
 
 import java.util.List;
 
-public class FindByManyKeys<K extends List<String>, T> extends OutQuery<K, T> {
+public class FindByKeys<K extends List<String>, T> extends OutQuery<K, T> {
     private final List<String> keyFields;
 
 
-    public FindByManyKeys(Fabricable<T> factory, String table, List<String> keyFields, DBConnectionProvider provider) {
+    public FindByKeys(Fabricable<T> factory, String table, List<String> keyFields, DBConnectionProvider provider) {
         super(factory, table, provider);
         this.keyFields = keyFields;
     }
@@ -21,7 +21,6 @@ public class FindByManyKeys<K extends List<String>, T> extends OutQuery<K, T> {
         }
 
         StringBuilder builder = new StringBuilder("SELECT * FROM " + table + " WHERE ");
-
 
         for(int i = 0; i < keyValues.size(); i++ ) {
             builder

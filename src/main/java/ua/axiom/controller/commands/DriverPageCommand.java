@@ -1,10 +1,12 @@
 package ua.axiom.controller.commands;
 
+import ua.axiom.controller.Command;
 import ua.axiom.core.Context;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Driver;
 import ua.axiom.model.actors.Order;
-import ua.axiom.persistance.repository.OrderRepository;
+import ua.axiom.persistance.repository.impl.CarRepository;
+import ua.axiom.persistance.repository.impl.OrderRepository;
 import ua.axiom.service.GuiService;
 import ua.axiom.service.LocalisationService;
 
@@ -17,11 +19,13 @@ public class DriverPageCommand extends Command<Driver> {
     private LocalisationService localisationService;
     private GuiService guiService;
     private OrderRepository orderRepository;
+    private CarRepository carRepository;
 
     {
         localisationService = Context.get(LocalisationService.class);
         guiService = Context.get(GuiService.class);
-        //  orderRepository = Context.get(OrderRepository.class);
+        orderRepository = Context.get(OrderRepository.class);
+        carRepository = Context.get(CarRepository.class);
     }
 
     @Override
@@ -50,9 +54,16 @@ public class DriverPageCommand extends Command<Driver> {
 
     @Override
     protected void userSpecificDataFill(Map<String, Object> model, Driver user) {
-        //  model.put("orders", orderRepository.findByFields(Arrays.asList("cClass", "status"), Arrays.asList(user.gegetAClass().toString(), Order.Status.PENDING.toString()));
+        model.put(
+                "orders",
+                orderRepository.findByFields(
+                        Arrays.asList("c_class", "status"),
+                        Arrays.asList(
+                                carRepository.findOne(user.getCarId()).iterator().next().getaClass().toString(),
+                                Order.Status.PENDING.toString())));
+
         guiService.userSpecificModelPopulation(model, user);
         model.put("balance", user.getMoney());
-        //  model.put("car", user.getCar());
+        model.put("car", carRepository.findOne(user.getCarId()).iterator().next().getaClass().toString());
     }
 }

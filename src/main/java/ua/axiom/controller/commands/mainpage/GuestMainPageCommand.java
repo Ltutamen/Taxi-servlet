@@ -1,10 +1,10 @@
 package ua.axiom.controller.commands.mainpage;
 
-import ua.axiom.controller.commands.Command;
+import ua.axiom.controller.Command;
 import ua.axiom.core.Context;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.repository.MultiTableRepository;
+import ua.axiom.persistance.repository.impl.MultiTableRepository;
 import ua.axiom.service.GuiService;
 
 import javax.servlet.http.HttpServletRequest;

@@ -3,7 +3,7 @@ package ua.axiom.service;
 import ua.axiom.core.Context;
 import ua.axiom.model.Role;
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.repository.MultiTableRepository;
+import ua.axiom.persistance.repository.impl.MultiTableRepository;
 
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;

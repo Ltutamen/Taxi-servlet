@@ -29,7 +29,5 @@ public class SimpleDBConnectionProvider extends DBConnectionProvider {
     }
 
     @Override
-    public void returnConnection(DataSource connection) {
-
-    }
+    public void returnConnection(DataSource connection) { }
 }

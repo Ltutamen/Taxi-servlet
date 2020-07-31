@@ -1,5 +1,7 @@
 package ua.axiom.controller.commands;
 
+import ua.axiom.controller.Command;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

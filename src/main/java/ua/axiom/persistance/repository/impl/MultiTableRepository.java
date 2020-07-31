@@ -1,15 +1,19 @@
-package ua.axiom.persistance.repository;
+package ua.axiom.persistance.repository.impl;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import ua.axiom.persistance.Persistent;
+import ua.axiom.persistance.query.InQuery;
+import ua.axiom.persistance.repository.AbstractRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MultiTableRepository<K, T> {
+//  todo use joins!!!
+public class MultiTableRepository<K, T extends Persistent<K>> {
 
-    List<AbstractRepository<K,  ? extends T>> repositories;
+    List<AbstractRepository<K,  T>> repositories;
 
-    public MultiTableRepository(List<AbstractRepository<K,  ? extends T>> repositories) {
+    public MultiTableRepository(List<AbstractRepository<K,  T>> repositories) {
         this.repositories = repositories;
     }
 
@@ -39,8 +43,9 @@ public class MultiTableRepository<K, T> {
 
 
 
-    public void save(T object) {
-        repositories
+    public void save(T object, K key) {
+        AbstractRepository<K, T> repository
+                = (AbstractRepository<K, T>) repositories
                 .stream()
                 .reduce(
                         null,
@@ -48,8 +53,10 @@ public class MultiTableRepository<K, T> {
                             if(r.getPersistedClass().equals(object.getClass())) {
                                 return r;
                             }
-                            return acc;})
-                .save(object);
+                            return acc;});
+
+        repository.save(object, key);
+
     }
 
     public void delete(K id) {

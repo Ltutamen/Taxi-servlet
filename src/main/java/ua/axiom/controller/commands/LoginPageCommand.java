@@ -1,12 +1,12 @@
 package ua.axiom.controller.commands;
 
+import ua.axiom.controller.Command;
 import ua.axiom.core.Context;
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.repository.MultiTableRepository;
+import ua.axiom.persistance.repository.impl.MultiTableRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,16 +27,10 @@ public class LoginPageCommand extends Command {
         String usernameParameter = request.getParameter("username");
         String passwordParameter = request.getParameter("password");
 
-        System.out.println("log in: " + usernameParameter + " " + passwordParameter);
-
         List<? extends User> userList = userRepository.findByFields(Collections.singletonList("username"), Collections.singletonList(usernameParameter));
 
         if (userList.size() == 1) {
-            System.out.println("logged in as " + usernameParameter);
-            System.out.println("todo decrypt password " + passwordParameter);
-
             User user = userList.iterator().next();
-
 
             //  todo encrypt or palace session id
             request.getSession().setAttribute("role", user.getRole());

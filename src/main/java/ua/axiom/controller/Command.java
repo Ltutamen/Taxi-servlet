@@ -1,4 +1,4 @@
-package ua.axiom.controller.commands;
+package ua.axiom.controller;
 
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.User;

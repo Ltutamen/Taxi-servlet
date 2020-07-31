@@ -10,6 +10,7 @@ public class DriverFactory implements Fabricable<Driver> {
     @Override
     public Driver fabricate(String[] params) {
         Driver driver = new Driver(Long.parseLong(params[1]));
+
         driver.setBanned(params[2].equals("1"));
         driver.setLocale(UserLocale.valueOf(params[3]));
         driver.setPassword(params[4]);

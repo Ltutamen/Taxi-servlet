@@ -20,7 +20,6 @@ public class Servlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("service " + req.getRequestURI());
         String requestURI = req.getRequestURI();
 
         String next = commandProviderService.getCommand(requestURI).execute(req, resp, requestURI);

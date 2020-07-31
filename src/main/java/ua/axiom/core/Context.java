@@ -1,13 +1,14 @@
 package ua.axiom.core;
 
+import ua.axiom.model.actors.User;
 import ua.axiom.persistance.database.SimpleDBConnectionProvider;
-import ua.axiom.persistance.repository.AdminRepository;
-import ua.axiom.persistance.repository.ClientRepository;
-import ua.axiom.persistance.repository.DriverRepository;
-import ua.axiom.persistance.repository.MultiTableRepository;
+import ua.axiom.persistance.query.IdGenerationQuery;
+import ua.axiom.persistance.repository.impl.*;
 import ua.axiom.service.CommandProviderService;
 import ua.axiom.service.GuiService;
+import ua.axiom.service.InputValidationService;
 import ua.axiom.service.LocalisationService;
+import ua.axiom.service.buisness.OrderService;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,13 +27,21 @@ public class Context {
             AdminRepository adminRepository = new AdminRepository();
             DriverRepository driverRepository = new DriverRepository();
 
+            Context.put(new IdGenerationQuery());
+
             Context.put(clientRepository);
             Context.put(adminRepository);
+            Context.put(driverRepository);
+            Context.put(new OrderRepository());
+            Context.put(new CarRepository());
 
-            Context.put(new MultiTableRepository<>(Arrays.asList(clientRepository, adminRepository, driverRepository)));
+            Context.put(new MultiTableRepository(Arrays.asList(clientRepository, adminRepository, driverRepository)));
             Context.put(new LocalisationService());
             Context.put(new GuiService());
+            Context.put(new OrderService());
+            Context.put(new InputValidationService());
             Context.put(new CommandProviderService());
+
 
             //  Context.put(new PostLoginController());
 

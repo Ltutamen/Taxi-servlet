@@ -1,5 +1,6 @@
 package ua.axiom.controller.commands;
 
+import ua.axiom.controller.Command;
 import ua.axiom.core.Context;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Car;
@@ -23,7 +24,13 @@ public class NewOrderCommand extends Command<Client> {
 
     @Override
     protected String processGet(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(request.getRequestURI());
         return getView();
+    }
+
+    @Override
+    protected String executePost(HttpServletRequest request, HttpServletResponse response) {
+        return super.executePost(request, response);
     }
 
     @Override
@@ -53,6 +60,8 @@ public class NewOrderCommand extends Command<Client> {
                 "sentence.your-orders",
                 "sentence.order-history"
         );
+
+        model.put("car_classes", Car.Class.values());
     }
 
     @Override

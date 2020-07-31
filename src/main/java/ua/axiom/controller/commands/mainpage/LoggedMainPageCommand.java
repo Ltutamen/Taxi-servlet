@@ -1,6 +1,6 @@
 package ua.axiom.controller.commands.mainpage;
 
-import ua.axiom.controller.commands.Command;
+import ua.axiom.controller.Command;
 import ua.axiom.core.Context;
 import ua.axiom.model.actors.User;
 import ua.axiom.service.GuiService;

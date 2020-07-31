@@ -1,7 +1,6 @@
 package ua.axiom.security;
 
 import ua.axiom.model.Role;
-import ua.axiom.model.RoleAccessConfiguration;
 import ua.axiom.service.SessionContextService;
 
 import javax.servlet.*;
@@ -20,7 +19,6 @@ public class AuthenticationFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("auth filter:" + request.getRequestURI());
 
         if (RoleAccessConfiguration.accessConfig.get(Role.GUEST).contains(request.getRequestURI())) {
             chain.doFilter(request, response);
