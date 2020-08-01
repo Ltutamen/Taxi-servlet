@@ -19,7 +19,7 @@ public class CarRepository extends AbstractRepository<Long, Car> {
         super(
                 new FindAllQuery<>(new CarFactory(), "car", Context.get(SimpleDBConnectionProvider.class)),
                 new FindOneQuery<>(new CarFactory(), "car", "id", Context.get(SimpleDBConnectionProvider.class)),
-                new InQuery<>(null, null, null),
+                new InQuery<>(null, null),
                 new AbstractMap.SimpleEntry<>(
                         Arrays.asList("driver_id"),
                         new FindByKeys<>(

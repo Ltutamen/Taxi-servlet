@@ -22,19 +22,6 @@ public class OrderRepository extends AbstractRepository<Long, Order> {
                 new FindOneQuery<>(new OrderFactory(), "orders", "id", Context.get(SimpleDBConnectionProvider.class)),
                 new InQuery<>(
                         "orders",
-                        new String[]{
-                                "id",
-                                "client_id",
-                                "driver_id",
-                                "status",
-                                "price",
-                                "date",
-                                "cClass",
-                                "departure",
-                                "destination",
-                                "confirmedByClient",
-                                "confirmedByDriver"
-                        },
                         Context.get(SimpleDBConnectionProvider.class)
                 ),
                 new AbstractMap.SimpleEntry<>(

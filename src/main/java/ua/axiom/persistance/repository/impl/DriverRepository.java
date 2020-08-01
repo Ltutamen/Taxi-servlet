@@ -19,7 +19,7 @@ public class DriverRepository extends AbstractRepository<Long, Driver> {
         super(
                 new FindAllQuery<>(new DriverFactory(), "drivers", Context.get(SimpleDBConnectionProvider.class)),
                 new FindOneQuery<>(new DriverFactory(), "drivers", "id", Context.get(SimpleDBConnectionProvider.class)),
-                new InQuery<>(null,null, null),
+                new InQuery<>(null, null),
                 new AbstractMap.SimpleEntry<>(
                         Arrays.asList("username"),
                         new FindByKeys<>(

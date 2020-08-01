@@ -14,8 +14,6 @@ public class Order extends Persistent<Long> {
 
     public enum Status{PENDING, TAKEN, FINISHED};
 
-    private Long id;
-
     private Long client_id;
 
     private Long driver_id;

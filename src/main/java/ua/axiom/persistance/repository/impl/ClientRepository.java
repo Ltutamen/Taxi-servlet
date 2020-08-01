@@ -19,7 +19,7 @@ public class ClientRepository extends AbstractRepository<Long, Client> {
         super(
             new FindAllQuery<>(new ClientFactory(), "clients", Context.get(SimpleDBConnectionProvider.class)),
             new FindOneQuery<>(new ClientFactory(), "clients", "id", Context.get(SimpleDBConnectionProvider.class)),
-                new InQuery<>(null, null, null),
+                new InQuery<>(null, null),
                 new AbstractMap.SimpleEntry<>(
                         Collections.singletonList("username"),
                         new FindByKeys<>(

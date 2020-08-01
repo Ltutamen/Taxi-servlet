@@ -18,19 +18,6 @@ public class InQueryTest {
     public void setQuery() {
          inOrderQuery = new InQuery<>(
                 "orders",
-                new String[]{
-                        "id",
-                        "client_id",
-                        "driver_id",
-                        "status",
-                        "price",
-                        "date",
-                        "c_class",
-                        "departure",
-                        "destination",
-                        "confirmed_by_client",
-                        "confirmed_by_driver"
-                },
                 new SimpleDBConnectionProvider()
         );
 

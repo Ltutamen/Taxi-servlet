@@ -11,6 +11,9 @@ import ua.axiom.persistance.repository.impl.ClientRepository;
 import ua.axiom.persistance.repository.impl.DriverRepository;
 import ua.axiom.persistance.repository.impl.OrderRepository;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class OrderService {
     private OrderRepository orderRepository;
     private ClientRepository clientRepository;
@@ -27,10 +30,14 @@ public class OrderService {
 
     public void addNewOrder(Client user, String departure, String destination, Car.Class aClass) {
         Order order = new Order(idGenerationQuery.execute(null).iterator().next());
+
         order.setStatus(Order.Status.PENDING);
         order.setDestination(destination);
         order.setDeparture(departure);
         order.setcClass(aClass);
+        order.setClient_id(user.getId());
+        order.setDate(new Date());
+        order.setPrice(new BigDecimal("500.00"));
 
         orderRepository.save(order, order.getId());
     }

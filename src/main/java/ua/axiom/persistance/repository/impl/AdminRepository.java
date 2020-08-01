@@ -19,7 +19,7 @@ public class AdminRepository extends AbstractRepository<Long, Admin> {
         super(
                 new FindAllQuery<>(new AdminFactory(), "admins", Context.get(SimpleDBConnectionProvider.class)),
                 new FindOneQuery<>(new AdminFactory(), "admins", "id", Context.get(SimpleDBConnectionProvider.class)),
-                new InQuery<>(null, null, null),
+                new InQuery<>(null,  null),
                 new AbstractMap.SimpleEntry<>(
                         Collections.singletonList("username"),
                         new FindByKeys<>(
