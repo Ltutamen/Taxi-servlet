@@ -2,7 +2,6 @@ package persistance;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.axiom.core.Context;
 import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Order;
 import ua.axiom.persistance.database.SimpleDBConnectionProvider;
@@ -20,7 +19,6 @@ public class InQueryTest {
                 "orders",
                 new SimpleDBConnectionProvider()
         );
-
     }
 
     @Test
@@ -35,6 +33,5 @@ public class InQueryTest {
         order.setClient_id(1L);
 
         inOrderQuery.execute(order, order.getId());
-
     }
 }
