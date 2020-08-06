@@ -11,18 +11,19 @@ import java.util.AbstractMap;
 import java.util.Collections;
 
 public class AdminRepository extends AbstractRepository<Long, Admin> {
+    private static final String ADMINS_TABLE_NAME = "admins";
 
     public AdminRepository() throws NoSuchFieldException {
         super(
-                new FindAllQuery<>(new AdminFactory(), "admins", Context.get(SimpleDBConnectionProvider.class)),
-                new FindOneQuery<>(new AdminFactory(), "admins", "id", Context.get(SimpleDBConnectionProvider.class)),
+                new FindAllQuery<>(new AdminFactory(), ADMINS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class)),
+                new FindOneQuery<>(new AdminFactory(), ADMINS_TABLE_NAME, "id", Context.get(SimpleDBConnectionProvider.class)),
                 new InQuery<>(null,  null),
-                new UpdateQuery<>("admins", "id", Admin.class, Context.get(SimpleDBConnectionProvider.class)),
+                new UpdateQuery<>(ADMINS_TABLE_NAME, "id", Admin.class, Context.get(SimpleDBConnectionProvider.class)),
                 new AbstractMap.SimpleEntry<>(
                         Collections.singletonList("username"),
                         new FindByKeys<>(
                                 new AdminFactory(),
-                                "admins",
+                                ADMINS_TABLE_NAME,
                                 Collections.singletonList("username"),
                                 Context.get(SimpleDBConnectionProvider.class)))
         );

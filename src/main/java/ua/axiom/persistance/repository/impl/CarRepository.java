@@ -12,17 +12,19 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class CarRepository extends AbstractRepository<Long, Car> {
+    private static final String CARS_TABLE_NAME = "cars";
+
     public CarRepository() {
         super(
-                new FindAllQuery<>(new CarFactory(), "car", Context.get(SimpleDBConnectionProvider.class)),
-                new FindOneQuery<>(new CarFactory(), "car", "id", Context.get(SimpleDBConnectionProvider.class)),
+                new FindAllQuery<>(new CarFactory(), CARS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class)),
+                new FindOneQuery<>(new CarFactory(), CARS_TABLE_NAME, "id", Context.get(SimpleDBConnectionProvider.class)),
                 new InQuery<>(null, null),
-                new UpdateQuery<>("cars", "id", Car.class, Context.get(SimpleDBConnectionProvider.class)),
+                new UpdateQuery<>(CARS_TABLE_NAME, "id", Car.class, Context.get(SimpleDBConnectionProvider.class)),
                 new AbstractMap.SimpleEntry<>(
                         Arrays.asList("driver_id"),
                         new FindByKeys<>(
                                 new CarFactory(),
-                                "car",
+                                CARS_TABLE_NAME,
                                 Collections.singletonList("driver_id"),
                                 Context.get(SimpleDBConnectionProvider.class)))
         );

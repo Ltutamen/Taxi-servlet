@@ -9,20 +9,23 @@ import ua.axiom.persistance.repository.AbstractRepository;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Collections;
 
 //  todo refactor constructor - remove "new" calls
 public class DriverRepository extends AbstractRepository<Long, Driver> {
+    private static final String DRIVERS_TABLE_NAME = "drivers";
+
     public DriverRepository() {
         super(
-                new FindAllQuery<>(new DriverFactory(), "drivers", Context.get(SimpleDBConnectionProvider.class)),
-                new FindOneQuery<>(new DriverFactory(), "drivers", "id", Context.get(SimpleDBConnectionProvider.class)),
+                new FindAllQuery<>(new DriverFactory(), DRIVERS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class)),
+                new FindOneQuery<>(new DriverFactory(), DRIVERS_TABLE_NAME, "id", Context.get(SimpleDBConnectionProvider.class)),
                 new InQuery<>(null, null),
-                new UpdateQuery<>("drivers", "id", Driver.class, Context.get(SimpleDBConnectionProvider.class)),
+                new UpdateQuery<>(DRIVERS_TABLE_NAME, "id", Driver.class, Context.get(SimpleDBConnectionProvider.class)),
                 new AbstractMap.SimpleEntry<>(
-                        Arrays.asList("username"),
+                        Collections.singletonList("username"),
                         new FindByKeys<>(
                                 new DriverFactory(),
-                                "drivers", Arrays.asList("username"),
+                                DRIVERS_TABLE_NAME, Collections.singletonList("username"),
                                 Context.get(SimpleDBConnectionProvider.class)))
         );
     }

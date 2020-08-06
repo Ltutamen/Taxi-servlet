@@ -12,16 +12,14 @@ import java.util.Arrays;
 
 
 public class OrderRepository extends AbstractRepository<Long, Order> {
+    private static final String ORDERS_TABLE_NAME = "orders";
 
     public OrderRepository() {
         super(
-                new FindAllQuery<>(new OrderFactory(), "orders", Context.get(SimpleDBConnectionProvider.class)),
-                new FindOneQuery<>(new OrderFactory(), "orders", "id", Context.get(SimpleDBConnectionProvider.class)),
-                new InQuery<>(
-                        "orders",
-                        Context.get(SimpleDBConnectionProvider.class)
-                ),
-                new UpdateQuery<>("orders", "id", Order.class, Context.get(SimpleDBConnectionProvider.class)),
+                new FindAllQuery<>(new OrderFactory(), ORDERS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class)),
+                new FindOneQuery<>(new OrderFactory(), ORDERS_TABLE_NAME, "id", Context.get(SimpleDBConnectionProvider.class)),
+                new InQuery<>(ORDERS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class)),
+                new UpdateQuery<>(ORDERS_TABLE_NAME, "id", Order.class, Context.get(SimpleDBConnectionProvider.class)),
                 new AbstractMap.SimpleEntry<>(
                         Arrays.asList("c_class", "status"),
                         new FindByKeys<>(

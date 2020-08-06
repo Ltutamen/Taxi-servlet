@@ -11,18 +11,19 @@ import java.util.AbstractMap;
 import java.util.Collections;
 
 public class ClientRepository extends AbstractRepository<Long, Client> {
+    private static String CLIENTS_TABLE_NAME = "clients";
 
     public ClientRepository() {
         super(
-            new FindAllQuery<>(new ClientFactory(), "clients", Context.get(SimpleDBConnectionProvider.class)),
-            new FindOneQuery<>(new ClientFactory(), "clients", "id", Context.get(SimpleDBConnectionProvider.class)),
+            new FindAllQuery<>(new ClientFactory(), CLIENTS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class)),
+            new FindOneQuery<>(new ClientFactory(), CLIENTS_TABLE_NAME, "id", Context.get(SimpleDBConnectionProvider.class)),
                 new InQuery<>(null, null),
-                new UpdateQuery<>("clients", "id", Client.class, Context.get(SimpleDBConnectionProvider.class)),
+                new UpdateQuery<>(CLIENTS_TABLE_NAME, "id", Client.class, Context.get(SimpleDBConnectionProvider.class)),
                 new AbstractMap.SimpleEntry<>(
                         Collections.singletonList("username"),
                         new FindByKeys<>(
                                 new ClientFactory(),
-                                "clients",
+                                CLIENTS_TABLE_NAME,
                                 Collections.singletonList("username"),
                                 Context.get(SimpleDBConnectionProvider.class)))
         );
