@@ -2,13 +2,10 @@ package ua.axiom.persistance.repository;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ua.axiom.persistance.Persistent;
-import ua.axiom.persistance.query.InQuery;
-import ua.axiom.persistance.query.OutQuery;
+import ua.axiom.persistance.query.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -22,6 +19,7 @@ public abstract class AbstractRepository<K, T extends Persistent<K>> {
     private final OutQuery<K, T> selectQuery;
 
     private final InQuery<K, T> saveQuery;
+    private final UpdateQuery<K, T> updateQuery;
     //  maps field names to set of queries, that take unknown Key and produce T
     private final Map<List<String>, OutQuery<List<String>, T>> findByFieldMapping = new HashMap<>();
 
@@ -29,16 +27,19 @@ public abstract class AbstractRepository<K, T extends Persistent<K>> {
             OutQuery<K, T> findQuery,
             OutQuery<K, T> selectQuery,
             InQuery<K, T> saveOneQuery,
+            UpdateQuery<K, T> updateQuery,
             Map.Entry<List<String>, OutQuery<List<String>, T>> ... byFieldsQuery
     ) {
         this.findQuery = findQuery;
         this.selectQuery = selectQuery;
         this.saveQuery = saveOneQuery;
+        this.updateQuery = updateQuery;
         findByFieldMapping.putAll(
                 Arrays
                         .stream(byFieldsQuery)
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
     }
+
 
     public List<T> findAll() {
         return findQuery.execute(null);
@@ -52,8 +53,12 @@ public abstract class AbstractRepository<K, T extends Persistent<K>> {
         throw new NotImplementedException();
     }
 
-    public void save(T object, K key) {
-        saveQuery.execute(object, key);
+    public void save(T object) {
+        saveQuery.execute(object, object.getId());
+    }
+
+    public void update(T object, Field[] fields) {
+        updateQuery.execute(object, object.getId(), fields);
     }
 
     public void delete(Long id) {

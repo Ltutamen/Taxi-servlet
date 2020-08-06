@@ -6,20 +6,29 @@ import java.util.*;
 public class PersistentFieldUtil {
     private static final Map<Class<? extends Persistent>, Field[]> cachedField = new HashMap<>();
 
-    public static Field[] getAllFields(Persistent<?> object) {
-        if(!cachedField.containsKey(object.getClass())) {
+    public static Field[] getAllFieldsAndSetAccessible(Persistent<?> object) {
+        return getAllFieldsAndSetAccessible(object.getClass());
+    }
+
+    public static Field[] getAllFieldsAndSetAccessible(Class<? extends Persistent> cclass) {
+        if(!cachedField.containsKey(cclass)) {
             synchronized (cachedField) {
-                if(!cachedField.containsKey(object.getClass())) {
+                if(!cachedField.containsKey(cclass)) {
                     List<Field[]> fieldsList = new ArrayList<>();
-                    for (Class cclass = object.getClass() ; cclass != null ; cclass = cclass.getSuperclass()) {
-                        fieldsList.add(cclass.getDeclaredFields());
+                    for (Class ccclass = cclass; ccclass != null ; ccclass = ccclass.getSuperclass()) {
+                        fieldsList.add(ccclass.getDeclaredFields());
                     }
                     //  flatten list
-                    cachedField.put(object.getClass(), fieldsList.stream().flatMap(Arrays::stream).toArray(Field[]::new));
+                    cachedField.put(cclass, fieldsList
+                            .stream()
+                            .flatMap(Arrays::stream)
+                            .map(field -> {field.setAccessible(true); return field;})
+                            .toArray(Field[]::new));
                 }
             }
         }
 
-        return cachedField.get(object.getClass());
+        return cachedField.get(cclass);
+
     }
 }

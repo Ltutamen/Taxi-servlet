@@ -4,10 +4,7 @@ import ua.axiom.core.Context;
 import ua.axiom.model.actors.Order;
 import ua.axiom.model.actors.factories.OrderFactory;
 import ua.axiom.persistance.database.SimpleDBConnectionProvider;
-import ua.axiom.persistance.query.FindAllQuery;
-import ua.axiom.persistance.query.FindByKeys;
-import ua.axiom.persistance.query.FindOneQuery;
-import ua.axiom.persistance.query.InQuery;
+import ua.axiom.persistance.query.*;
 import ua.axiom.persistance.repository.AbstractRepository;
 
 import java.util.AbstractMap;
@@ -24,6 +21,7 @@ public class OrderRepository extends AbstractRepository<Long, Order> {
                         "orders",
                         Context.get(SimpleDBConnectionProvider.class)
                 ),
+                new UpdateQuery<>("orders", "id", Order.class, Context.get(SimpleDBConnectionProvider.class)),
                 new AbstractMap.SimpleEntry<>(
                         Arrays.asList("c_class", "status"),
                         new FindByKeys<>(

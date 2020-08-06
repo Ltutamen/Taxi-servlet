@@ -16,10 +16,10 @@ public abstract class Persistent<K> {
     public K getId() { return id; }
 
     public int getFieldsNum() {
-        return PersistentFieldUtil.getAllFields(this).length;
+        return PersistentFieldUtil.getAllFieldsAndSetAccessible(this).length;
     }
 
     public Field[] getOrderedFields() {
-        return PersistentFieldUtil.getAllFields(this);
+        return PersistentFieldUtil.getAllFieldsAndSetAccessible(this);
     }
 }

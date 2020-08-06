@@ -1,5 +1,6 @@
 package ua.axiom.service.buisness;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ua.axiom.core.Context;
 import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Client;
@@ -11,10 +12,17 @@ import ua.axiom.persistance.repository.impl.ClientRepository;
 import ua.axiom.persistance.repository.impl.DriverRepository;
 import ua.axiom.persistance.repository.impl.OrderRepository;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class OrderService {
+    private static Field[] ADD_NEW_ORDER_CLIENT_UPDATED_FIELDS;
+    private static Field[] FINISH_ORDER_DRIVER_UPDATE_FIELDS;
+    private static Field[] FINISH_ORDER_ORDER_UPDATE_FIELDS;
+
     private OrderRepository orderRepository;
     private ClientRepository clientRepository;
     private DriverRepository driverRepository;
@@ -26,20 +34,36 @@ public class OrderService {
         clientRepository = Context.get(ClientRepository.class);
         driverRepository = Context.get(DriverRepository.class);
         idGenerationQuery = Context.get(IdGenerationQuery.class);
+
+        try {
+            Class<Client> clientClass = Client.class;
+            ADD_NEW_ORDER_CLIENT_UPDATED_FIELDS = new Field[]{clientClass.getDeclaredField("money")};
+            Class<Driver> driverClass = Driver.class;
+            FINISH_ORDER_DRIVER_UPDATE_FIELDS = new Field[]{driverClass.getDeclaredField("money"), driverClass.getDeclaredField("currentOrderId")};
+            Class<Order> orderClass = Order.class;
+            FINISH_ORDER_ORDER_UPDATE_FIELDS = new Field[]{orderClass.getDeclaredField("status"), orderClass.getDeclaredField("destination"), orderClass.getDeclaredField("departure"), orderClass.getDeclaredField("c_class"), orderClass.getDeclaredField("client_id"), orderClass.getDeclaredField("date")};
+        } catch (NoSuchFieldException nsme) {
+            throw new RuntimeException(nsme.getMessage());
+        }
     }
 
     public void addNewOrder(Client user, String departure, String destination, Car.Class aClass) {
         Order order = new Order(idGenerationQuery.execute(null).iterator().next());
 
+        //  todo move out
         order.setStatus(Order.Status.PENDING);
         order.setDestination(destination);
         order.setDeparture(departure);
         order.setcClass(aClass);
         order.setClient_id(user.getId());
         order.setDate(new Date());
-        order.setPrice(new BigDecimal("500.00"));
 
-        orderRepository.save(order, order.getId());
+        BigDecimal price = new BigDecimal("500.00");
+        order.setPrice(price);
+        user.setMoney(user.getMoney().subtract(price));
+
+        clientRepository.update(user, ADD_NEW_ORDER_CLIENT_UPDATED_FIELDS);
+        orderRepository.save(order);
     }
 
     public void finishOrder(Order order) {
@@ -50,8 +74,32 @@ public class OrderService {
         driver.setMoney(driver.getMoney().add(order.getPrice()));
         driver.setCurrentOrderId(null);
 
-        driverRepository.save(driver, driver.getId());
-        orderRepository.save(order, driver.getId());
+        driverRepository.update(driver, FINISH_ORDER_DRIVER_UPDATE_FIELDS);
+        orderRepository.update(order, FINISH_ORDER_ORDER_UPDATE_FIELDS);
 
+    }
+
+    public void confirmByClient(long orderID) {
+        Order order = orderRepository.findOne(orderID).iterator().next();
+
+        order.setConfirmedByClient(true);
+
+
+    }
+
+    public void confirmByDriver() {
+
+    }
+
+    public void cancelOrder() {
+        throw new NotImplementedException();
+    }
+
+    public List<Order> getOrdersByStatusAndClass(Order.Status status, Car.Class cClass) {
+        return orderRepository.findByFields(Arrays.asList("status", "c_class"), Arrays.asList(status.name(), cClass.name()));
+    }
+
+    public List<Order> getClientPendingOrders(long clientID) {
+        return orderRepository.findByFields(Arrays.asList("status", "client_id"), Arrays.asList(Long.toString(clientID), Order.Status.PENDING.name()));
     }
 }

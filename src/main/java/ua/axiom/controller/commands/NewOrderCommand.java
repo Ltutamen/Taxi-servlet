@@ -8,6 +8,7 @@ import ua.axiom.model.actors.Client;
 import ua.axiom.model.actors.Order;
 import ua.axiom.service.GuiService;
 import ua.axiom.service.LocalisationService;
+import ua.axiom.service.buisness.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,21 +17,18 @@ import java.util.Map;
 public class NewOrderCommand extends Command<Client> {
     private LocalisationService localisationService;
     private GuiService guiService;
+    private OrderService orderService;
 
     {
         guiService = Context.get(GuiService.class);
         localisationService = Context.get(LocalisationService.class);
+        orderService = Context.get(OrderService.class);
     }
 
     @Override
     protected String processGet(HttpServletRequest request, HttpServletResponse response) {
         System.out.println(request.getRequestURI());
         return getView();
-    }
-
-    @Override
-    protected String executePost(HttpServletRequest request, HttpServletResponse response) {
-        return super.executePost(request, response);
     }
 
     @Override
@@ -72,6 +70,8 @@ public class NewOrderCommand extends Command<Client> {
         model.put("client-balance", user.getMoney());
         model.put("username", user.getUsername());
         model.put("current-locale", user.getLocale());
+
+        //  model.put("orders", orderService.getClientPendingOrders(user.getId()));
     }
 
     protected String getView() {

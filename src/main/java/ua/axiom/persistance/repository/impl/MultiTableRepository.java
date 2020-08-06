@@ -55,7 +55,7 @@ public class MultiTableRepository<K, T extends Persistent<K>> {
                             }
                             return acc;});
 
-        repository.save(object, key);
+        repository.save(object);
 
     }
 

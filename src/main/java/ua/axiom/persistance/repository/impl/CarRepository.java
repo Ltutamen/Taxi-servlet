@@ -4,10 +4,7 @@ import ua.axiom.core.Context;
 import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.factories.CarFactory;
 import ua.axiom.persistance.database.SimpleDBConnectionProvider;
-import ua.axiom.persistance.query.FindAllQuery;
-import ua.axiom.persistance.query.FindByKeys;
-import ua.axiom.persistance.query.FindOneQuery;
-import ua.axiom.persistance.query.InQuery;
+import ua.axiom.persistance.query.*;
 import ua.axiom.persistance.repository.AbstractRepository;
 
 import java.util.AbstractMap;
@@ -20,6 +17,7 @@ public class CarRepository extends AbstractRepository<Long, Car> {
                 new FindAllQuery<>(new CarFactory(), "car", Context.get(SimpleDBConnectionProvider.class)),
                 new FindOneQuery<>(new CarFactory(), "car", "id", Context.get(SimpleDBConnectionProvider.class)),
                 new InQuery<>(null, null),
+                new UpdateQuery<>("cars", "id", Car.class, Context.get(SimpleDBConnectionProvider.class)),
                 new AbstractMap.SimpleEntry<>(
                         Arrays.asList("driver_id"),
                         new FindByKeys<>(

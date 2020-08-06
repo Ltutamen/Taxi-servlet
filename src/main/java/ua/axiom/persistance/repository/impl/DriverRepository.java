@@ -4,10 +4,7 @@ import ua.axiom.core.Context;
 import ua.axiom.model.actors.Driver;
 import ua.axiom.model.actors.factories.DriverFactory;
 import ua.axiom.persistance.database.SimpleDBConnectionProvider;
-import ua.axiom.persistance.query.FindAllQuery;
-import ua.axiom.persistance.query.FindByKeys;
-import ua.axiom.persistance.query.FindOneQuery;
-import ua.axiom.persistance.query.InQuery;
+import ua.axiom.persistance.query.*;
 import ua.axiom.persistance.repository.AbstractRepository;
 
 import java.util.AbstractMap;
@@ -20,6 +17,7 @@ public class DriverRepository extends AbstractRepository<Long, Driver> {
                 new FindAllQuery<>(new DriverFactory(), "drivers", Context.get(SimpleDBConnectionProvider.class)),
                 new FindOneQuery<>(new DriverFactory(), "drivers", "id", Context.get(SimpleDBConnectionProvider.class)),
                 new InQuery<>(null, null),
+                new UpdateQuery<>("drivers", "id", Driver.class, Context.get(SimpleDBConnectionProvider.class)),
                 new AbstractMap.SimpleEntry<>(
                         Arrays.asList("username"),
                         new FindByKeys<>(
