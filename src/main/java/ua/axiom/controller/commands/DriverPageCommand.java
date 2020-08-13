@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DriverPageCommand extends Command<Driver> {
     private LocalisationService localisationService;
@@ -56,11 +58,11 @@ public class DriverPageCommand extends Command<Driver> {
     protected void userSpecificDataFill(Map<String, Object> model, Driver user) {
         model.put(
                 "orders",
-                orderRepository.findByFields(
-                        Arrays.asList("c_class", "status"),
-                        Arrays.asList(
-                                carRepository.findOne(user.getCarId()).iterator().next().getaClass().toString(),
-                                Order.Status.PENDING.toString())));
+                orderRepository.findByFields(Stream.of(
+                        new Object[][]{
+                    {"c_class", carRepository.findOne(user.getCarId()).iterator().next().getaClass().toString()},
+                    {"status", Order.Status.PENDING.toString()}})
+                        .collect(Collectors.toMap(p -> (String)p[0], p -> p[1]))));
 
         guiService.userSpecificModelPopulation(model, user);
         model.put("balance", user.getMoney());

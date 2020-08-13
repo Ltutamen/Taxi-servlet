@@ -1,11 +1,16 @@
 package ua.axiom.model.actors;
 
 import ua.axiom.persistance.Persistent;
+import ua.axiom.persistance.misc.annotations.PersistingStrategy;
+import ua.axiom.persistance.misc.representation.PersistingDepersistingStrategyProvider;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import static ua.axiom.persistance.misc.representation.EnumPersistingStrategy.ORDINAL;
+import static ua.axiom.persistance.misc.representation.EnumPersistingStrategy.STRING;
 
 public class Order extends Persistent<Long> {
     public Order(Long id) {
@@ -18,12 +23,14 @@ public class Order extends Persistent<Long> {
 
     private Long driver_id;
 
+    @PersistingStrategy(strategy = PersistingDepersistingStrategyProvider.ORDINAL)
     private Status status;
 
     private BigDecimal price;
 
     private Date date;
 
+    @PersistingStrategy(strategy = PersistingDepersistingStrategyProvider.ORDINAL)
     private Car.Class c_class;
 
     private String departure;

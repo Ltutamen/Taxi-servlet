@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ClientPageCommand extends Command<Client> {
     private GuiService guiService;
@@ -62,8 +65,18 @@ public class ClientPageCommand extends Command<Client> {
     @Override
     protected void userSpecificDataFill(Map<String, Object> model, Client user) {
         model.put("client_balance", user.getMoney());
-        model.put("taken_orders", orderRepository.findByFields(Arrays.asList("client_id", "status"), Arrays.asList(user.getId().toString(), Order.Status.TAKEN.toString())));
-        model.put("pending_orders", orderRepository.findByFields(Arrays.asList("client_id", "status"), Arrays.asList(user.getId().toString(), Order.Status.PENDING.toString())));
+        model.put("taken_orders", orderRepository.findByFields(
+                Stream.of(new Object[][]{
+                        {"client_id", user.getId()},
+                        {"status", Order.Status.TAKEN}
+                })
+                        .collect(Collectors.toMap(p -> (String)p[0], p -> p[1]))));
+        model.put("pending_orders", orderRepository.findByFields(
+                Stream.of(new Object[][]{
+                        {"client_id", user.getId()},
+                        {"status", Order.Status.PENDING}
+                })
+                        .collect(Collectors.toMap(p -> (String)p[0], p->p[1]))));
         guiService.userSpecificModelPopulation(model, user);
     }
 }

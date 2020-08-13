@@ -6,6 +6,7 @@ import ua.axiom.persistance.query.InQuery;
 import ua.axiom.persistance.repository.AbstractRepository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 //  todo use joins!!!
@@ -33,10 +34,10 @@ public class MultiTableRepository<K, T extends Persistent<K>> {
                 .collect(Collectors.toList());
     }
 
-    public List<T> findByFields(final List<String> fields, final List<String> keys) {
+    public List<T> findByFields(Map<String, Object> keyValueMap) {
         return repositories
                 .stream()
-                .map(r ->r.findByFields(fields, keys))
+                .map(r ->r.findByFields(keyValueMap))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }

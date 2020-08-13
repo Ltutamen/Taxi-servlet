@@ -21,23 +21,20 @@ public abstract class AbstractRepository<K, T extends Persistent<K>> {
     private final InQuery<K, T> saveQuery;
     private final UpdateQuery<K, T> updateQuery;
     //  maps field names to set of queries, that take unknown Key and produce T
-    private final Map<List<String>, OutQuery<List<String>, T>> findByFieldMapping = new HashMap<>();
+    private final FindByKeysQuery<K, T> findByFieldsQuery;
 
     protected AbstractRepository(
             OutQuery<K, T> findQuery,
             OutQuery<K, T> selectQuery,
             InQuery<K, T> saveOneQuery,
             UpdateQuery<K, T> updateQuery,
-            Map.Entry<List<String>, OutQuery<List<String>, T>> ... byFieldsQuery
+            FindByKeysQuery<K, T> findByFieldsQuery
     ) {
         this.findQuery = findQuery;
         this.selectQuery = selectQuery;
         this.saveQuery = saveOneQuery;
         this.updateQuery = updateQuery;
-        findByFieldMapping.putAll(
-                Arrays
-                        .stream(byFieldsQuery)
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+        this.findByFieldsQuery = findByFieldsQuery;
     }
 
 
@@ -69,17 +66,8 @@ public abstract class AbstractRepository<K, T extends Persistent<K>> {
         throw new NotImplementedException();
     }
 
-    /**
-     * Finds all rows, where
-     * @param fieldNames equals to the
-     * @param keys, that represents field value
-     */
-    public List<T> findByFields(List<String> fieldNames, List<String> keys) {
-        if(findByFieldMapping.containsKey(fieldNames)) {
-            return findByFieldMapping.get(fieldNames).execute(keys);
-        } else {
-            throw new IllegalArgumentException("No query for field <" + fieldNames + "> for repository " + this.getClass());
-        }
+    public List<T> findByFields(Map<String, Object> keyToValueMap) {
+        return findByFieldsQuery.execute(getPersistedClass(), keyToValueMap);
     }
 
     public abstract Class<T> getPersistedClass();

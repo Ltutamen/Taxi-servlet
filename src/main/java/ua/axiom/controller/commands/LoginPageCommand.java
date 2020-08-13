@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LoginPageCommand extends Command {
     MultiTableRepository<Long, User> userRepository;
@@ -27,7 +29,10 @@ public class LoginPageCommand extends Command {
         String usernameParameter = request.getParameter("username");
         String passwordParameter = request.getParameter("password");
 
-        List<? extends User> userList = userRepository.findByFields(Collections.singletonList("username"), Collections.singletonList(usernameParameter));
+        List<? extends User> userList = userRepository.findByFields(
+                Stream.of(new Object[][]{
+                {"username", usernameParameter},
+        }).collect(Collectors.toMap(p -> (String)p[0], p->p[1])));
 
         if (userList.size() == 1) {
             User user = userList.iterator().next();

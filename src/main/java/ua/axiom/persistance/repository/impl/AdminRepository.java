@@ -7,9 +7,6 @@ import ua.axiom.persistance.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.query.*;
 import ua.axiom.persistance.repository.AbstractRepository;
 
-import java.util.AbstractMap;
-import java.util.Collections;
-
 public class AdminRepository extends AbstractRepository<Long, Admin> {
     private static final String ADMINS_TABLE_NAME = "admins";
 
@@ -19,13 +16,7 @@ public class AdminRepository extends AbstractRepository<Long, Admin> {
                 new FindOneQuery<>(new AdminFactory(), ADMINS_TABLE_NAME, "id", Context.get(SimpleDBConnectionProvider.class)),
                 new InQuery<>(null,  null),
                 new UpdateQuery<>(ADMINS_TABLE_NAME, "id", Admin.class, Context.get(SimpleDBConnectionProvider.class)),
-                new AbstractMap.SimpleEntry<>(
-                        Collections.singletonList("username"),
-                        new FindByKeys<>(
-                                new AdminFactory(),
-                                ADMINS_TABLE_NAME,
-                                Collections.singletonList("username"),
-                                Context.get(SimpleDBConnectionProvider.class)))
+                new FindByKeysQuery<>(new AdminFactory(), ADMINS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class))
         );
     }
 

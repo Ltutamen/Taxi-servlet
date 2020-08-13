@@ -17,6 +17,8 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class OrderService {
     private static Field[] ADD_NEW_ORDER_CLIENT_UPDATED_FIELDS;
@@ -50,7 +52,6 @@ public class OrderService {
     public void addNewOrder(Client user, String departure, String destination, Car.Class aClass) {
         Order order = new Order(idGenerationQuery.execute(null).iterator().next());
 
-        //  todo move out
         order.setStatus(Order.Status.PENDING);
         order.setDestination(destination);
         order.setDeparture(departure);
@@ -96,10 +97,20 @@ public class OrderService {
     }
 
     public List<Order> getOrdersByStatusAndClass(Order.Status status, Car.Class cClass) {
-        return orderRepository.findByFields(Arrays.asList("status", "c_class"), Arrays.asList(status.name(), cClass.name()));
+        return orderRepository.findByFields(
+                Stream.of(new Object[][]{
+                {"status", status.toString()},
+                {"c_class", cClass.toString()}})
+                        .collect(Collectors.toMap(p -> (String)p[0], p -> p[1])));
     }
 
     public List<Order> getClientPendingOrders(long clientID) {
-        return orderRepository.findByFields(Arrays.asList("status", "client_id"), Arrays.asList(Long.toString(clientID), Order.Status.PENDING.name()));
+        return orderRepository.findByFields(
+                Stream.of(
+                new Object[][] {
+                        {"status", Long.toString(clientID)},
+                        {"client_id", Order.Status.PENDING.name()}
+                }
+        ).collect(Collectors.toMap(p -> (String)p[0], p -> p[1])));
     }
 }
