@@ -22,4 +22,5 @@ public abstract class Persistent<K> {
     public Field[] getOrderedFields() {
         return PersistentFieldUtil.getAllFieldsAndSetAccessible(this);
     }
+
 }

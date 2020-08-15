@@ -9,6 +9,7 @@ import ua.axiom.persistance.repository.impl.ClientRepository;
 import ua.axiom.persistance.repository.impl.OrderRepository;
 import ua.axiom.service.GuiService;
 import ua.axiom.service.LocalisationService;
+import ua.axiom.service.buisness.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,14 +22,14 @@ import java.util.stream.Stream;
 public class ClientPageCommand extends Command<Client> {
     private GuiService guiService;
     private LocalisationService localisationService;
-    private ClientRepository clientRepository;
-    private OrderRepository orderRepository;
+    private OrderService orderService;
+    //  private ClientService clientService;
 
     {
         guiService = Context.get(GuiService.class);
         localisationService = Context.get(LocalisationService.class);
-        clientRepository = Context.get(ClientRepository.class);
-        orderRepository = Context.get(OrderRepository.class);
+        orderService = Context.get(OrderService.class);
+        //  orderRepository = Context.get(OrderRepository.class);
     }
 
     @Override
@@ -65,18 +66,9 @@ public class ClientPageCommand extends Command<Client> {
     @Override
     protected void userSpecificDataFill(Map<String, Object> model, Client user) {
         model.put("client_balance", user.getMoney());
-        model.put("taken_orders", orderRepository.findByFields(
-                Stream.of(new Object[][]{
-                        {"client_id", user.getId()},
-                        {"status", Order.Status.TAKEN}
-                })
-                        .collect(Collectors.toMap(p -> (String)p[0], p -> p[1]))));
-        model.put("pending_orders", orderRepository.findByFields(
-                Stream.of(new Object[][]{
-                        {"client_id", user.getId()},
-                        {"status", Order.Status.PENDING}
-                })
-                        .collect(Collectors.toMap(p -> (String)p[0], p->p[1]))));
+        model.put("taken_orders", orderService.getClientTakenOrders(user.getId()));
+        model.put("pending_orders", orderService.getClientPendingOrders(user.getId()));
         guiService.userSpecificModelPopulation(model, user);
     }
 }
+

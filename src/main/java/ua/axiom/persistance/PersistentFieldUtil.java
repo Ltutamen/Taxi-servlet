@@ -33,4 +33,16 @@ public class PersistentFieldUtil {
 
         return cachedField.get(cclass);
     }
+
+    public static Field getFieldByName(String name, Class<? extends Persistent> cClass) {
+        Field[] fields = getAllFieldsAndSetAccessible(cClass);
+
+        for (Field field : fields) {
+            if(field.getName().equals(name)) {
+                return field;
+            }
+        }
+
+        throw new IllegalStateException("Field <" + name + "> doesnt exist in class <" + cClass.getName() + ">");
+    }
 }
