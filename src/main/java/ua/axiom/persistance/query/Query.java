@@ -14,5 +14,4 @@ public abstract class Query<K, T> {
         this.table = table;
         this.provider = provider;
     }
-
 }

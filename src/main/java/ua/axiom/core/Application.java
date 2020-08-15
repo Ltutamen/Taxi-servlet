@@ -27,8 +27,5 @@ public class Application {
                 .getFieldsAnnotatedWith(Bean.class)
                 .stream().forEach(field -> {if (! field.getType().equals(Method.class)) {throw new RuntimeException("@Bean works on methods only! ");} });
         reflection.getFieldsAnnotatedWith()*/
-
-
-
     }
 }

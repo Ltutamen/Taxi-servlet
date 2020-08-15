@@ -10,6 +10,9 @@ public class PersistentFieldUtil {
         return getAllFieldsAndSetAccessible(object.getClass());
     }
 
+    /**
+     * @return all fields in given class, that are also set to accessible
+     */
     public static Field[] getAllFieldsAndSetAccessible(Class<? extends Persistent> cclass) {
         if(!cachedField.containsKey(cclass)) {
             synchronized (cachedField) {
@@ -29,6 +32,5 @@ public class PersistentFieldUtil {
         }
 
         return cachedField.get(cclass);
-
     }
 }

@@ -45,6 +45,5 @@ public abstract class OutQuery<K, T> extends Query<K, T> {
         return result;
     }
 
-    //  todo autowire - singe responsibility violation
     protected abstract String constructQueryString(K key);
 }

@@ -29,7 +29,7 @@ public class OrderService {
     private ClientRepository clientRepository;
     private DriverRepository driverRepository;
 
-    private OutQuery<Void, Long> idGenerationQuery;
+    private IdGenerationQuery idGenerationQuery;
 
     {
         orderRepository = Context.get(OrderRepository.class);
@@ -50,7 +50,7 @@ public class OrderService {
     }
 
     public void addNewOrder(Client user, String departure, String destination, Car.Class aClass) {
-        Order order = new Order(idGenerationQuery.execute(null).iterator().next());
+        Order order = new Order(idGenerationQuery.execute());
 
         order.setStatus(Order.Status.PENDING);
         order.setDestination(destination);

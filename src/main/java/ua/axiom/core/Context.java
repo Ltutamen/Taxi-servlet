@@ -1,6 +1,5 @@
 package ua.axiom.core;
 
-import ua.axiom.model.actors.User;
 import ua.axiom.persistance.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.query.IdGenerationQuery;
 import ua.axiom.persistance.repository.impl.*;
@@ -27,7 +26,7 @@ public class Context {
             AdminRepository adminRepository = new AdminRepository();
             DriverRepository driverRepository = new DriverRepository();
 
-            Context.put(new IdGenerationQuery());
+            Context.put(new IdGenerationQuery(Context.get(SimpleDBConnectionProvider.class)));
 
             Context.put(clientRepository);
             Context.put(adminRepository);
@@ -51,7 +50,7 @@ public class Context {
         }
     }
 
-    public static void put(Object object) {
+    public static synchronized void put(Object object) {
         if(isSealed) {
             throw new RuntimeException("Context is sealed!");
         }
@@ -62,41 +61,15 @@ public class Context {
         singleton.elements.put(object.getClass(), object);
     }
 
-    public static <T> T get(Class<T> type/*, Object... constructorParams*/) {
+    public static <T> T get(Class<T> type) {
         if (singleton.elements.get(type) == null) {
             throw new IllegalArgumentException("No such class in context: " + type);
-            /*Object o = null;
-            conLoop:
-            for (Constructor con : type.getConstructors()) {
-                if (constructorParams.length == con.getParameterCount()) {
-                    for (int i = 0; i < constructorParams.length; ++i) {
-                        if (wrongTypeCheck(constructorParams[i], con.getParameterTypes()[i])) {
-                            continue conLoop;
-                        }
-                    }
-                    try {
-                        o = con.newInstance(constructorParams);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-            }
-
-            if (o == null) {
-                throw new IllegalArgumentException("no matching constructor to call on class "
-                        + type.toString()
-                        + " with arguments: "
-                        + Arrays.toString(constructorParams));
-            }
-
-            singleton.elements.put(type, o);*/
         }
 
         return (T)singleton.elements.get(type);
     }
 
-    public void seal() {
+    public static synchronized void seal() {
         Context.isSealed = true;
     }
 

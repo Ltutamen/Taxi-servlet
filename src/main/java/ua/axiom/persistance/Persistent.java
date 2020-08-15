@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 public abstract class Persistent<K> {
     protected final K id;
 
-    public Persistent(K id) {
+    protected Persistent(K id) {
         this.id = id;
     }
 

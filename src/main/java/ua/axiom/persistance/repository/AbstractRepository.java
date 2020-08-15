@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
  */
 //  todo remove field to T name mapping, use field name instead
 public abstract class AbstractRepository<K, T extends Persistent<K>> {
-    private final OutQuery<K, T> findQuery;
-    private final OutQuery<K, T> selectQuery;
+    private final OutQuery<K, T> findAllQuery;
+    private final OutQuery<K, T> selectByIdQuery;
 
-    private final InQuery<K, T> saveQuery;
+    private final InQuery<K, T> saveNewQuery;
     private final UpdateQuery<K, T> updateQuery;
     //  maps field names to set of queries, that take unknown Key and produce T
     private final FindByKeysQuery<K, T> findByFieldsQuery;
@@ -30,20 +30,20 @@ public abstract class AbstractRepository<K, T extends Persistent<K>> {
             UpdateQuery<K, T> updateQuery,
             FindByKeysQuery<K, T> findByFieldsQuery
     ) {
-        this.findQuery = findQuery;
-        this.selectQuery = selectQuery;
-        this.saveQuery = saveOneQuery;
+        this.findAllQuery = findQuery;
+        this.selectByIdQuery = selectQuery;
+        this.saveNewQuery = saveOneQuery;
         this.updateQuery = updateQuery;
         this.findByFieldsQuery = findByFieldsQuery;
     }
 
 
     public List<T> findAll() {
-        return findQuery.execute(null);
+        return findAllQuery.execute(null);
     }
 
     public List<T> findOne(K id) {
-        return selectQuery.execute(id);
+        return selectByIdQuery.execute(id);
     }
 
     public List<T> findByKey(String keyName, String keyValue) {
@@ -51,7 +51,7 @@ public abstract class AbstractRepository<K, T extends Persistent<K>> {
     }
 
     public void save(T object) {
-        saveQuery.execute(object, object.getId());
+        saveNewQuery.execute(object, object.getId());
     }
 
     public void update(T object, Field[] fields) {
