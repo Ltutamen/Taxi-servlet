@@ -30,12 +30,6 @@ public class NewOrderPostCommand extends Command<Client> {
         String departure = request.getParameter("departure");
         String destination = request.getParameter("destination");
 
-        /*if (!inputValidationService.isValid(departure, InputType.location, user.getLocale().toJavaLocale()) ||
-                !inputValidationService.isValid(destination, InputType.location, user.getLocale().toJavaLocale())
-        ) {
-            return "redirect:/neworder&error=true";
-        }*/
-
         orderService.addNewOrder(user, departure, destination, aClass);
 
         return "redirect:/clientpage";

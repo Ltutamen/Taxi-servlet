@@ -13,6 +13,7 @@ import ua.axiom.persistance.repository.impl.OrderRepository;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +29,7 @@ public class OrderService {
     private OrderRepository orderRepository;
     private ClientRepository clientRepository;
     private DriverRepository driverRepository;
+    private CarService carService;
 
     private IdGenerationQuery idGenerationQuery;
 
@@ -36,6 +38,8 @@ public class OrderService {
         clientRepository = Context.get(ClientRepository.class);
         driverRepository = Context.get(DriverRepository.class);
         idGenerationQuery = Context.get(IdGenerationQuery.class);
+
+        carService = Context.get(CarService.class);
 
         try {
             Class<Client> clientClass = Client.class;
@@ -127,5 +131,16 @@ public class OrderService {
                             {"status", Order.Status.TAKEN}
                     }
                     ).collect(Collectors.toMap(p -> (String)p[0], p -> p[1])));
+    }
+
+    public List<Order> getSuitableOrders(Driver driver) {
+        long carID = driver.getCarId();
+        Car car = carService.getCarById(carID);
+        Car.Class cClass = car.getaClass();
+
+        return orderRepository.findByFields(Arrays.stream(new Object[][] {
+                {"c_class", cClass},
+                {"status", Order.Status.PENDING}
+        }).collect(Collectors.toMap(p ->(String)p[0], p -> p[1])));
     }
 }

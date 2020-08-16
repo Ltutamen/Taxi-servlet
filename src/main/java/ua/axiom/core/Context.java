@@ -3,12 +3,13 @@ package ua.axiom.core;
 import ua.axiom.persistance.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.query.IdGenerationQuery;
 import ua.axiom.persistance.repository.impl.*;
-import ua.axiom.service.CommandProviderService;
-import ua.axiom.service.GuiService;
-import ua.axiom.service.InputValidationService;
-import ua.axiom.service.LocalisationService;
+import ua.axiom.security.PasswordEncoder;
+import ua.axiom.security.PasswordEncoderProvider;
+import ua.axiom.service.*;
+import ua.axiom.service.buisness.CarService;
 import ua.axiom.service.buisness.OrderService;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,21 +29,23 @@ public class Context {
 
             Context.put(new IdGenerationQuery(Context.get(SimpleDBConnectionProvider.class)));
 
-            Context.put(clientRepository);
-            Context.put(adminRepository);
-            Context.put(driverRepository);
+            Context.put(new ClientRepository());
+            Context.put(new AdminRepository());
+            Context.put(new DriverRepository());
             Context.put(new OrderRepository());
             Context.put(new CarRepository());
 
             Context.put(new MultiTableRepository(Arrays.asList(clientRepository, adminRepository, driverRepository)));
+
             Context.put(new LocalisationService());
+            Context.put(new PasswordEncoderProvider());
             Context.put(new GuiService());
+            Context.put(new CarService());
             Context.put(new OrderService());
+            Context.put(new LoginService());
             Context.put(new InputValidationService());
             Context.put(new CommandProviderService());
 
-
-            //  Context.put(new PostLoginController());
 
         } catch (Exception e) {
             e.printStackTrace();

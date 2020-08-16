@@ -38,10 +38,10 @@ public class GeneralPersisting {
 
     /**
      * @param field specifies persistance type (threw annotations) and return enum type
-     * @param string specifies value of enum field
+     * @param value specifies value of enum field
      * @return
      */
-    public static <T extends Enum<T>> Enum<T> getObject(Field field/*Class<T> tClass*/, String string) {
+    public static <T extends Enum<T>> Enum<T> getObject(Field field, String value) {
         return OBJECT_DEPERSISTION_STRATEGIES
                 .entrySet()
                 .stream()
@@ -51,7 +51,7 @@ public class GeneralPersisting {
                                 .isAssignableFrom(field.getType()))
                 .findAny()
                 .orElseThrow(IllegalStateException::new).getValue()
-                .apply(field, string);
+                .apply(field, value);
     };
 
 }

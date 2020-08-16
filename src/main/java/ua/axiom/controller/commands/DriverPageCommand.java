@@ -5,14 +5,13 @@ import ua.axiom.core.Context;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Driver;
 import ua.axiom.model.actors.Order;
-import ua.axiom.persistance.repository.impl.CarRepository;
-import ua.axiom.persistance.repository.impl.OrderRepository;
 import ua.axiom.service.GuiService;
 import ua.axiom.service.LocalisationService;
+import ua.axiom.service.buisness.CarService;
+import ua.axiom.service.buisness.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,14 +19,14 @@ import java.util.stream.Stream;
 public class DriverPageCommand extends Command<Driver> {
     private LocalisationService localisationService;
     private GuiService guiService;
-    private OrderRepository orderRepository;
-    private CarRepository carRepository;
+    private OrderService orderService;
+    private CarService carService;
 
     {
         localisationService = Context.get(LocalisationService.class);
         guiService = Context.get(GuiService.class);
-        orderRepository = Context.get(OrderRepository.class);
-        carRepository = Context.get(CarRepository.class);
+        orderService = Context.get(OrderService.class);
+        carService = Context.get(CarService.class);
     }
 
     @Override
@@ -56,16 +55,12 @@ public class DriverPageCommand extends Command<Driver> {
 
     @Override
     protected void userSpecificDataFill(Map<String, Object> model, Driver user) {
-        model.put(
-                "orders",
-                orderRepository.findByFields(Stream.of(
-                        new Object[][]{
-                    {"c_class", carRepository.findOne(user.getCarId()).iterator().next().getaClass().toString()},
-                    {"status", Order.Status.PENDING.toString()}})
-                        .collect(Collectors.toMap(p -> (String)p[0], p -> p[1]))));
+        model.put("orders", orderService.getSuitableOrders(user));
 
         guiService.userSpecificModelPopulation(model, user);
+
         model.put("balance", user.getMoney());
-        model.put("car", carRepository.findOne(user.getCarId()).iterator().next().getaClass().toString());
+
+        model.put("car", carService.getCarById(user.getCarId()));
     }
 }

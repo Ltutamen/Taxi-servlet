@@ -4,6 +4,7 @@ import ua.axiom.controller.Command;
 import ua.axiom.core.Context;
 import ua.axiom.model.actors.User;
 import ua.axiom.persistance.repository.impl.MultiTableRepository;
+import ua.axiom.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,10 +14,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class LoginPageCommand extends Command {
-    MultiTableRepository<Long, User> userRepository;
+    //  MultiTableRepository<Long, User> userRepository;
+
+    private LoginService loginService;
 
     {
-        userRepository = Context.get(MultiTableRepository.class);
+        loginService = Context.get(LoginService.class);
     }
 
     @Override
@@ -29,23 +32,13 @@ public class LoginPageCommand extends Command {
         String usernameParameter = request.getParameter("username");
         String passwordParameter = request.getParameter("password");
 
-        List<? extends User> userList = userRepository.findByFields(
-                Stream.of(new Object[][]{
-                {"username", usernameParameter},
-        }).collect(Collectors.toMap(p -> (String)p[0], p->p[1])));
+        boolean logged = loginService.tryLogin(usernameParameter, passwordParameter, request);
 
-        if (userList.size() == 1) {
-            User user = userList.iterator().next();
-
-            //  todo encrypt or palace session id
-            request.getSession().setAttribute("role", user.getRole());
-            request.getSession().setAttribute("user_id", user.getId());
-
+        if(logged) {
             return "redirect:/api/postloginredirect";
-        } else {
-            //  todo throw error
-            return getView();
         }
+
+        return getView();
     }
 
     protected String getView() {
