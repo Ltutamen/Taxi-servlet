@@ -1,4 +1,4 @@
-package ua.axiom.controller.commands.mainpage;
+package ua.axiom.controller.commands.viewable.mainpage;
 
 import ua.axiom.controller.commands.MultiViewCommand;
 import ua.axiom.model.Role;

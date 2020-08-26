@@ -2,18 +2,21 @@ package ua.axiom.service;
 
 import ua.axiom.controller.Command;
 import ua.axiom.controller.commands.*;
-import ua.axiom.controller.commands.mainpage.MainPageCommand;
+import ua.axiom.controller.commands.viewable.driverpage.DriverNoOrderPageCommand;
+import ua.axiom.controller.commands.viewable.driverpage.DriverPageCommand;
+import ua.axiom.controller.commands.viewable.mainpage.MainPageCommand;
+import ua.axiom.controller.commands.viewable.*;
 import ua.axiom.model.actors.User;
 
 import java.util.HashMap;
 
-public class CommandProviderService {
+public class CommandToRequestMappingService {
 
     private final HashMap<String, Command> uriToCommand = new HashMap<>();
 
-    public CommandProviderService() {
+    public CommandToRequestMappingService() {
         uriToCommand.put("/clientpage", new ClientPageCommand());
-        uriToCommand.put("/driverpage", new DriverNoOrderPageCommand());
+        uriToCommand.put("/driverpage", new DriverPageCommand());
         uriToCommand.put("/adminpage", new AdminPageCommand());
 
         uriToCommand.put("/neworder", new NewOrderCommand());

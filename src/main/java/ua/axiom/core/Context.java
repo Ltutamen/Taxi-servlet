@@ -44,7 +44,8 @@ public class Context {
             Context.put(new OrderService());
             Context.put(new LoginService());
             Context.put(new InputValidationService());
-            Context.put(new CommandProviderService());
+            Context.put(new DriverSessionContextService());
+            Context.put(new CommandToRequestMappingService());
 
 
         } catch (Exception e) {

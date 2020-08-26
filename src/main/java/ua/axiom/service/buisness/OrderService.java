@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -164,5 +165,13 @@ public class OrderService {
                 {"c_class", cClass},
                 {"status", Order.Status.PENDING}
         }).collect(Collectors.toMap(p ->(String)p[0], p -> p[1])));
+    }
+
+    public Optional<Order> getOrderForDriver(long driverId) {
+        return Optional.ofNullable(
+                orderRepository.findByFields(Arrays.stream(new Object[][] {
+                {"status", Order.Status.TAKEN},
+                {"driver_id", driverId}
+        }).collect(Collectors.toMap(p ->(String)p[0], p -> p[1]))).iterator().next());
     }
 }

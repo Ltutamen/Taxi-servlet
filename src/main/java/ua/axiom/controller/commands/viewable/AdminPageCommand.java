@@ -1,4 +1,4 @@
-package ua.axiom.controller.commands;
+package ua.axiom.controller.commands.viewable;
 
 import ua.axiom.controller.Command;
 import ua.axiom.model.actors.Admin;

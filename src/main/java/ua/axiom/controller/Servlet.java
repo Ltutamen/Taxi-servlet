@@ -1,7 +1,7 @@
 package ua.axiom.controller;
 
 import ua.axiom.core.Context;
-import ua.axiom.service.CommandProviderService;
+import ua.axiom.service.CommandToRequestMappingService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,10 +13,10 @@ import java.io.IOException;
 @WebServlet(value = {"/**", "/"}, name = "mainPage")
 public class Servlet extends HttpServlet {
     {
-        commandProviderService = Context.get(CommandProviderService.class);
+        commandProviderService = Context.get(CommandToRequestMappingService.class);
     }
 
-    private CommandProviderService commandProviderService;
+    private CommandToRequestMappingService commandProviderService;
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -1,7 +1,5 @@
 package ua.axiom.service;
 
-import ua.axiom.service.misc.MiscNulls;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -56,9 +54,9 @@ public class LocalisationService {
     }
 
     private Map<String, String> getDictionary(Locale locale) {
-        Map<String, String> dictionary = localeToDictionaryMap.get(locale);
+        Optional<Map<String, String>> dictionaryOptional = Optional.of(localeToDictionaryMap.get(locale));
 
-        return MiscNulls.getOrThrow(dictionary, new IllegalStateException("Locale " + locale + " is not present in " + this.getClass()));
+        return dictionaryOptional.orElseThrow(() ->  new IllegalStateException("Locale " + locale + " is not present in " + this.getClass()));
     }
 
     private void addLocale(Locale locale) {
