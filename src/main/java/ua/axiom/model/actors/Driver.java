@@ -6,34 +6,34 @@ import java.math.BigDecimal;
 
 public class Driver extends User {
 
-    private long carId;
+    private long car_id;
 
-    private BigDecimal money;
+    private BigDecimal balance;
 
-    private Long currentOrderId;
+    private Long current_order_id;
 
     public long getCarId() {
-        return carId;
+        return car_id;
     }
 
     public void setCarId(long carId) {
-        this.carId = carId;
+        this.car_id = carId;
     }
 
     public long getCurrentOrderId() {
-        return currentOrderId;
+        return current_order_id;
     }
 
     public void setCurrentOrderId(Long currentOrderId) {
-        this.currentOrderId = currentOrderId;
+        this.current_order_id = currentOrderId;
     }
 
     public BigDecimal getMoney() {
-        return money;
+        return balance;
     }
 
     public void setMoney(BigDecimal money) {
-        this.money = money;
+        this.balance = money;
     }
 
     public Driver(long id) {

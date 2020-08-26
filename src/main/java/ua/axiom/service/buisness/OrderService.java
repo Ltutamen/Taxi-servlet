@@ -22,9 +22,11 @@ import java.util.stream.Stream;
 import static ua.axiom.persistance.PersistentFieldUtil.getFieldByName;
 
 public class OrderService {
-    private static Field[] ADD_NEW_ORDER_CLIENT_UPDATED_FIELDS;
-    private static Field[] FINISH_ORDER_DRIVER_UPDATE_FIELDS;
-    private static Field[] FINISH_ORDER_ORDER_UPDATE_FIELDS;
+    private static final Field[] ADD_NEW_ORDER_CLIENT_UPDATED_FIELDS;
+    private static final Field[] FINISH_ORDER_DRIVER_UPDATE_FIELDS;
+    private static final Field[] FINISH_ORDER_ORDER_UPDATE_FIELDS;
+    private static final Field[] ORDER_TAKEN_BY_DRIVER_DRIVER_UPDATE_FIELDS;
+    private static final Field[] ORDER_TAKEN_BY_DRIVER_ORDER_UPDATE_FIELDS;
 
     private OrderRepository orderRepository;
     private ClientRepository clientRepository;
@@ -33,6 +35,23 @@ public class OrderService {
 
     private IdGenerationQuery idGenerationQuery;
 
+    static {
+        try {
+            Class<Client> clientClass = Client.class;
+            Class<Order> orderClass = Order.class;
+            Class<Driver> driverClass = Driver.class;
+
+            ADD_NEW_ORDER_CLIENT_UPDATED_FIELDS = new Field[]{clientClass.getDeclaredField("money")};
+            FINISH_ORDER_DRIVER_UPDATE_FIELDS = new Field[]{driverClass.getDeclaredField("balance"), driverClass.getDeclaredField("current_order_id")};
+            FINISH_ORDER_ORDER_UPDATE_FIELDS = new Field[]{orderClass.getDeclaredField("status"), orderClass.getDeclaredField("destination"), orderClass.getDeclaredField("departure"), orderClass.getDeclaredField("c_class"), orderClass.getDeclaredField("client_id"), orderClass.getDeclaredField("date")};
+            ORDER_TAKEN_BY_DRIVER_DRIVER_UPDATE_FIELDS = new Field[] {driverClass.getDeclaredField("current_order_id")};
+            ORDER_TAKEN_BY_DRIVER_ORDER_UPDATE_FIELDS = new Field[] {orderClass.getDeclaredField("status"), orderClass.getDeclaredField("driver_id")};
+
+        } catch (NoSuchFieldException nsme) {
+            throw new RuntimeException(nsme.getMessage());
+        }
+    }
+
     {
         orderRepository = Context.get(OrderRepository.class);
         clientRepository = Context.get(ClientRepository.class);
@@ -40,17 +59,6 @@ public class OrderService {
         idGenerationQuery = Context.get(IdGenerationQuery.class);
 
         carService = Context.get(CarService.class);
-
-        try {
-            Class<Client> clientClass = Client.class;
-            ADD_NEW_ORDER_CLIENT_UPDATED_FIELDS = new Field[]{clientClass.getDeclaredField("money")};
-            Class<Driver> driverClass = Driver.class;
-            FINISH_ORDER_DRIVER_UPDATE_FIELDS = new Field[]{driverClass.getDeclaredField("money"), driverClass.getDeclaredField("currentOrderId")};
-            Class<Order> orderClass = Order.class;
-            FINISH_ORDER_ORDER_UPDATE_FIELDS = new Field[]{orderClass.getDeclaredField("status"), orderClass.getDeclaredField("destination"), orderClass.getDeclaredField("departure"), orderClass.getDeclaredField("c_class"), orderClass.getDeclaredField("client_id"), orderClass.getDeclaredField("date")};
-        } catch (NoSuchFieldException nsme) {
-            throw new RuntimeException(nsme.getMessage());
-        }
     }
 
     public void addNewOrder(Client user, String departure, String destination, Car.Class aClass) {
@@ -69,6 +77,20 @@ public class OrderService {
 
         clientRepository.update(user, ADD_NEW_ORDER_CLIENT_UPDATED_FIELDS);
         orderRepository.save(order);
+    }
+
+    //  todo @Transactional
+    public void processOrderTakenByDriver(long driverId, long orderId) {
+        Driver driver = driverRepository.findOne(driverId).iterator().next();
+        Order order = orderRepository.findOne(orderId).iterator().next();
+
+        driver.setCurrentOrderId(order.getId());
+        order.setStatus(Order.Status.TAKEN);
+        order.setDriver_id(driverId);
+
+        driverRepository.update(driver, ORDER_TAKEN_BY_DRIVER_DRIVER_UPDATE_FIELDS);
+        orderRepository.update(order, ORDER_TAKEN_BY_DRIVER_ORDER_UPDATE_FIELDS);
+
     }
 
     public void finishOrder(Order order) {

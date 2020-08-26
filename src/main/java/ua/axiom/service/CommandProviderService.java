@@ -13,7 +13,7 @@ public class CommandProviderService {
 
     public CommandProviderService() {
         uriToCommand.put("/clientpage", new ClientPageCommand());
-        uriToCommand.put("/driverpage", new DriverPageCommand());
+        uriToCommand.put("/driverpage", new DriverNoOrderPageCommand());
         uriToCommand.put("/adminpage", new AdminPageCommand());
 
         uriToCommand.put("/neworder", new NewOrderCommand());
@@ -26,6 +26,8 @@ public class CommandProviderService {
         uriToCommand.put("/error", new ErrorCommand());
         uriToCommand.put("/", new MainPageCommand());
         uriToCommand.put("/index", new MainPageCommand());
+
+        uriToCommand.put("/driverpage/takeorder", new DriverPageTakeOrder());
     }
 
     public Command<? extends User> getCommand(String url) {

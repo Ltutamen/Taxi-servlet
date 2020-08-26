@@ -4,7 +4,6 @@ import ua.axiom.core.Context;
 import ua.axiom.model.actors.User;
 import ua.axiom.persistance.repository.impl.MultiTableRepository;
 import ua.axiom.security.PasswordEncoder;
-import ua.axiom.security.PasswordEncoderProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

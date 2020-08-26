@@ -14,7 +14,7 @@ public abstract class User extends Persistent<Long> {
 
     protected UserLocale locale;
 
-    protected boolean isBanned;
+    protected boolean is_banned;
 
     public User(long id) {
         super(id);
@@ -45,10 +45,10 @@ public abstract class User extends Persistent<Long> {
     }
 
     public boolean isBanned() {
-        return isBanned;
+        return is_banned;
     }
 
     public void setBanned(boolean banned) {
-        isBanned = banned;
+        is_banned = banned;
     }
 }

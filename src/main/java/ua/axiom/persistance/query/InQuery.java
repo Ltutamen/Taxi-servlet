@@ -32,6 +32,7 @@ public class InQuery<K, T extends Persistent<K>> extends Query<K, T> {
             for(int i = 1; i <= objectFields.length ; ++i) {
                 Field field = objectFields[i-1];
                 field.setAccessible(true);
+                //  todo persistent strategies
                 if(field.getType().isEnum()) {
                     statement.setObject(i, ((Enum)field.get(object)).ordinal());
                 }

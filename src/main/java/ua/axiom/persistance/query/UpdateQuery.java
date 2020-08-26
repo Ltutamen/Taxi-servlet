@@ -3,6 +3,8 @@ package ua.axiom.persistance.query;
 import ua.axiom.persistance.Persistent;
 import ua.axiom.persistance.PersistentFieldUtil;
 import ua.axiom.persistance.database.DBConnectionProvider;
+import ua.axiom.persistance.misc.representation.GeneralPersisting;
+import ua.axiom.persistance.misc.representation.PersistingDepersistingStrategyProvider;
 
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
@@ -30,7 +32,6 @@ public class UpdateQuery<K, T extends Persistent<K>> extends InQuery<K, T> {
 
         idField.setAccessible(true);
 
-        //  this.preparedStatementString = getPreparedStatementString(objectFields, table, idField);
     }
 
     public void execute(T object, K key, Field[] fieldsToUpdate) {
@@ -54,7 +55,7 @@ public class UpdateQuery<K, T extends Persistent<K>> extends InQuery<K, T> {
                 }
 
                 field.setAccessible(true);
-                statement.setObject(i+1, field.get(object));
+                statement.setObject(i+1, GeneralPersisting.getRepresentation(field, field.get(object)));
                 i++;
             }
 

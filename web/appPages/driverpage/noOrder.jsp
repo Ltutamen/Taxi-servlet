@@ -1,4 +1,5 @@
-<%@ page import="java.util.Map" %><%--
+<%@ page import="java.util.Map" %>
+<%@ page import="ua.axiom.model.actors.Car" %><%--
   Created by IntelliJ IDEA.
   User: myself
   Date: 4/29/20
@@ -30,8 +31,8 @@
     <div class="row">
         <div class="card col-4" style="width: 18rem;">
             <div class="card-header">
-                <p><%= request.getAttribute("word.class")%>: <%= request.getAttribute("aClass")%> </p>
-                <p><%= request.getAttribute("word.car-model")%>: <%= request.getAttribute("modelName")%></p>
+                <p><%= request.getAttribute("word.class")%>: <%= ((Car)request.getAttribute("car")).getaClass()%> </p>
+                <p><%= request.getAttribute("word.car-model")%>: <%= ((Car)request.getAttribute("car")).getModelName()%></p>
                 <p><%= request.getAttribute("word.balance")%>: <%= request.getAttribute("balance")%></p>
             </div>
             <div class="card-body">
@@ -60,8 +61,8 @@
                     <c:forEach items="${requestScope.orders}" var="order">
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-4"><%= request.getAttribute("word.from") %> <%= request.getAttribute("departure") %> </div>
-                                <div class="col-4"><%= request.getAttribute("word.to") %> <%= request.getAttribute("destination") %> </div>
+                                <div class="col-4"><%= request.getAttribute("word.from") %> <c:out value="${order.getDeparture()}"/> %> </div>
+                                <div class="col-4"><%= request.getAttribute("word.to") %> <c:out value="${order.getDestination()}"/> </div>
                                 <div class="col-4">
                                     <form method="post" action="/driverpage/takeorder">
                                         <button type="submit" class="btn btn-warning" value="${order.id}" name="orderId"><%= request.getAttribute("sentence.take-order")%></button>

@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class DriverPageCommand extends Command<Driver> {
+public class DriverNoOrderPageCommand extends Command<Driver> {
     private LocalisationService localisationService;
     private GuiService guiService;
     private OrderService orderService;

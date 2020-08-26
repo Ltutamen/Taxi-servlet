@@ -26,7 +26,7 @@ public abstract class Command<T extends User> {
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> model = new HashMap<>();
 
-        T user = (T)SessionContextService.getPersistedCurrentUser(request.getSession());
+        T user = getPersistedCurrentUser(request);
 
         nonUserSpecificDataFill(model, user.getLocale());
         userSpecificDataFill(model, user);
@@ -49,5 +49,13 @@ public abstract class Command<T extends User> {
     protected void nonUserSpecificDataFill(Map<String, Object> model, UserLocale userLocale) {}
 
     protected void userSpecificDataFill(Map<String, Object> model, T user) {}
+
+    protected T getPersistedCurrentUser(HttpServletRequest request) {
+        return (T)SessionContextService.getPersistedCurrentUser(request.getSession());
+    }
+
+    protected long getCurrentUserId(HttpServletRequest request) {
+        return SessionContextService.getCurrentUserId(request.getSession());
+    }
 
 }

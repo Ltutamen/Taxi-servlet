@@ -2,11 +2,14 @@ package ua.axiom.persistance.repository;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ua.axiom.persistance.Persistent;
-import ua.axiom.persistance.query.*;
+import ua.axiom.persistance.query.FindByKeysQuery;
+import ua.axiom.persistance.query.InQuery;
+import ua.axiom.persistance.query.OutQuery;
+import ua.axiom.persistance.query.UpdateQuery;
 
 import java.lang.reflect.Field;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Abstract repository, that supports basic CRUD operations with a database over a specific table
@@ -58,7 +61,7 @@ public abstract class AbstractRepository<K, T extends Persistent<K>> {
         updateQuery.execute(object, object.getId(), fields);
     }
 
-    public void delete(Long id) {
+    public void delete(K id) {
         throw new NotImplementedException();
     }
 

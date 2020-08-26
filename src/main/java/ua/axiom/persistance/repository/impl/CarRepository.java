@@ -8,7 +8,7 @@ import ua.axiom.persistance.query.*;
 import ua.axiom.persistance.repository.AbstractRepository;
 
 public class CarRepository extends AbstractRepository<Long, Car> {
-    private static final String CARS_TABLE_NAME = "cars";
+    private static final String CARS_TABLE_NAME = "car";
 
     public CarRepository() {
         super(
