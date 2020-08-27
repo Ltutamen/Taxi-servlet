@@ -30,7 +30,8 @@ public class OrderFactory implements Fabricable<Order> {
         order.setPrice(new BigDecimal(params[8]));
         /*order.setStatus(Order.Status.valueOf(params[9]));*/
         order.setClient_id(Long.parseLong(params[10]));
-        order.setDriver_id(params.length >= 11 ? Long.parseLong(params[12]) : null);
+        //  todo debug
+        order.setDriver_id(params.length >= 12 && params[12] != null ? Long.parseLong(params[12]) : null);
         try {
             order.setDate(dateFormat.parse(params[5]));
         } catch (ParseException parseException) {

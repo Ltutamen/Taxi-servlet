@@ -29,12 +29,21 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <%= request.getAttribute("sentence.current-order-description-msg")%> <%= request.getAttribute("word.from")%> <%= request.getAttribute("departure")%> <%= request.getAttribute("word.to")%> <%= request.getAttribute("destination")%>
+                <%= request.getAttribute("sentence.current-order-description-msg")%>
+                <%= request.getAttribute("word.from")%>
+                ${order.departure}
+<%--                <%= request.getAttribute("departure")%>--%>
+                <%= request.getAttribute("word.to")%>
+                ${order.destination}
+<%--                <%= request.getAttribute("destination")%>--%>
+
             </div>
             <div class="card-body">
-                <p>Price: <%= request.getAttribute("tax")%></p>
-                <form method="post" action="driverpage/confirmation">
-                    <button type="submit" class="btn btn-primary"><%= request.getAttribute("sentence.sentence-confirm-msg")%></button>
+                <p>Price: </p>
+                ${order.price}
+                <form method="post" action="/driverpage/confirmation">
+                    <input type="hidden" name="orderID" value="${order.id}"/>
+                    <button type="submit" class="btn btn-primary" value="${order.id}"><%= request.getAttribute("sentence.sentence-confirm-msg")%></button>
                 </form>
             </div>
         </div>

@@ -31,6 +31,7 @@ public class CommandToRequestMappingService {
         uriToCommand.put("/index", new MainPageCommand());
 
         uriToCommand.put("/driverpage/takeorder", new DriverPageTakeOrder());
+        uriToCommand.put("/driverpage/confirmation", new DriverPageOrderConfirmation());
     }
 
     public Command<? extends User> getCommand(String url) {

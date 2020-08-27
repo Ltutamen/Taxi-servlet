@@ -120,7 +120,7 @@ public class OrderService {
 
         order.setConfirmedByDriver(true);
 
-        orderRepository.update(order, new Field[]{getFieldByName("confirmedByDriver", Order.class)});
+        orderRepository.update(order, new Field[]{getFieldByName("confirmed_by_driver", Order.class)});
 
     }
 
