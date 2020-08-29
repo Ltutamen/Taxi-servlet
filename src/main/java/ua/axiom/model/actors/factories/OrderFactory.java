@@ -2,15 +2,16 @@ package ua.axiom.model.actors.factories;
 
 import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Order;
-import ua.axiom.persistance.Fabricable;
-import ua.axiom.persistance.misc.representation.GeneralPersisting;
+import ua.axiom.persistance.Fabric;
+import ua.axiom.persistance.misc.representation.depersision.GeneralDepersistion;
+import ua.axiom.persistance.misc.representation.persision.GeneralPersisting;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class OrderFactory implements Fabricable<Order> {
+public class OrderFactory implements Fabric<Order> {
     @Override
     public Order fabricate(String[] params) {
         Order order = new Order(Long.parseLong(params[1]));
@@ -18,8 +19,8 @@ public class OrderFactory implements Fabricable<Order> {
 
         /*order.setcClass(Car.Class.values()[Integer.parseInt(params[2])]);*/
         try {
-            order.setcClass((Car.Class)GeneralPersisting.getObject(Car.class.getDeclaredField("aClass"), params[2]));
-            order.setStatus((Order.Status)GeneralPersisting.getObject(Order.class.getDeclaredField("status"), params[9]));
+            order.setcClass((Car.Class) GeneralDepersistion.getObject(Car.class.getDeclaredField("aClass"), params[2]));
+            order.setStatus((Order.Status)GeneralDepersistion.getObject(Order.class.getDeclaredField("status"), params[9]));
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
@@ -38,7 +39,6 @@ public class OrderFactory implements Fabricable<Order> {
             parseException.printStackTrace();
         }
 
-        //  order.setCClass(params[2])
         return order;
     }
 }

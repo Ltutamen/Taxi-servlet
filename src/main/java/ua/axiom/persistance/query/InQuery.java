@@ -72,5 +72,4 @@ public class InQuery<K, T extends Persistent<K>> extends Query<K, T> {
         statement = newStatement.toString();
         return statement;
     }
-
 }

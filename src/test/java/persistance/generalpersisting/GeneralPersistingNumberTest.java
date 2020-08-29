@@ -2,7 +2,7 @@ package persistance.generalpersisting;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ua.axiom.persistance.misc.representation.GeneralPersisting;
+import ua.axiom.persistance.misc.representation.persision.GeneralPersisting;
 
 import java.lang.reflect.Field;
 

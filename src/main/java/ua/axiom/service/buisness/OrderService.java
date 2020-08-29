@@ -6,6 +6,7 @@ import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Client;
 import ua.axiom.model.actors.Driver;
 import ua.axiom.model.actors.Order;
+import ua.axiom.model.exception.NotEnoughMoneyException;
 import ua.axiom.persistance.query.IdGenerationQuery;
 import ua.axiom.persistance.repository.impl.ClientRepository;
 import ua.axiom.persistance.repository.impl.DriverRepository;
@@ -44,7 +45,7 @@ public class OrderService {
 
             ADD_NEW_ORDER_CLIENT_UPDATED_FIELDS = new Field[]{clientClass.getDeclaredField("money")};
             FINISH_ORDER_DRIVER_UPDATE_FIELDS = new Field[]{driverClass.getDeclaredField("balance"), driverClass.getDeclaredField("current_order_id")};
-            FINISH_ORDER_ORDER_UPDATE_FIELDS = new Field[]{orderClass.getDeclaredField("status"), orderClass.getDeclaredField("destination"), orderClass.getDeclaredField("departure"), orderClass.getDeclaredField("c_class"), orderClass.getDeclaredField("client_id"), orderClass.getDeclaredField("date")};
+            FINISH_ORDER_ORDER_UPDATE_FIELDS = new Field[]{ orderClass.getDeclaredField("status")};
             ORDER_TAKEN_BY_DRIVER_DRIVER_UPDATE_FIELDS = new Field[] {driverClass.getDeclaredField("current_order_id")};
             ORDER_TAKEN_BY_DRIVER_ORDER_UPDATE_FIELDS = new Field[] {orderClass.getDeclaredField("status"), orderClass.getDeclaredField("driver_id")};
 
@@ -62,7 +63,12 @@ public class OrderService {
         carService = Context.get(CarService.class);
     }
 
-    public void addNewOrder(Client user, String departure, String destination, Car.Class aClass) {
+    public void addNewOrder(Client user, String departure, String destination, Car.Class aClass) throws NotEnoughMoneyException {
+        BigDecimal price = new BigDecimal("500.00");
+
+        if(user.getMoney().compareTo(price) < 0) {
+            throw new NotEnoughMoneyException();
+        }
         Order order = new Order(idGenerationQuery.execute());
 
         order.setStatus(Order.Status.PENDING);
@@ -72,7 +78,6 @@ public class OrderService {
         order.setClient_id(user.getId());
         order.setDate(new Date());
 
-        BigDecimal price = new BigDecimal("500.00");
         order.setPrice(price);
         user.setMoney(user.getMoney().subtract(price));
 
@@ -94,16 +99,20 @@ public class OrderService {
 
     }
 
-    public void finishOrder(Order order) {
-        order.setStatus(Order.Status.FINISHED);
+    public void tryFinishOrder(long orderId) {
+        Order order = orderRepository.findOne(orderId).iterator().next();
 
-        Driver driver = driverRepository.findOne(order.getDriver_id()).iterator().next();
+        if(order.isConfirmedByClient() && order.isConfirmedByDriver()) {
+            Driver driver = driverRepository.findOne(order.getDriver_id()).iterator().next();
 
-        driver.setMoney(driver.getMoney().add(order.getPrice()));
-        driver.setCurrentOrderId(null);
+            driver.setMoney(driver.getMoney().add(order.getPrice()));
+            driver.setCurrentOrderId(null);
 
-        driverRepository.update(driver, FINISH_ORDER_DRIVER_UPDATE_FIELDS);
-        orderRepository.update(order, FINISH_ORDER_ORDER_UPDATE_FIELDS);
+            order.setStatus(Order.Status.FINISHED);
+
+            driverRepository.update(driver, FINISH_ORDER_DRIVER_UPDATE_FIELDS);
+            orderRepository.update(order, FINISH_ORDER_ORDER_UPDATE_FIELDS);
+        }
 
     }
 
@@ -112,7 +121,9 @@ public class OrderService {
 
         order.setConfirmedByClient(true);
 
-        orderRepository.update(order, new Field[]{getFieldByName("confirmedByClient", Order.class)});
+        orderRepository.update(order, new Field[]{getFieldByName("confirmed_by_client", Order.class)});
+
+        tryFinishOrder(orderID);
     }
 
     public void confirmByDriver(long orderID) {
@@ -121,6 +132,8 @@ public class OrderService {
         order.setConfirmedByDriver(true);
 
         orderRepository.update(order, new Field[]{getFieldByName("confirmed_by_driver", Order.class)});
+
+        tryFinishOrder(orderID);
 
     }
 

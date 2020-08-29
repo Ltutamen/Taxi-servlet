@@ -3,8 +3,7 @@ package ua.axiom.persistance.query;
 import ua.axiom.persistance.Persistent;
 import ua.axiom.persistance.PersistentFieldUtil;
 import ua.axiom.persistance.database.DBConnectionProvider;
-import ua.axiom.persistance.misc.representation.GeneralPersisting;
-import ua.axiom.persistance.misc.representation.PersistingDepersistingStrategyProvider;
+import ua.axiom.persistance.misc.representation.persision.GeneralPersisting;
 
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
@@ -12,6 +11,8 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import static ua.axiom.persistance.misc.JavaSqlTypeGetter.getJavaSqlType;
 
 public class UpdateQuery<K, T extends Persistent<K>> extends InQuery<K, T> {
     //  private final String preparedStatementString;
@@ -49,13 +50,23 @@ public class UpdateQuery<K, T extends Persistent<K>> extends InQuery<K, T> {
 
         try {
             int i = 0;
+
+            //  set non-key values
             for(Field field : fieldsToUpdate) {
                 if(field.getName().equals(idField.getName())) {
                     break;
                 }
 
                 field.setAccessible(true);
-                statement.setObject(i+1, GeneralPersisting.getRepresentation(field, field.get(object)));
+
+                //  todo refactor
+                if(field.getType().isAssignableFrom(boolean.class)) {
+                    statement.setBoolean(i+1, GeneralPersisting.getBoolRepresentation(field, field.get(object)));
+                } else if(field.get(object) == null) {
+                    statement.setNull(i+1, getJavaSqlType(field.getType()));
+                } else {
+                    statement.setObject(i+1, GeneralPersisting.getRepresentation(field, field.get(object)));
+                }
                 i++;
             }
 

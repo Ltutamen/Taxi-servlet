@@ -1,4 +1,4 @@
-package ua.axiom.persistance.misc.representation;
+package ua.axiom.persistance.misc.representation.persision;
 
 import ua.axiom.persistance.misc.annotations.PersistingStrategy;
 

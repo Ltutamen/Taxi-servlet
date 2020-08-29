@@ -42,6 +42,7 @@ public class ClientPageCommand extends Command<Client> {
                 "sentence.cancel-order",
                 "sentence.promocodes",
                 "sentence.replenish-balance",
+                "sentence.sentence-confirm-msg",
                 "sentence.delete-account",
                 "info.username",
                 "word.from",
@@ -57,11 +58,11 @@ public class ClientPageCommand extends Command<Client> {
     }
 
     @Override
-    protected void userSpecificDataFill(Map<String, Object> model, Client user) {
-        model.put("client_balance", user.getMoney());
-        model.put("taken_orders", orderService.getClientTakenOrders(user.getId()));
-        model.put("pending_orders", orderService.getClientPendingOrders(user.getId()));
-        guiService.userSpecificModelPopulation(model, user);
+    protected void userSpecificDataFill(Map<String, Object> model, Client client) {
+        model.put("client_balance", client.getMoney());
+        model.put("taken_orders", orderService.getClientTakenOrders(client.getId()));
+        model.put("pending_orders", orderService.getClientPendingOrders(client.getId()));
+        guiService.userSpecificModelPopulation(model, client);
     }
 }
 

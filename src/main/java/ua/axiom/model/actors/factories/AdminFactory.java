@@ -2,9 +2,9 @@ package ua.axiom.model.actors.factories;
 
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Admin;
-import ua.axiom.persistance.Fabricable;
+import ua.axiom.persistance.Fabric;
 
-public class AdminFactory implements Fabricable<Admin> {
+public class AdminFactory implements Fabric<Admin> {
     @Override
     public Admin fabricate(String[] params) {
         long id = Long.parseLong(params[1]);

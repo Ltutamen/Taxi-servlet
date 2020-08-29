@@ -4,6 +4,7 @@ import ua.axiom.controller.Command;
 import ua.axiom.core.Context;
 import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Client;
+import ua.axiom.model.exception.NotEnoughMoneyException;
 import ua.axiom.service.InputValidationService;
 import ua.axiom.service.InputValidationService.InputType;
 import ua.axiom.service.SessionContextService;
@@ -30,7 +31,11 @@ public class NewOrderPostCommand extends Command<Client> {
         String departure = request.getParameter("departure");
         String destination = request.getParameter("destination");
 
-        orderService.addNewOrder(user, departure, destination, aClass);
+        try {
+            orderService.addNewOrder(user, departure, destination, aClass);
+        } catch (NotEnoughMoneyException neme) {
+            return "redirect:/error?err=neme";
+        }
 
         return "redirect:/clientpage";
     }

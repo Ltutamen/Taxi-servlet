@@ -1,11 +1,10 @@
 package ua.axiom.persistance.query;
 
-import com.google.common.collect.Sets;
 import ua.axiom.persistance.Executor;
-import ua.axiom.persistance.Fabricable;
+import ua.axiom.persistance.Fabric;
 import ua.axiom.persistance.Persistent;
 import ua.axiom.persistance.database.DBConnectionProvider;
-import ua.axiom.persistance.misc.representation.GeneralPersisting;
+import ua.axiom.persistance.misc.representation.persision.GeneralPersisting;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -18,9 +17,9 @@ import static ua.axiom.persistance.PersistentFieldUtil.getAllFieldsAndSetAccessi
 
 public class FindByKeysQuery<K, T extends Persistent<K>> extends Query<T, K> {
     private final Map<Set<String>, String> keySetToQueryStringMap;
-    private final Fabricable<T> objectFactory;
+    private final Fabric<T> objectFactory;
 
-    public FindByKeysQuery(Fabricable<T> factory, String tableName, DBConnectionProvider provider) {
+    public FindByKeysQuery(Fabric<T> factory, String tableName, DBConnectionProvider provider) {
         super(tableName, provider);
         this.keySetToQueryStringMap = new HashMap<>();
         this.objectFactory = factory;

@@ -2,14 +2,14 @@ package ua.axiom.model.actors.factories;
 
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Client;
-import ua.axiom.persistance.Fabricable;
+import ua.axiom.persistance.Fabric;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class ClientFactory implements Fabricable<Client> {
+public class ClientFactory implements Fabric<Client> {
     @Override
     public Client fabricate(String[] params) {
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Executor {
 
-    public static <T> List<T> getResult(ResultSet resultSet, Fabricable<T> factory) {
+    public static <T> List<T> getResult(ResultSet resultSet, Fabric<T> factory) {
         int columnCount = 0;
         try {
             columnCount = resultSet.getMetaData().getColumnCount() + 1;

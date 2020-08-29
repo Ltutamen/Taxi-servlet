@@ -2,11 +2,11 @@ package ua.axiom.model.actors.factories;
 
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Driver;
-import ua.axiom.persistance.Fabricable;
+import ua.axiom.persistance.Fabric;
 
 import java.math.BigDecimal;
 
-public class DriverFactory implements Fabricable<Driver> {
+public class DriverFactory implements Fabric<Driver> {
     @Override
     public Driver fabricate(String[] params) {
         Driver driver = new Driver(Long.parseLong(params[1]));

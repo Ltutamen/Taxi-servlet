@@ -9,9 +9,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static ua.axiom.persistance.misc.representation.EnumPersistingStrategy.ORDINAL;
-import static ua.axiom.persistance.misc.representation.EnumPersistingStrategy.STRING;
-
 public class Order extends Persistent<Long> {
     public Order(Long id) {
         super(id);

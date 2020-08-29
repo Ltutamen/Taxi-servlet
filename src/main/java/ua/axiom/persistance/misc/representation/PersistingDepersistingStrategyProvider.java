@@ -1,6 +1,7 @@
 package ua.axiom.persistance.misc.representation;
 
-import ua.axiom.persistance.misc.annotations.PersistingStrategy;
+import ua.axiom.persistance.misc.representation.depersision.EnumDepersistingStrategy;
+import ua.axiom.persistance.misc.representation.persision.EnumPersistingStrategy;
 
 public enum  PersistingDepersistingStrategyProvider {
     ORDINAL(EnumDepersistingStrategy.ORDINAL, EnumPersistingStrategy.ORDINAL),

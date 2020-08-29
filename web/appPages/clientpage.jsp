@@ -52,24 +52,6 @@
             <div class="card-body">
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <c:forEach items="${requestScope.pending_orders}" var="order">
-                            <div class="card-body">
-                                <div class="row">
-                                    <label class="card-text col-3"><%= request.getAttribute("word.from") %>: "${order.departure} </label>
-                                    <label class="card-text col-3"><%= request.getAttribute("word.to") %>: "${order.destination} </label>
-                                    <label class="card-text col-3"><%= request.getAttribute("word.class") %>: "${order.cClass} </label>
-                                    <label class="card-text col-3"><%= request.getAttribute("word.fee") %>: "${order.price} </label>
-                                </div>
-                                <div class="row">
-                                    <form method="post" action="/clientpage/cancelorder">
-                                        <button type="submit" class="btn btn-warning" value="${order.id}" name="orderId"><%= request.getAttribute("word.cancel") %></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </c:forEach>
-
-                    </li>
-                    <li class="list-group-item">
                         <c:forEach items="${requestScope.taken_orders}" var="order">
                             <div class="card text-white bg-success">
                                 <div class="card-body">
@@ -87,6 +69,24 @@
                                 </div>
                             </div>
                         </c:forEach>
+                    </li>
+                    <li class="list-group-item">
+                        <c:forEach items="${requestScope.pending_orders}" var="order">
+                            <div class="card-body">
+                                <div class="row">
+                                    <label class="card-text col-3"><%= request.getAttribute("word.from") %>: "${order.departure} </label>
+                                    <label class="card-text col-3"><%= request.getAttribute("word.to") %>: "${order.destination} </label>
+                                    <label class="card-text col-3"><%= request.getAttribute("word.class") %>: "${order.cClass} </label>
+                                    <label class="card-text col-3"><%= request.getAttribute("word.fee") %>: "${order.price} </label>
+                                </div>
+                                <div class="row">
+                                    <form method="post" action="/clientpage/cancelorder">
+                                        <button type="submit" class="btn btn-warning" value="${order.id}" name="orderId"><%= request.getAttribute("word.cancel") %></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </c:forEach>
+
                     </li>
                     <li class="list-group-item align-content-center">
                         <p> <%= request.getAttribute("word.page") %> : <%= request.getAttribute("page") %> / <%= request.getAttribute("max-pages") %> </p>
