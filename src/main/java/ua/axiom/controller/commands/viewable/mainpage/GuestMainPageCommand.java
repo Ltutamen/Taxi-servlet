@@ -4,7 +4,6 @@ import ua.axiom.controller.Command;
 import ua.axiom.core.Context;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.repository.impl.MultiTableRepository;
 import ua.axiom.service.GuiService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +13,9 @@ import java.util.Map;
 
 public class GuestMainPageCommand extends Command<User> {
     private GuiService guiService;
-    private MultiTableRepository<Long, User> test;
 
     {
         guiService = Context.get(GuiService.class);
-        test = Context.get(MultiTableRepository.class);
     }
 
     @Override

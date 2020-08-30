@@ -43,7 +43,7 @@ public class UpdateQuery<K, T extends Persistent<K>> extends InQuery<K, T> {
         PreparedStatement statement = null;
         try {
             String preparedStatementString = fieldsToQueryStringMap.get(fieldsToUpdate);
-            statement = provider.getConnection().getConnection().prepareStatement(preparedStatementString);
+            statement = provider.getConnection().prepareStatement(preparedStatementString);
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }

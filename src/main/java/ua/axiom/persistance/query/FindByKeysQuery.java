@@ -34,7 +34,7 @@ public class FindByKeysQuery<K, T extends Persistent<K>> extends Query<T, K> {
         Field[] fields = getAllFieldsAndSetAccessible(object);
 
         try (
-                Connection connection = provider.getConnection().getConnection();
+                Connection connection = provider.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query);
         ) {
 

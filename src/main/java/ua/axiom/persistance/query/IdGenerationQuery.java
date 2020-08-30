@@ -16,7 +16,7 @@ public class IdGenerationQuery {
 
     public Long execute() {
         try (
-                Connection connection = provider.getConnection().getConnection();
+                Connection connection = provider.getConnection();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(constructQueryString())
         ) {

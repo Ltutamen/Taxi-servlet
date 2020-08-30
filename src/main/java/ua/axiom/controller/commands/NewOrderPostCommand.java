@@ -6,7 +6,6 @@ import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Client;
 import ua.axiom.model.exception.NotEnoughMoneyException;
 import ua.axiom.service.InputValidationService;
-import ua.axiom.service.InputValidationService.InputType;
 import ua.axiom.service.SessionContextService;
 import ua.axiom.service.buisness.OrderService;
 

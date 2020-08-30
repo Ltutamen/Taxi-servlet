@@ -4,7 +4,6 @@ import ua.axiom.controller.Command;
 import ua.axiom.core.Context;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Driver;
-import ua.axiom.model.actors.Order;
 import ua.axiom.service.GuiService;
 import ua.axiom.service.LocalisationService;
 import ua.axiom.service.buisness.CarService;
@@ -13,8 +12,6 @@ import ua.axiom.service.buisness.OrderService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DriverNoOrderPageCommand extends Command<Driver> {
     private LocalisationService localisationService;

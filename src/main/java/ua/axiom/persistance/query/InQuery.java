@@ -21,7 +21,7 @@ public class InQuery<K, T extends Persistent<K>> extends Query<K, T> {
 
         PreparedStatement statement = null;
         try {
-            statement = provider.getConnection().getConnection().prepareStatement(sStatement);
+            statement = provider.getConnection().prepareStatement(sStatement);
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }

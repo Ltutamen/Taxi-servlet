@@ -1,9 +1,9 @@
 package ua.axiom.persistance.database;
 
-import javax.sql.DataSource;
+import java.sql.Connection;
 
 public abstract class DBConnectionProvider {
-    public abstract DataSource getConnection();
+    public abstract Connection getConnection();
 
-    public abstract void returnConnection(DataSource connection);
+    public abstract void returnConnection(Connection connection);
 }
