@@ -1,11 +1,13 @@
 package ua.axiom.model.actors.factories;
 
+import ua.axiom.core.annotations.Component;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Driver;
 import ua.axiom.persistance.Fabric;
 
 import java.math.BigDecimal;
 
+@Component
 public class DriverFactory implements Fabric<Driver> {
     @Override
     public Driver fabricate(String[] params) {

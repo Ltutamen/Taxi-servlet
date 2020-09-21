@@ -1,6 +1,7 @@
 package ua.axiom.controller.commands.viewable;
 
 import ua.axiom.controller.Command;
+import ua.axiom.core.annotations.RequestMapping;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Driver;
 
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
+//  todo use
+@RequestMapping("/driver/newcar")
 public class NewCarCommand extends Command<Driver> {
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {

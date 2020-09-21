@@ -1,19 +1,19 @@
-package ua.axiom.core;
+package ua.axiom.core.deprecated;
 
 import ua.axiom.persistance.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.query.IdGenerationQuery;
 import ua.axiom.persistance.repository.impl.*;
-import ua.axiom.security.PasswordEncoder;
 import ua.axiom.security.PasswordEncoderProvider;
 import ua.axiom.service.*;
 import ua.axiom.service.buisness.CarService;
 import ua.axiom.service.buisness.OrderService;
 
-import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+/*
 
+@Deprecated
 public class Context {
     private static final Context singleton = new Context();
     private static boolean isSealed = false;
@@ -65,7 +65,7 @@ public class Context {
         singleton.elements.put(object.getClass(), object);
     }
 
-    public static <T> T get(Class<T> type) {
+    public static synchronized  <T> T get(Class<T> type) {
         if (singleton.elements.get(type) == null) {
             throw new IllegalArgumentException("No such class in context: " + type);
         }
@@ -76,7 +76,6 @@ public class Context {
     public static synchronized void seal() {
         Context.isSealed = true;
     }
-
 
     private static boolean wrongTypeCheck (Object conObj, Class paramClass) {
         //  standart non-wrapped classes
@@ -108,4 +107,5 @@ public class Context {
         return true;
     }
 }
+*/
 

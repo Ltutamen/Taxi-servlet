@@ -1,21 +1,19 @@
 package ua.axiom.service;
 
 import ua.axiom.controller.Command;
-import ua.axiom.controller.commands.*;
-import ua.axiom.controller.commands.viewable.driverpage.DriverNoOrderPageCommand;
-import ua.axiom.controller.commands.viewable.driverpage.DriverPageCommand;
-import ua.axiom.controller.commands.viewable.mainpage.MainPageCommand;
-import ua.axiom.controller.commands.viewable.*;
-import ua.axiom.model.actors.User;
+import ua.axiom.core.annotations.CommandMappingService;
+import ua.axiom.core.web.CommandProviderI;
 
 import java.util.HashMap;
 
-public class CommandToRequestMappingService {
 
-    private final HashMap<String, Command> uriToCommand = new HashMap<>();
+@CommandMappingService
+public class CommandToRequestMappingService implements CommandProviderI {
+
+    private final HashMap<String, Command<?>> uriToCommandMap = new HashMap<>();
 
     public CommandToRequestMappingService() {
-        uriToCommand.put("/clientpage", new ClientPageCommand());
+        /*uriToCommand.put("/clientpage", new ClientPageCommand());
         uriToCommand.put("/driverpage", new DriverPageCommand());
         uriToCommand.put("/adminpage", new AdminPageCommand());
 
@@ -33,11 +31,16 @@ public class CommandToRequestMappingService {
         uriToCommand.put("/driverpage/takeorder", new DriverPageTakeOrder());
         uriToCommand.put("/driverpage/confirmation", new DriverPageOrderConfirmation());
         uriToCommand.put("/clientpage/confirm", new ClientPageOrderConfirmation());
+        uriToCommand.put("/clientpage/cancelorder", new ClientPageCancelOrder());*/
     }
 
-    public Command<? extends User> getCommand(String url) {
-        return uriToCommand.get(url);
+    @Override
+    public Command<?> getCommand(String path) {
+        return uriToCommandMap.get(path);
     }
 
-
+    @Override
+    public void addCommand(String path, Command<?> command) {
+        uriToCommandMap.put(path, command);
+    }
 }

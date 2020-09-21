@@ -1,19 +1,16 @@
 package ua.axiom.service;
 
-import ua.axiom.core.Context;
+import ua.axiom.core.annotations.Autowired;
 import ua.axiom.model.Role;
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.repository.impl.MultiTableRepository;
+import ua.axiom.persistance.repository.impl.UsersRepository;
 
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 
 public class SessionContextService {
-    private static MultiTableRepository<Long, User> userRepository;
-
-    static {
-        userRepository = Context.get(MultiTableRepository.class);
-    }
+    @Autowired
+    private static UsersRepository userRepository;
 
     public static Long getCurrentUserId(HttpSession session) {
         return (Long) session.getAttribute(SessionParams.USER_ID.toString());

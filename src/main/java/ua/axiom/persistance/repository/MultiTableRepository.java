@@ -1,21 +1,27 @@
-package ua.axiom.persistance.repository.impl;
+package ua.axiom.persistance.repository;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import ua.axiom.core.annotations.Autowired;
+import ua.axiom.core.annotations.InitMethod;
 import ua.axiom.persistance.Persistent;
 import ua.axiom.persistance.query.InQuery;
 import ua.axiom.persistance.repository.AbstractRepository;
+import ua.axiom.persistance.repository.impl.AdminRepository;
+import ua.axiom.persistance.repository.impl.ClientRepository;
+import ua.axiom.persistance.repository.impl.DriverRepository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 //  todo use joins!!!
-public class MultiTableRepository<K, T extends Persistent<K>> {
+public abstract class MultiTableRepository<K, T extends Persistent<K>> {
+    private List<AbstractRepository<K,  ? extends T>> repositories = new ArrayList<>();
 
-    List<AbstractRepository<K,  T>> repositories;
-
-    public MultiTableRepository(List<AbstractRepository<K,  T>> repositories) {
-        this.repositories = repositories;
+    protected void addRepository(AbstractRepository<K, ? extends T> repository) {
+        repositories.add(repository);
     }
 
     public List<T> findAll() {

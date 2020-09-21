@@ -1,6 +1,7 @@
 package ua.axiom.controller.commands;
 
 import ua.axiom.controller.Command;
+import ua.axiom.model.actors.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class MultiViewCommand extends Command {
+public abstract class MultiViewCommand<T extends User> extends Command<T> {
     private final Map<Function<HttpServletRequest, Boolean>, Command> requestMapping;
 
     protected MultiViewCommand() {
@@ -20,6 +21,7 @@ public abstract class MultiViewCommand extends Command {
     }
 
     protected void addCommand(Function<HttpServletRequest, Boolean> supplier, Command command) {
+        assert command != null;
         requestMapping.put(supplier, command);
     }
 

@@ -1,23 +1,30 @@
 package ua.axiom.persistance.repository.impl;
 
-import ua.axiom.core.Context;
+import ua.axiom.core.annotations.Autowired;
+import ua.axiom.core.annotations.Component;
+import ua.axiom.core.annotations.InitMethod;
 import ua.axiom.model.actors.Client;
 import ua.axiom.model.actors.factories.ClientFactory;
 import ua.axiom.persistance.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.query.*;
 import ua.axiom.persistance.repository.AbstractRepository;
 
+@Component
 public class ClientRepository extends AbstractRepository<Long, Client> {
     private static String CLIENTS_TABLE_NAME = "clients";
 
-    public ClientRepository() {
-        super(
-            new FindAllQuery<>(new ClientFactory(), CLIENTS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class)),
-            new FindOneQuery<>(new ClientFactory(), CLIENTS_TABLE_NAME, "id", Context.get(SimpleDBConnectionProvider.class)),
-            new InQuery<>(null, null),
-            new UpdateQuery<>(CLIENTS_TABLE_NAME, "id", Client.class, Context.get(SimpleDBConnectionProvider.class)),
-            new FindByKeysQuery<>(new ClientFactory(), CLIENTS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class))
-        );
+    @Autowired
+    private SimpleDBConnectionProvider connectionProvider;
+    @Autowired
+    private ClientFactory factory;
+
+    @InitMethod
+    private void initMethod() {
+        super.setFindAllQuery(new FindAllQuery<>(factory, CLIENTS_TABLE_NAME, connectionProvider));
+        super.setSelectByIdQuery(new FindOneByKey<>(factory, CLIENTS_TABLE_NAME, "id", connectionProvider));
+        super.setSaveNewQuery(new InQuery<>(null, null));
+        super.setUpdateQuery(new UpdateQuery<>(CLIENTS_TABLE_NAME, "id", Client.class, connectionProvider));
+        super.setFindByFieldsQuery(new FindByKeysQuery<>(factory, CLIENTS_TABLE_NAME, connectionProvider));
     }
 
     @Override

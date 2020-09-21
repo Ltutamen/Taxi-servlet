@@ -8,4 +8,9 @@
         <welcome-file>/</welcome-file>
     </welcome-file-list>
 
+    <listener>
+        <listener-class>ua.axiom.core.ContextCreatorListener</listener-class>
+    </listener>
+
+
 </web-app>

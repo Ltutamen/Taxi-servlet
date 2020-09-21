@@ -1,7 +1,9 @@
 package ua.axiom.controller.commands.viewable;
 
 import ua.axiom.controller.Command;
-import ua.axiom.core.Context;
+import ua.axiom.core.annotations.Component;
+import ua.axiom.core.annotations.Autowired;
+import ua.axiom.core.annotations.RequestMapping;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Client;
 import ua.axiom.service.GuiService;
@@ -12,18 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
+@RequestMapping("/clientpage")
+@Component
 public class ClientPageCommand extends Command<Client> {
+    @Autowired
     private GuiService guiService;
+    @Autowired
     private LocalisationService localisationService;
+    @Autowired
     private OrderService orderService;
-    //  private ClientService clientService;
-
-    {
-        guiService = Context.get(GuiService.class);
-        localisationService = Context.get(LocalisationService.class);
-        orderService = Context.get(OrderService.class);
-        //  orderRepository = Context.get(OrderRepository.class);
-    }
 
     @Override
     protected String processGet(HttpServletRequest request, HttpServletResponse response) {

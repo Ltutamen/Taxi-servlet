@@ -2,12 +2,15 @@ package ua.axiom.persistance.database;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import javax.sql.DataSource;
+
+import ua.axiom.core.annotations.Component;
 import ua.axiom.persistance.JDBCConfiguration;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
+@Component
 public class SimpleDBConnectionProvider extends DBConnectionProvider {
     private static volatile DataSource dataSource;
 

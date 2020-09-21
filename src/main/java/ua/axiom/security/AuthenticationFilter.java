@@ -26,7 +26,7 @@ public class AuthenticationFilter extends HttpFilter {
         }
 
         HttpSession session = request.getSession(false);
-        //  todo remove refactor, never true
+
         if (session == null || SessionContextService.getCurrentUserRole(session) == null) {
             request.getSession(true).setAttribute("role", Role.GUEST);
             response.sendRedirect("/login");

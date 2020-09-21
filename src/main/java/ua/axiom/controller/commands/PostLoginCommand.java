@@ -1,14 +1,17 @@
 package ua.axiom.controller.commands;
 
 import ua.axiom.controller.Command;
+import ua.axiom.core.annotations.RequestMapping;
 import ua.axiom.model.Role;
+import ua.axiom.model.actors.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostLoginCommand extends Command {
+@RequestMapping("/api/postloginredirect")
+public class PostLoginCommand extends Command<User> {
     private static final Map<Role, String> postLoginRedirectMapping = new HashMap<>();
 
     static {

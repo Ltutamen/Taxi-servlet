@@ -1,6 +1,6 @@
 package ua.axiom.controller;
 
-import ua.axiom.core.Context;
+import ua.axiom.core.context.ApplicationContext;
 import ua.axiom.service.CommandToRequestMappingService;
 
 import javax.servlet.ServletException;
@@ -12,11 +12,27 @@ import java.io.IOException;
 
 @WebServlet(value = {"/**", "/"}, name = "mainPage")
 public class Servlet extends HttpServlet {
+    private final static String PACKAGE_TO_SCAN = "ua.axiom";
+
+    //  the only Context lookup
     {
-        commandProviderService = Context.get(CommandToRequestMappingService.class);
+        ApplicationContext.init();
+        commandProviderService = ApplicationContext.getInstance().getObject(CommandToRequestMappingService.class);
     }
 
     private CommandToRequestMappingService commandProviderService;
+
+    @Override
+    public void init() throws ServletException {
+
+/*        Reflections reflections = new Reflections(new ConfigurationBuilder()
+                .setUrls(ClasspathHelper.forPackage(PACKAGE_TO_SCAN))
+                .setScanners(new SubTypesScanner(),
+                        new TypeAnnotationsScanner()));
+*/
+
+        ApplicationContext.init();
+    }
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

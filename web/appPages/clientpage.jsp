@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="row">
                                         <form method="post" action="/clientpage/confirm">
-                                            <button type="submit" class="btn btn-warning" value="${order.id}" name="orderId"><%= request.getAttribute("sentence.sentence-confirm-msg") %></button>
+                                            <button type="submit" class="btn btn-warning" value="${order.id}" name="order_id"><%= request.getAttribute("sentence.sentence-confirm-msg") %></button>
                                         </form>
                                     </div>
                                 </div>

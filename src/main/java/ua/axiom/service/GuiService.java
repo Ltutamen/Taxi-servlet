@@ -1,6 +1,6 @@
 package ua.axiom.service;
 
-import ua.axiom.core.Context;
+import ua.axiom.core.annotations.Autowired;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.User;
 
@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class GuiService {
-    private LocalisationService localisationService = Context.get(LocalisationService.class);
+    @Autowired
+    private LocalisationService localisationService;
 
     public void userSpecificModelPopulation(Map<String, Object> model, User user) {
         nonUserSpecificModelPopulation(model, user.getLocale());

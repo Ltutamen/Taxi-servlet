@@ -1,8 +1,9 @@
 package ua.axiom.service;
 
-import ua.axiom.core.Context;
+import ua.axiom.core.annotations.Autowired;
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.repository.impl.MultiTableRepository;
+import ua.axiom.persistance.repository.MultiTableRepository;
+import ua.axiom.persistance.repository.impl.UsersRepository;
 import ua.axiom.security.PasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,13 +12,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class LoginService {
-    private final MultiTableRepository repository;
-    private final PasswordEncoder encoder;
-
-    {
-        repository = Context.get(MultiTableRepository.class);
-        encoder = Context.get(PasswordEncoder.class);
-    }
+    @Autowired
+    private UsersRepository repository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     public boolean tryLogin(String username, String password, HttpServletRequest request) {
         List<? extends User> userList = repository.findByFields(

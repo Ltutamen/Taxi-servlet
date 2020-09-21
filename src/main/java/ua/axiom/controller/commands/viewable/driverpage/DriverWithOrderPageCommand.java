@@ -1,7 +1,7 @@
 package ua.axiom.controller.commands.viewable.driverpage;
 
 import ua.axiom.controller.Command;
-import ua.axiom.core.Context;
+import ua.axiom.core.annotations.Autowired;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Driver;
 import ua.axiom.model.actors.Order;
@@ -15,17 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 public class DriverWithOrderPageCommand extends Command<Driver> {
+    @Autowired
     private LocalisationService localisationService;
+    @Autowired
     private GuiService guiService;
+    @Autowired
     private OrderService orderService;
+    @Autowired
     private CarService carService;
-
-    {
-        localisationService = Context.get(LocalisationService.class);
-        guiService = Context.get(GuiService.class);
-        orderService = Context.get(OrderService.class);
-        carService = Context.get(CarService.class);
-    }
 
     @Override
     protected String processGet(HttpServletRequest request, HttpServletResponse response) {
@@ -41,10 +38,6 @@ public class DriverWithOrderPageCommand extends Command<Driver> {
 
         Order order = orderService.getOrderForDriver(user.getId()).get();
         model.put("order", order);
-
-
-
-
     }
 
     @Override

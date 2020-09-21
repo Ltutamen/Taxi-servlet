@@ -14,7 +14,7 @@ public class Order extends Persistent<Long> {
         super(id);
     }
 
-    public enum Status{PENDING, TAKEN, FINISHED};
+    public enum Status{PENDING, TAKEN, FINISHED, CANCELLED};
 
     private Long client_id;
 

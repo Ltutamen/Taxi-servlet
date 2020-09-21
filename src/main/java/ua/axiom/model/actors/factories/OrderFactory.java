@@ -1,5 +1,6 @@
 package ua.axiom.model.actors.factories;
 
+import ua.axiom.core.annotations.Component;
 import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Order;
 import ua.axiom.persistance.Fabric;
@@ -11,6 +12,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+@Component
 public class OrderFactory implements Fabric<Order> {
     @Override
     public Order fabricate(String[] params) {

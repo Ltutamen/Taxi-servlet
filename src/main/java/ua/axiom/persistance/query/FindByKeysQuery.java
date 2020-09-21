@@ -25,13 +25,13 @@ public class FindByKeysQuery<K, T extends Persistent<K>> extends Query<T, K> {
         this.objectFactory = factory;
     }
 
-    public List<T> execute(Class<T> object, Map<String, Object> keyValueFieldMap) {
+    public List<T> execute(Class<T> objectClass, Map<String, Object> keyValueFieldMap) {
         if(!keySetToQueryStringMap.containsKey(keyValueFieldMap.keySet())) {
             keySetToQueryStringMap.put(keyValueFieldMap.keySet(), getQueryString(keyValueFieldMap, table));
         }
 
         String query = keySetToQueryStringMap.get(keyValueFieldMap.keySet());
-        Field[] fields = getAllFieldsAndSetAccessible(object);
+        Field[] fields = getAllFieldsAndSetAccessible(objectClass);
 
         try (
                 Connection connection = provider.getConnection();

@@ -1,7 +1,7 @@
 package ua.axiom.service.buisness;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import ua.axiom.core.Context;
+import ua.axiom.core.annotations.Component;
+import ua.axiom.core.annotations.Autowired;
 import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Client;
 import ua.axiom.model.actors.Driver;
@@ -23,18 +23,25 @@ import java.util.stream.Stream;
 
 import static ua.axiom.persistance.PersistentFieldUtil.getFieldByName;
 
+@Component
 public class OrderService {
     private static final Field[] ADD_NEW_ORDER_CLIENT_UPDATED_FIELDS;
     private static final Field[] FINISH_ORDER_DRIVER_UPDATE_FIELDS;
     private static final Field[] FINISH_ORDER_ORDER_UPDATE_FIELDS;
     private static final Field[] ORDER_TAKEN_BY_DRIVER_DRIVER_UPDATE_FIELDS;
     private static final Field[] ORDER_TAKEN_BY_DRIVER_ORDER_UPDATE_FIELDS;
+    private static final Field[] ORDER_CANCELLED_ORDER_UPDATE_FIELDS;
 
+    @Autowired
     private OrderRepository orderRepository;
+    @Autowired
     private ClientRepository clientRepository;
+    @Autowired
     private DriverRepository driverRepository;
+    @Autowired
     private CarService carService;
 
+    @Autowired
     private IdGenerationQuery idGenerationQuery;
 
     static {
@@ -48,19 +55,11 @@ public class OrderService {
             FINISH_ORDER_ORDER_UPDATE_FIELDS = new Field[]{ orderClass.getDeclaredField("status")};
             ORDER_TAKEN_BY_DRIVER_DRIVER_UPDATE_FIELDS = new Field[] {driverClass.getDeclaredField("current_order_id")};
             ORDER_TAKEN_BY_DRIVER_ORDER_UPDATE_FIELDS = new Field[] {orderClass.getDeclaredField("status"), orderClass.getDeclaredField("driver_id")};
+            ORDER_CANCELLED_ORDER_UPDATE_FIELDS = new Field[] {orderClass.getDeclaredField("status")};
 
         } catch (NoSuchFieldException nsme) {
             throw new RuntimeException(nsme.getMessage());
         }
-    }
-
-    {
-        orderRepository = Context.get(OrderRepository.class);
-        clientRepository = Context.get(ClientRepository.class);
-        driverRepository = Context.get(DriverRepository.class);
-        idGenerationQuery = Context.get(IdGenerationQuery.class);
-
-        carService = Context.get(CarService.class);
     }
 
     public void addNewOrder(Client user, String departure, String destination, Car.Class aClass) throws NotEnoughMoneyException {
@@ -137,8 +136,13 @@ public class OrderService {
 
     }
 
-    public void cancelOrder() {
-        throw new NotImplementedException();
+    public void cancelOrder(String orderToCancelId) {
+        Order order = orderRepository.findOne(Long.parseLong(orderToCancelId)).iterator().next();
+
+        order.setStatus(Order.Status.CANCELLED);
+
+        orderRepository.update(order, ORDER_CANCELLED_ORDER_UPDATE_FIELDS);
+
     }
 
     public List<Order> getOrdersByStatusAndClass(Order.Status status, Car.Class cClass) {

@@ -3,10 +3,10 @@ package ua.axiom.persistance.query;
 import ua.axiom.persistance.Fabric;
 import ua.axiom.persistance.database.DBConnectionProvider;
 
-public class FindOneQuery<K, T> extends OutQuery<K, T> {
+public class FindOneByKey<K, T> extends OutQuery<K, T> {
     private final String keyName;
 
-    public FindOneQuery(Fabric<T> factory, String table, String keyName, DBConnectionProvider provider) {
+    public FindOneByKey(Fabric<T> factory, String table, String keyName, DBConnectionProvider provider) {
         super(factory, table, provider);
         this.keyName = keyName;
     }

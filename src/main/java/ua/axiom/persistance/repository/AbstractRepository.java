@@ -2,10 +2,7 @@ package ua.axiom.persistance.repository;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ua.axiom.persistance.Persistent;
-import ua.axiom.persistance.query.FindByKeysQuery;
-import ua.axiom.persistance.query.InQuery;
-import ua.axiom.persistance.query.OutQuery;
-import ua.axiom.persistance.query.UpdateQuery;
+import ua.axiom.persistance.query.*;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -18,28 +15,37 @@ import java.util.Map;
  */
 //  todo remove field to T name mapping, use field name instead
 public abstract class AbstractRepository<K, T extends Persistent<K>> {
-    private final OutQuery<K, T> findAllQuery;
-    private final OutQuery<K, T> selectByIdQuery;
 
-    private final InQuery<K, T> saveNewQuery;
-    private final UpdateQuery<K, T> updateQuery;
+    private FindAllQuery<K, T> findAllQuery;
+    private FindOneByKey<K, T> selectByIdQuery;
+
+    private InQuery<K, T> saveNewQuery;
+    private UpdateQuery<K, T> updateQuery;
     //  maps field names to set of queries, that take unknown Key and produce T
-    private final FindByKeysQuery<K, T> findByFieldsQuery;
+    private FindByKeysQuery<K, T> findByFieldsQuery;
 
-    protected AbstractRepository(
-            OutQuery<K, T> findQuery,
-            OutQuery<K, T> selectQuery,
-            InQuery<K, T> saveOneQuery,
-            UpdateQuery<K, T> updateQuery,
-            FindByKeysQuery<K, T> findByFieldsQuery
-    ) {
-        this.findAllQuery = findQuery;
-        this.selectByIdQuery = selectQuery;
-        this.saveNewQuery = saveOneQuery;
-        this.updateQuery = updateQuery;
-        this.findByFieldsQuery = findByFieldsQuery;
+    protected AbstractRepository() {
     }
 
+    protected void setFindAllQuery(FindAllQuery<K, T> findQuery) {
+        this.findAllQuery = findQuery;
+    }
+
+    protected void setSelectByIdQuery(FindOneByKey<K, T> selectQuery) {
+        this.selectByIdQuery = selectQuery;
+    }
+
+    protected void setSaveNewQuery(InQuery<K, T> saveOneQuery) {
+        this.saveNewQuery = saveOneQuery;
+    }
+
+    protected void setUpdateQuery(UpdateQuery<K, T> updateQuery) {
+        this.updateQuery = updateQuery;
+    }
+
+    protected void setFindByFieldsQuery(FindByKeysQuery<K, T> findByFieldsQuery) {
+        this.findByFieldsQuery = findByFieldsQuery;
+    }
 
     public List<T> findAll() {
         return findAllQuery.execute(null);

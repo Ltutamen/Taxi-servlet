@@ -1,25 +1,32 @@
 package ua.axiom.persistance.repository.impl;
 
-import ua.axiom.core.Context;
+import ua.axiom.core.annotations.Component;
+import ua.axiom.core.annotations.Autowired;
+import ua.axiom.core.annotations.InitMethod;
+import ua.axiom.model.actors.Admin;
 import ua.axiom.model.actors.Order;
+import ua.axiom.model.actors.factories.AdminFactory;
 import ua.axiom.model.actors.factories.OrderFactory;
 import ua.axiom.persistance.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.query.*;
 import ua.axiom.persistance.repository.AbstractRepository;
 
-
+@Component
 public class OrderRepository extends AbstractRepository<Long, Order> {
     private static final String ORDERS_TABLE_NAME = "orders";
 
-    public OrderRepository() {
-        super(
-                new FindAllQuery<>(new OrderFactory(), ORDERS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class)),
-                new FindOneQuery<>(new OrderFactory(), ORDERS_TABLE_NAME, "id", Context.get(SimpleDBConnectionProvider.class)),
-                new InQuery<>(ORDERS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class)),
-                new UpdateQuery<>(ORDERS_TABLE_NAME, "id", Order.class, Context.get(SimpleDBConnectionProvider.class)),
-                new FindByKeysQuery<>(new OrderFactory(), ORDERS_TABLE_NAME, Context.get(SimpleDBConnectionProvider.class))
+    @Autowired
+    private SimpleDBConnectionProvider connectionProvider;
+    @Autowired
+    private OrderFactory factory;
 
-        );
+    @InitMethod
+    private void initMethod() {
+        super.setFindAllQuery(new FindAllQuery<>(factory, ORDERS_TABLE_NAME, connectionProvider));
+        super.setSelectByIdQuery(new FindOneByKey<>(factory, ORDERS_TABLE_NAME, "id", connectionProvider));
+        super.setSaveNewQuery(new InQuery<>(null,  null));
+        super.setUpdateQuery(new UpdateQuery<>(ORDERS_TABLE_NAME, "id", Order.class, connectionProvider));
+        super.setFindByFieldsQuery(new FindByKeysQuery<>(factory, ORDERS_TABLE_NAME, connectionProvider));
     }
 
     @Override

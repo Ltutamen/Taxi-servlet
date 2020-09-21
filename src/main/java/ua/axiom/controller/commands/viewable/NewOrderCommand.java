@@ -1,7 +1,8 @@
 package ua.axiom.controller.commands.viewable;
 
 import ua.axiom.controller.Command;
-import ua.axiom.core.Context;
+import ua.axiom.core.annotations.RequestMapping;
+import ua.axiom.core.annotations.Autowired;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Client;
@@ -14,16 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
+@RequestMapping("/api/neworder")
 public class NewOrderCommand extends Command<Client> {
+    @Autowired
     private LocalisationService localisationService;
+    @Autowired
     private GuiService guiService;
+    @Autowired
     private OrderService orderService;
-
-    {
-        guiService = Context.get(GuiService.class);
-        localisationService = Context.get(LocalisationService.class);
-        orderService = Context.get(OrderService.class);
-    }
 
     @Override
     protected String processGet(HttpServletRequest request, HttpServletResponse response) {

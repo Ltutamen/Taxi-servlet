@@ -1,5 +1,7 @@
 package ua.axiom.persistance.query;
 
+import ua.axiom.core.annotations.Autowired;
+import ua.axiom.core.annotations.Bean;
 import ua.axiom.persistance.database.DBConnectionProvider;
 
 import java.sql.Connection;
@@ -7,11 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@Bean
 public class IdGenerationQuery {
-    private final DBConnectionProvider provider;
+    @Autowired
+    private DBConnectionProvider provider;
 
-    public IdGenerationQuery(DBConnectionProvider provider) {
-        this.provider = provider;
+    public IdGenerationQuery() {
     }
 
     public Long execute() {

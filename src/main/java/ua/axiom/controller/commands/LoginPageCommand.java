@@ -1,19 +1,19 @@
 package ua.axiom.controller.commands;
 
 import ua.axiom.controller.Command;
-import ua.axiom.core.Context;
+import ua.axiom.core.annotations.RequestMapping;
+import ua.axiom.core.annotations.Autowired;
+import ua.axiom.model.actors.User;
 import ua.axiom.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoginPageCommand extends Command {
+@RequestMapping("/login")
+public class LoginPageCommand extends Command<User> {
 
+    @Autowired
     private LoginService loginService;
-
-    {
-        loginService = Context.get(LoginService.class);
-    }
 
     @Override
     protected String executeGet(HttpServletRequest request, HttpServletResponse response) {

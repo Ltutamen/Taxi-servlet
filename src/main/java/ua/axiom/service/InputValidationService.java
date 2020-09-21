@@ -1,6 +1,6 @@
 package ua.axiom.service;
 
-import ua.axiom.core.Context;
+import ua.axiom.core.annotations.Autowired;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -14,12 +14,9 @@ public class InputValidationService {
         location,
     }
 
+    @Autowired
     private LocalisationService localisationService;
     private Map<InputType, Pattern> patternCache = new HashMap<>();
-
-    {
-        localisationService = Context.get(LocalisationService.class);
-    }
 
     public boolean isValid(String input, InputType type, Locale locale) {
         Pattern pattern = patternCache.get(type);
