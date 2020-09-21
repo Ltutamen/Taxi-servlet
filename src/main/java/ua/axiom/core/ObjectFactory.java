@@ -1,6 +1,5 @@
 package ua.axiom.core;
 
-import org.omg.SendingContext.RunTime;
 import ua.axiom.core.annotations.AnnotationProcessor;
 import ua.axiom.core.annotations.Component;
 import ua.axiom.core.annotations.processors.AnnotationProcessorI;

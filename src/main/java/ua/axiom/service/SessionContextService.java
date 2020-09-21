@@ -1,6 +1,6 @@
 package ua.axiom.service;
 
-import ua.axiom.core.annotations.Autowired;
+import ua.axiom.core.context.ApplicationContext;
 import ua.axiom.model.Role;
 import ua.axiom.model.actors.User;
 import ua.axiom.persistance.repository.impl.UsersRepository;
@@ -9,8 +9,18 @@ import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 
 public class SessionContextService {
-    @Autowired
     private static UsersRepository userRepository;
+
+    static {
+        initStaticFields();
+    }
+
+    /**
+     * I don't know how to @Autowire static fields (and Spring does not too)
+     */
+    private static void initStaticFields() {
+        userRepository = ApplicationContext.getInstance().getObject(UsersRepository.class);
+    }
 
     public static Long getCurrentUserId(HttpSession session) {
         return (Long) session.getAttribute(SessionParams.USER_ID.toString());
