@@ -17,11 +17,12 @@ import java.util.function.ToIntFunction;
 @Component
 public class ObjectFactory {
     private static final Class<? extends Annotation> ANNOTATION_PROCESSOR_ANNOTATION = AnnotationProcessor.class;
+    private static final int DEFAULT_ANNOTATION_PROCESSING_ORDER = 1;
 
     private static final Comparator<Map.Entry<Class<? extends Annotation>, AnnotationProcessorI>> ANNOTATION_PROCESSING_ORDER_COMPARATOR = (entry1, entry2) -> {
         ToIntFunction<Map.Entry<Class<? extends Annotation>, AnnotationProcessorI>> orderFromAnnotationExtractionFunc = (entry) -> {
             Optional<AnnotationProcessingOrder> orderAnnotationOptional = Optional.ofNullable(entry.getKey().getAnnotation(AnnotationProcessingOrder.class));
-            return orderAnnotationOptional.map(AnnotationProcessingOrder::value).orElse(1);
+            return orderAnnotationOptional.map(AnnotationProcessingOrder::value).orElse(DEFAULT_ANNOTATION_PROCESSING_ORDER);
         };
 
         return orderFromAnnotationExtractionFunc.applyAsInt(entry1) - orderFromAnnotationExtractionFunc.applyAsInt(entry2);

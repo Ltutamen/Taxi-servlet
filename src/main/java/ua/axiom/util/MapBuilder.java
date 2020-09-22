@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
+/**
+ * Provides a fancy vay to create a Map: just make new MapBuilder, add pairs to it, and build
+ * @param <K> key type of map
+ * @param <V> val type of map
+ */
 public class MapBuilder<K, V>  {
     private static class Pair<K, V> {
         public K key;
