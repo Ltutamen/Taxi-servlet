@@ -1,6 +1,6 @@
 package ua.axiom.core.annotations;
 
-import ua.axiom.core.context.AnnotationProcessingOrder;
+import ua.axiom.core.annotations.core.AnnotationProcessingOrder;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

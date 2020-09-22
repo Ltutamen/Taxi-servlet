@@ -1,4 +1,4 @@
-package ua.axiom.core.annotations;
+package ua.axiom.core.annotations.core;
 
 import java.lang.annotation.*;
 

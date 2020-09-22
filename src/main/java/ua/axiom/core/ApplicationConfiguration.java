@@ -1,4 +1,4 @@
-package ua.axiom.core.context;
+package ua.axiom.core;
 
 import ua.axiom.controller.commands.*;
 import ua.axiom.controller.commands.viewable.AdminPageCommand;

@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Marks method that returns Object, that should be put into context
+ * currently does nothing, all objects are being but into context no matter what
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

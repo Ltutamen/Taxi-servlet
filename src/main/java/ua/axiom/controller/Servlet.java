@@ -31,7 +31,7 @@ public class Servlet extends HttpServlet {
                         new TypeAnnotationsScanner()));
 */
 
-        ApplicationContext.init();
+        //  ApplicationContext.init();
     }
 
     @Override

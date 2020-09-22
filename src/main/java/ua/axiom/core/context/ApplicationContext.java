@@ -1,6 +1,6 @@
 package ua.axiom.core.context;
 
-import ua.axiom.core.ObjectFactory;
+import ua.axiom.core.ApplicationConfiguration;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,11 +41,18 @@ public class ApplicationContext {
 
         Class<? extends T> implClass = getImplType(type);
 
-        if (type.isInterface()) {
+        //  already implemented
+/*        if (type.isInterface()) {
             throw new RuntimeException("Wiring interface types not implemented yet");
-        }
+        }*/
 
-        T t = factory.createObject(implClass);
+        T t = null;
+        try {
+            t = factory.createObject(implClass);
+        } catch (Throwable tr) {
+            System.err.println(tr.getMessage());
+            throw new RuntimeException(tr.getCause());
+        }
 
         impCache.put(type, t);
 

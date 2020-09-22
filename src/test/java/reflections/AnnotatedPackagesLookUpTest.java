@@ -11,7 +11,7 @@ import org.reflections.scanners.TypeElementsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
-import ua.axiom.core.annotations.AnnotationProcessor;
+import ua.axiom.core.annotations.core.AnnotationProcessor;
 
 import java.util.Set;
 

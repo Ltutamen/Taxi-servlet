@@ -1,5 +1,7 @@
 package ua.axiom.core.context;
 
+import ua.axiom.core.ApplicationConfiguration;
+
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.Map;

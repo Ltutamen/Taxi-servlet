@@ -1,6 +1,6 @@
 package ua.axiom.core.annotations.processors;
 
-import ua.axiom.core.annotations.AnnotationProcessor;
+import ua.axiom.core.annotations.core.AnnotationProcessor;
 import ua.axiom.core.annotations.Autowired;
 import ua.axiom.core.context.ApplicationContext;
 import ua.axiom.core.context.ApplicationContextAnnotatedClassesProvider;
