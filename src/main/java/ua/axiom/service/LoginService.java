@@ -2,8 +2,7 @@ package ua.axiom.service;
 
 import ua.axiom.core.annotations.Autowired;
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.repository.MultiTableRepository;
-import ua.axiom.persistance.repository.impl.UsersRepository;
+import ua.axiom.persistance.jdbcbased.repository.impl.UsersRepository;
 import ua.axiom.security.PasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;

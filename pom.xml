@@ -105,6 +105,11 @@
             <artifactId>tomcat-jdbc</artifactId>
             <version>7.0.47</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.0.0.Final</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>

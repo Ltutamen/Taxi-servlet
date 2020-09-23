@@ -1,6 +1,6 @@
 package ua.axiom.model.actors;
 
-import ua.axiom.persistance.Persistent;
+import ua.axiom.persistance.jdbcbased.Persistent;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

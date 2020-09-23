@@ -1,7 +1,7 @@
 package ua.axiom.service.buisness;
 
 import ua.axiom.model.actors.Order;
-import ua.axiom.persistance.repository.impl.ClientRepository;
+import ua.axiom.persistance.jdbcbased.repository.impl.ClientRepository;
 
 import java.util.List;
 

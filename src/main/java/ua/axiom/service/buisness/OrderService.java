@@ -7,10 +7,10 @@ import ua.axiom.model.actors.Client;
 import ua.axiom.model.actors.Driver;
 import ua.axiom.model.actors.Order;
 import ua.axiom.model.exception.NotEnoughMoneyException;
-import ua.axiom.persistance.query.IdGenerationQuery;
-import ua.axiom.persistance.repository.impl.ClientRepository;
-import ua.axiom.persistance.repository.impl.DriverRepository;
-import ua.axiom.persistance.repository.impl.OrderRepository;
+import ua.axiom.persistance.jdbcbased.query.IdGenerationQuery;
+import ua.axiom.persistance.jdbcbased.repository.impl.ClientRepository;
+import ua.axiom.persistance.jdbcbased.repository.impl.DriverRepository;
+import ua.axiom.persistance.jdbcbased.repository.impl.OrderRepository;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static ua.axiom.persistance.PersistentFieldUtil.getFieldByName;
+import static ua.axiom.persistance.jdbcbased.PersistentFieldUtil.getFieldByName;
 
 @Component
 public class OrderService {

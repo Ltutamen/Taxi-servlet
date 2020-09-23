@@ -1,8 +1,8 @@
 package ua.axiom.model.actors;
 
-import ua.axiom.persistance.Persistent;
-import ua.axiom.persistance.misc.annotations.PersistingStrategy;
-import ua.axiom.persistance.misc.representation.PersistingDepersistingStrategyProvider;
+import ua.axiom.persistance.jdbcbased.Persistent;
+import ua.axiom.persistance.jdbcbased.misc.annotations.PersistingStrategy;
+import ua.axiom.persistance.jdbcbased.misc.representation.PersistingDepersistingStrategyProvider;
 
 import java.math.BigDecimal;
 import java.util.Arrays;

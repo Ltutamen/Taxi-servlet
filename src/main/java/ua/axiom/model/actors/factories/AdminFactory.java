@@ -3,7 +3,7 @@ package ua.axiom.model.actors.factories;
 import ua.axiom.core.annotations.Component;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Admin;
-import ua.axiom.persistance.Fabric;
+import ua.axiom.persistance.jdbcbased.Fabric;
 
 @Component
 public class AdminFactory implements Fabric<Admin> {

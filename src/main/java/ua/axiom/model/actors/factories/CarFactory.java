@@ -1,8 +1,8 @@
 package ua.axiom.model.actors.factories;
 
 import ua.axiom.model.actors.Car;
-import ua.axiom.persistance.Fabric;
-import ua.axiom.persistance.misc.representation.depersision.GeneralDepersistion;
+import ua.axiom.persistance.jdbcbased.Fabric;
+import ua.axiom.persistance.jdbcbased.misc.representation.depersision.GeneralDepersistion;
 
 public class CarFactory implements Fabric<Car> {
     @Override

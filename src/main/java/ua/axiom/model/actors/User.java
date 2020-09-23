@@ -2,7 +2,7 @@ package ua.axiom.model.actors;
 
 import ua.axiom.model.Role;
 import ua.axiom.model.UserLocale;
-import ua.axiom.persistance.Persistent;
+import ua.axiom.persistance.jdbcbased.Persistent;
 
 public abstract class User extends Persistent<Long> {
 

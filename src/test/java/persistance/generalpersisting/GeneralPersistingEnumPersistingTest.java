@@ -2,9 +2,9 @@ package persistance.generalpersisting;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ua.axiom.persistance.misc.annotations.PersistingStrategy;
-import ua.axiom.persistance.misc.representation.persision.GeneralPersisting;
-import ua.axiom.persistance.misc.representation.PersistingDepersistingStrategyProvider;
+import ua.axiom.persistance.jdbcbased.misc.annotations.PersistingStrategy;
+import ua.axiom.persistance.jdbcbased.misc.representation.persision.GeneralPersisting;
+import ua.axiom.persistance.jdbcbased.misc.representation.PersistingDepersistingStrategyProvider;
 
 import java.lang.reflect.Field;
 

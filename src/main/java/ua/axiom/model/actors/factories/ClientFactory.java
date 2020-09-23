@@ -3,7 +3,7 @@ package ua.axiom.model.actors.factories;
 import ua.axiom.core.annotations.Component;
 import ua.axiom.model.UserLocale;
 import ua.axiom.model.actors.Client;
-import ua.axiom.persistance.Fabric;
+import ua.axiom.persistance.jdbcbased.Fabric;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;

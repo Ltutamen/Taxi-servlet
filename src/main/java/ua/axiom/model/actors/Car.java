@@ -1,6 +1,6 @@
 package ua.axiom.model.actors;
 
-import ua.axiom.persistance.Persistent;
+import ua.axiom.persistance.jdbcbased.Persistent;
 
 public class Car extends Persistent<Long> {
     public enum Class{

@@ -3,7 +3,7 @@ package ua.axiom.service;
 import ua.axiom.core.context.ApplicationContext;
 import ua.axiom.model.Role;
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.repository.impl.UsersRepository;
+import ua.axiom.persistance.jdbcbased.repository.impl.UsersRepository;
 
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;

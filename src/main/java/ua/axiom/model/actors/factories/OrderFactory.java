@@ -3,9 +3,8 @@ package ua.axiom.model.actors.factories;
 import ua.axiom.core.annotations.Component;
 import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Order;
-import ua.axiom.persistance.Fabric;
-import ua.axiom.persistance.misc.representation.depersision.GeneralDepersistion;
-import ua.axiom.persistance.misc.representation.persision.GeneralPersisting;
+import ua.axiom.persistance.jdbcbased.Fabric;
+import ua.axiom.persistance.jdbcbased.misc.representation.depersision.GeneralDepersistion;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
