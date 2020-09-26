@@ -2,14 +2,20 @@ package ua.axiom.model.actors;
 
 import ua.axiom.model.Role;
 
+import javax.ejb.Local;
+import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+@Entity
 public class Driver extends User {
 
     private long car_id;
 
+    @NotNull
     private BigDecimal balance;
 
+    @NotNull
     private Long current_order_id;
 
     public long getCarId() {

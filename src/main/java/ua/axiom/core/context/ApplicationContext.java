@@ -34,7 +34,6 @@ public class ApplicationContext {
     }
 
     public <T> T getObject(Class<T> type) {
-        System.out.println(this.getClass() + "getObject, type " + type);
         if (impCache.containsKey(type)) {
             return (T) impCache.get(type);
         }

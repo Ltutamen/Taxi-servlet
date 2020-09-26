@@ -10,6 +10,6 @@ public class CarService {
 
 
     public Car getCarById(long id) {
-        return carRepository.findOne(id).iterator().next();
+        return carRepository.read(id);
     }
 }

@@ -2,6 +2,14 @@ package ua.axiom.model.actors;
 
 import ua.axiom.persistance.jdbcbased.Persistent;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
 public class Car extends Persistent<Long> {
     public enum Class{
         BUDGET(0.75F),
@@ -19,8 +27,12 @@ public class Car extends Persistent<Long> {
         super(id);
     }
 
+    @NotNull
+    @Size(min = 4, max = 40)
     private String modelName;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private Class aClass;
 
     public String getModelName() {

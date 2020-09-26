@@ -4,14 +4,21 @@ import ua.axiom.model.Role;
 import ua.axiom.model.UserLocale;
 import ua.axiom.persistance.jdbcbased.Persistent;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public abstract class User extends Persistent<Long> {
 
+    @NotNull
+    @Size(max = 40, min = 5)
     protected String username;
 
+    @Size(max = 40, min = 5)
     protected String password;
 
     public abstract Role getRole();
 
+    @NotNull
     protected UserLocale locale;
 
     protected boolean is_banned;

@@ -8,7 +8,6 @@ import ua.axiom.core.context.ApplicationContextAnnotatedClassesProvider;
 public class BeanProcessor implements AnnotationProcessorI {
     @Override
     public void process(Object object, ApplicationContextAnnotatedClassesProvider context) {
-        System.out.println("bean proc for " + object.getClass());
 
     }
 }

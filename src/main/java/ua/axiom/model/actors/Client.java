@@ -2,10 +2,12 @@ package ua.axiom.model.actors;
 
 import ua.axiom.model.Role;
 
+import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 
+@Entity
 public class Client extends User {
 
     private Date birthDate;

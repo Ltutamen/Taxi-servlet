@@ -5,12 +5,13 @@ import ua.axiom.core.annotations.Autowired;
 import ua.axiom.core.annotations.InitMethod;
 import ua.axiom.model.actors.Order;
 import ua.axiom.model.actors.factories.OrderFactory;
+import ua.axiom.persistance.dao.OrderDao;
 import ua.axiom.persistance.jdbcbased.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.jdbcbased.query.*;
 import ua.axiom.persistance.jdbcbased.repository.AbstractRepository;
 
 @Component
-public class OrderRepository extends AbstractRepository<Long, Order> {
+public class OrderRepository extends OrderDao {
     private static final String ORDERS_TABLE_NAME = "orders";
 
     @Autowired

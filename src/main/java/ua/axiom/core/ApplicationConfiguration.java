@@ -14,6 +14,10 @@ import ua.axiom.model.actors.factories.AdminFactory;
 import ua.axiom.model.actors.factories.ClientFactory;
 import ua.axiom.model.actors.factories.DriverFactory;
 import ua.axiom.model.actors.factories.OrderFactory;
+import ua.axiom.persistance.dao.AdminDao;
+import ua.axiom.persistance.dao.ClientDao;
+import ua.axiom.persistance.dao.DriverDao;
+import ua.axiom.persistance.dao.OrderDao;
 import ua.axiom.persistance.jdbcbased.database.DBConnectionProvider;
 import ua.axiom.persistance.jdbcbased.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.jdbcbased.query.IdGenerationQuery;
@@ -100,6 +104,10 @@ public interface ApplicationConfiguration {
 
     Map<Class<?>, Class<?>> INTERFACE_TO_IMPLEMENTATION_MAP = new MapBuilder<Class<?>, Class<?>>()
             .addPair(DBConnectionProvider.class, SimpleDBConnectionProvider.class)
+            .addPair(AdminDao.class, AdminRepository.class)
+            .addPair(DriverDao.class, DriverRepository.class)
+            .addPair(OrderDao.class, OrderRepository.class)
+            .addPair(ClientDao.class, ClientRepository.class)
             .build();
 
 }

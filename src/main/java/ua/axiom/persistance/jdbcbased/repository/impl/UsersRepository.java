@@ -3,6 +3,8 @@ package ua.axiom.persistance.jdbcbased.repository.impl;
 import ua.axiom.core.annotations.Autowired;
 import ua.axiom.core.annotations.InitMethod;
 import ua.axiom.model.actors.User;
+import ua.axiom.persistance.dao.AdminDao;
+import ua.axiom.persistance.dao.DriverDao;
 import ua.axiom.persistance.jdbcbased.repository.MultiTableRepository;
 
 
@@ -11,10 +13,10 @@ public class UsersRepository extends MultiTableRepository<Long, User> {
     private ClientRepository clientRepository;
 
     @Autowired
-    private AdminRepository adminRepository;
+    private AdminDao adminRepository;
 
     @Autowired
-    private DriverRepository driverRepository;
+    private DriverDao driverRepository;
 
     @InitMethod
     private void init() {

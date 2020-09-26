@@ -1,5 +1,6 @@
 package ua.axiom.persistance.jdbcbased;
 
+import javax.persistence.Id;
 import java.lang.reflect.Field;
 
 /**
@@ -7,6 +8,7 @@ import java.lang.reflect.Field;
  * @param <K> key type
  */
 public abstract class Persistent<K> {
+    @Id
     protected final K id;
 
     protected Persistent(K id) {

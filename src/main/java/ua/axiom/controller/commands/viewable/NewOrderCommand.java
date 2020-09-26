@@ -26,7 +26,6 @@ public class NewOrderCommand extends Command<Client> {
 
     @Override
     protected String processGet(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(request.getRequestURI());
         return getView();
     }
 

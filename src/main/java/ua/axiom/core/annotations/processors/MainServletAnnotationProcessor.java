@@ -8,6 +8,6 @@ import ua.axiom.core.context.ApplicationContextAnnotatedClassesProvider;
 public class MainServletAnnotationProcessor implements AnnotationProcessorI {
     @Override
     public void process(Object object, ApplicationContextAnnotatedClassesProvider context) {
-        System.out.println("main servlet annotation processor for class " + object.getClass());
+
     }
 }

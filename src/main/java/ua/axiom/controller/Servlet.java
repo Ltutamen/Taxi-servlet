@@ -1,5 +1,6 @@
 package ua.axiom.controller;
 
+import org.hibernate.SessionFactory;
 import ua.axiom.core.context.ApplicationContext;
 import ua.axiom.service.CommandToRequestMappingService;
 
@@ -14,6 +15,8 @@ import java.io.IOException;
 public class Servlet extends HttpServlet {
     private final static String PACKAGE_TO_SCAN = "ua.axiom";
 
+
+
     //  the only Context lookup
     {
         ApplicationContext.init();
@@ -24,14 +27,6 @@ public class Servlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-
-/*        Reflections reflections = new Reflections(new ConfigurationBuilder()
-                .setUrls(ClasspathHelper.forPackage(PACKAGE_TO_SCAN))
-                .setScanners(new SubTypesScanner(),
-                        new TypeAnnotationsScanner()));
-*/
-
-        //  ApplicationContext.init();
     }
 
     @Override
@@ -49,6 +44,11 @@ public class Servlet extends HttpServlet {
         } else {
             throw new IllegalArgumentException("Wrong result string: " + next);
         }
+
+    }
+
+    @Override
+    public void destroy() {
 
     }
 }

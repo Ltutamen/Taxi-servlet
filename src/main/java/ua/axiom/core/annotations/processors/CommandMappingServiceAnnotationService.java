@@ -25,7 +25,6 @@ public class CommandMappingServiceAnnotationService implements AnnotationProcess
         Set<Class<? extends Command<?>>> commandClasses = GenericCollectionsUtil.toCollection(HashSet::new, context.getClassesAnnotatedWith(RequestMapping.class));
 
         for (Class<? extends Command<?>> cClass : commandClasses) {
-            System.out.println("cClass + " + cClass);
             try {
                 Command<?> command = ApplicationContext.getInstance().getObject(cClass);
                 mappingService.addCommand(getURLPathFromAnnotation(cClass), command);
@@ -36,8 +35,6 @@ public class CommandMappingServiceAnnotationService implements AnnotationProcess
 
 
         }
-
-        System.out.println("commands injected into CommandMapping: " + commandClasses.size());
     }
 
     private static String getURLPathFromAnnotation(Class<? extends Command<?>> commandClass) {

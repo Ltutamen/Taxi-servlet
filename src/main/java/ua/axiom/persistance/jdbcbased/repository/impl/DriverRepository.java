@@ -5,12 +5,13 @@ import ua.axiom.core.annotations.Autowired;
 import ua.axiom.core.annotations.InitMethod;
 import ua.axiom.model.actors.Driver;
 import ua.axiom.model.actors.factories.DriverFactory;
+import ua.axiom.persistance.dao.DriverDao;
 import ua.axiom.persistance.jdbcbased.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.jdbcbased.query.*;
 import ua.axiom.persistance.jdbcbased.repository.AbstractRepository;
 
 @Component
-public class DriverRepository extends AbstractRepository<Long, Driver> {
+public class DriverRepository extends DriverDao {
     private static final String DRIVERS_TABLE_NAME = "drivers";
 
     @Autowired

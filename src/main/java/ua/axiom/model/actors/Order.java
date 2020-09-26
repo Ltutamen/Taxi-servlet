@@ -4,11 +4,15 @@ import ua.axiom.persistance.jdbcbased.Persistent;
 import ua.axiom.persistance.jdbcbased.misc.annotations.PersistingStrategy;
 import ua.axiom.persistance.jdbcbased.misc.representation.PersistingDepersistingStrategyProvider;
 
+import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Order extends Persistent<Long> {
     public Order(Long id) {
         super(id);
@@ -16,22 +20,32 @@ public class Order extends Persistent<Long> {
 
     public enum Status{PENDING, TAKEN, FINISHED, CANCELLED};
 
+    @NotNull
     private Long client_id;
 
+    @NotNull
     private Long driver_id;
 
+    @NotNull
     @PersistingStrategy(strategy = PersistingDepersistingStrategyProvider.ORDINAL)
     private Status status;
 
+    @NotNull
     private BigDecimal price;
 
+    @NotNull
     private Date date;
 
+    @NotNull
     @PersistingStrategy(strategy = PersistingDepersistingStrategyProvider.ORDINAL)
     private Car.Class c_class;
 
+    @NotNull
+    @Size(min = 5, max = 40)
     private String departure;
 
+    @NotNull
+    @Size(min = 5, max = 40)
     private String destination;
 
     private boolean confirmed_by_client;

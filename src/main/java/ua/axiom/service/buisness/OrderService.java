@@ -1,16 +1,16 @@
 package ua.axiom.service.buisness;
 
-import ua.axiom.core.annotations.Component;
 import ua.axiom.core.annotations.Autowired;
+import ua.axiom.core.annotations.Component;
 import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Client;
 import ua.axiom.model.actors.Driver;
 import ua.axiom.model.actors.Order;
 import ua.axiom.model.exception.NotEnoughMoneyException;
+import ua.axiom.persistance.dao.ClientDao;
+import ua.axiom.persistance.dao.DriverDao;
+import ua.axiom.persistance.dao.OrderDao;
 import ua.axiom.persistance.jdbcbased.query.IdGenerationQuery;
-import ua.axiom.persistance.jdbcbased.repository.impl.ClientRepository;
-import ua.axiom.persistance.jdbcbased.repository.impl.DriverRepository;
-import ua.axiom.persistance.jdbcbased.repository.impl.OrderRepository;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -33,11 +33,11 @@ public class OrderService {
     private static final Field[] ORDER_CANCELLED_ORDER_UPDATE_FIELDS;
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderDao orderRepository;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientDao clientRepository;
     @Autowired
-    private DriverRepository driverRepository;
+    private DriverDao driverRepository;
     @Autowired
     private CarService carService;
 
@@ -86,8 +86,8 @@ public class OrderService {
 
     //  todo @Transactional
     public void processOrderTakenByDriver(long driverId, long orderId) {
-        Driver driver = driverRepository.findOne(driverId).iterator().next();
-        Order order = orderRepository.findOne(orderId).iterator().next();
+        Driver driver = driverRepository.read(driverId);
+        Order order = orderRepository.read(orderId);
 
         driver.setCurrentOrderId(order.getId());
         order.setStatus(Order.Status.TAKEN);
@@ -99,10 +99,10 @@ public class OrderService {
     }
 
     public void tryFinishOrder(long orderId) {
-        Order order = orderRepository.findOne(orderId).iterator().next();
+        Order order = orderRepository.read(orderId);
 
         if(order.isConfirmedByClient() && order.isConfirmedByDriver()) {
-            Driver driver = driverRepository.findOne(order.getDriver_id()).iterator().next();
+            Driver driver = driverRepository.read(order.getDriver_id());
 
             driver.setMoney(driver.getMoney().add(order.getPrice()));
             driver.setCurrentOrderId(null);
@@ -116,7 +116,7 @@ public class OrderService {
     }
 
     public void confirmByClient(long orderID) {
-        Order order = orderRepository.findOne(orderID).iterator().next();
+        Order order = orderRepository.read(orderID);
 
         order.setConfirmedByClient(true);
 
@@ -126,7 +126,7 @@ public class OrderService {
     }
 
     public void confirmByDriver(long orderID) {
-        Order order = orderRepository.findOne(orderID).iterator().next();
+        Order order = orderRepository.read(orderID);
 
         order.setConfirmedByDriver(true);
 
@@ -137,7 +137,7 @@ public class OrderService {
     }
 
     public void cancelOrder(String orderToCancelId) {
-        Order order = orderRepository.findOne(Long.parseLong(orderToCancelId)).iterator().next();
+        Order order = orderRepository.read(Long.parseLong(orderToCancelId));
 
         order.setStatus(Order.Status.CANCELLED);
 

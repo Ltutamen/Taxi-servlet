@@ -1,34 +1,27 @@
 package ua.axiom.persistance.jdbcbased.repository;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import ua.axiom.persistance.dao.CRUDRepository;
 import ua.axiom.persistance.jdbcbased.Persistent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 //  todo use joins!!!
 public abstract class MultiTableRepository<K, T extends Persistent<K>> {
-    private List<AbstractRepository<K,  ? extends T>> repositories = new ArrayList<>();
+    private List<CRUDRepository<K,  ? extends T>> repositories = new ArrayList<>();
 
-    protected void addRepository(AbstractRepository<K, ? extends T> repository) {
+    protected void addRepository(CRUDRepository<K, ? extends T> repository) {
         repositories.add(repository);
-    }
-
-    public List<T> findAll() {
-        return repositories
-                .stream()
-                .map(AbstractRepository::findAll)
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
     }
 
     public List<T> findOne(final K id) {
         return repositories
                 .stream()
-                .map(ar -> ar.findOne(id))
-                .flatMap(List::stream)
+                .map(ar -> ar.read(id))
                 .collect(Collectors.toList());
     }
 

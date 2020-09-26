@@ -11,9 +11,6 @@ import java.util.Arrays;
 public class AutowiredProcessor implements AnnotationProcessorI {
     @Override
     public void process(Object object, ApplicationContextAnnotatedClassesProvider context) {
-        System.out.println("autowired proc for " + object.getClass() + " total + " + Arrays.stream(object.getClass().getDeclaredFields())
-                .filter(field -> field.getAnnotation(Autowired.class) != null)
-                .count());
 
         Arrays.stream(object
                     .getClass()

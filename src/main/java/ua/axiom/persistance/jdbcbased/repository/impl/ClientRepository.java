@@ -5,12 +5,13 @@ import ua.axiom.core.annotations.Component;
 import ua.axiom.core.annotations.InitMethod;
 import ua.axiom.model.actors.Client;
 import ua.axiom.model.actors.factories.ClientFactory;
+import ua.axiom.persistance.dao.ClientDao;
 import ua.axiom.persistance.jdbcbased.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.jdbcbased.query.*;
 import ua.axiom.persistance.jdbcbased.repository.AbstractRepository;
 
 @Component
-public class ClientRepository extends AbstractRepository<Long, Client> {
+public class ClientRepository extends ClientDao {
     private static String CLIENTS_TABLE_NAME = "clients";
 
     @Autowired
