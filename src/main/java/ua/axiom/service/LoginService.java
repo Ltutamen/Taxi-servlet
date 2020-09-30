@@ -2,7 +2,7 @@ package ua.axiom.service;
 
 import ua.axiom.core.annotations.Autowired;
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.jdbcbased.repository.impl.UsersRepository;
+import ua.axiom.persistance.jdbcbased.repository.impl.UsersRepositoryJDBC;
 import ua.axiom.security.PasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 public class LoginService {
     @Autowired
-    private UsersRepository repository;
+    private UsersRepositoryJDBC repository;
     @Autowired
     private PasswordEncoder encoder;
 

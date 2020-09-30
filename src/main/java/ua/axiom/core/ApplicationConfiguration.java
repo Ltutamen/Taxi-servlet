@@ -51,14 +51,14 @@ public interface ApplicationConfiguration {
 
     HashSet<Class<?>> COMPONENT_ANNOTATED_OBJECTS_CLASSES = new HashSet<>(
             Arrays.asList(
-                    DriverRepository.class,
+                    DriverRepositoryJDBC.class,
                     DriverFactory.class,
-                    ClientRepository.class,
+                    ClientRepositoryJDBC.class,
                     ClientFactory.class,
-                    OrderRepository.class,
+                    OrderRepositoryJDBC.class,
                     OrderFactory.class,
                     AdminFactory.class,
-                    AdminRepository.class,
+                    AdminRepositoryJDBC.class,
 
                     OrderService.class,
                     ClientPageService.class,
@@ -104,10 +104,10 @@ public interface ApplicationConfiguration {
 
     Map<Class<?>, Class<?>> INTERFACE_TO_IMPLEMENTATION_MAP = new MapBuilder<Class<?>, Class<?>>()
             .addPair(DBConnectionProvider.class, SimpleDBConnectionProvider.class)
-            .addPair(AdminDao.class, AdminRepository.class)
-            .addPair(DriverDao.class, DriverRepository.class)
-            .addPair(OrderDao.class, OrderRepository.class)
-            .addPair(ClientDao.class, ClientRepository.class)
+            .addPair(AdminDao.class, AdminRepositoryJDBC.class)
+            .addPair(DriverDao.class, DriverRepositoryJDBC.class)
+            .addPair(OrderDao.class, OrderRepositoryJDBC.class)
+            .addPair(ClientDao.class, ClientRepositoryJDBC.class)
             .build();
 
 }

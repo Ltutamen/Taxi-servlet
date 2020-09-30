@@ -2,11 +2,11 @@ package ua.axiom.service.buisness;
 
 import ua.axiom.core.annotations.Autowired;
 import ua.axiom.model.actors.Car;
-import ua.axiom.persistance.jdbcbased.repository.impl.CarRepository;
+import ua.axiom.persistance.jdbcbased.repository.impl.CarRepositoryJDBC;
 
 public class CarService {
     @Autowired
-    private CarRepository carRepository;
+    private CarRepositoryJDBC carRepository;
 
 
     public Car getCarById(long id) {

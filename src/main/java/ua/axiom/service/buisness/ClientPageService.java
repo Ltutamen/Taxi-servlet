@@ -1,15 +1,15 @@
 package ua.axiom.service.buisness;
 
 import ua.axiom.model.actors.Order;
-import ua.axiom.persistance.jdbcbased.repository.impl.ClientRepository;
+import ua.axiom.persistance.jdbcbased.repository.impl.CarRepositoryJDBC;
 
 import java.util.List;
 
 public class ClientPageService {
-    private ClientRepository clientRepository;
+    private CarRepositoryJDBC clientRepository;
     private OrderService orderService;
 
-    public ClientPageService(ClientRepository clientRepository, OrderService orderService) {
+    public ClientPageService(CarRepositoryJDBC clientRepository, OrderService orderService) {
         this.clientRepository = clientRepository;
         this.orderService = orderService;
     }
