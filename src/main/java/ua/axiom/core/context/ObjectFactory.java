@@ -67,11 +67,9 @@ public class ObjectFactory {
     private <T> T create(Class<T> implClass) {
         try {
             return implClass.getDeclaredConstructor().newInstance();
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException("No public constructor for class <" + implClass + ">");
-        } catch (InstantiationException ie) {
-            throw new RuntimeException("Instantiation exception for class <" + implClass + ">");
-        } catch (InvocationTargetException | IllegalAccessException e) {
+        } catch (InvocationTargetException | InstantiationException | NoSuchMethodException e) {
+            throw new RuntimeException(e.getCause() + "for class <" + implClass + ">");
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
             throw new RuntimeException(e.getCause());
         }

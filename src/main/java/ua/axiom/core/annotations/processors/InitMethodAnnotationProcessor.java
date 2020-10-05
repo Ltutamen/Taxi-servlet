@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class InitMethodAnnotationProcessor implements AnnotationProcessorI {
     @Override
     public void process(Object object, ApplicationContextAnnotatedClassesProvider context) {
+
         Arrays.stream(object.getClass().getDeclaredMethods())
                 .filter(method -> method.getAnnotation(InitMethod.class) != null)
                 .peek(method -> method.setAccessible(true))
@@ -24,7 +25,7 @@ public class InitMethodAnnotationProcessor implements AnnotationProcessorI {
                     try {
                         method.invoke(object);
                     } catch (InvalidKeyException | IllegalAccessException | InvocationTargetException e) {
-                        throw new RuntimeException("Exception calling init method <" + method.getName() + "> for class <" + object.getClass());
+                        throw new RuntimeException("Exception calling init method <" + method.getName() + "> for class <" + object.getClass() + "> with cause: <\n" + e.getCause() + "\n>");
                     }
                 });
     }

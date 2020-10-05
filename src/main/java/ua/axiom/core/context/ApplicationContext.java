@@ -1,5 +1,6 @@
 package ua.axiom.core.context;
 
+import org.apache.log4j.Logger;
 import ua.axiom.core.ApplicationConfiguration;
 
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ApplicationContext {
     private static ApplicationContext instance;
+    private static Logger logger = Logger.getLogger(ApplicationContext.class);
 
     private ApplicationContextAnnotatedClassesProvider annotationsContext;
     private ObjectFactory factory;
@@ -29,16 +31,20 @@ public class ApplicationContext {
     }
 
     public ApplicationContext() {
+        logger.info("<" + getClass()  + "> constructor");
         this.annotationsContext = new HardcodedAnnotatedClassesProvider();
         this.factory = new ObjectFactory(annotationsContext);
     }
 
     public <T> T getObject(Class<T> type) {
+        logger.info("<" + type + "> getObject request");
         if (impCache.containsKey(type)) {
+            logger.info("<" + type + "> getObject request from cache");
             return (T) impCache.get(type);
         }
 
         Class<? extends T> implClass = getImplType(type);
+        logger.info("<" + implClass + "> is an implementation class for class <" + type + ">");
 
         //  already implemented
 /*        if (type.isInterface()) {
@@ -50,6 +56,7 @@ public class ApplicationContext {
             t = factory.createObject(implClass);
         } catch (Throwable tr) {
             System.err.println(tr.getMessage());
+            logger.error(tr.getCause() + "for class <" + implClass + ">");
             throw new RuntimeException(tr.getCause());
         }
 

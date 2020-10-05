@@ -23,6 +23,8 @@ import ua.axiom.persistance.jdbcbased.database.SimpleDBConnectionProvider;
 import ua.axiom.persistance.jdbcbased.query.IdGenerationQuery;
 import ua.axiom.persistance.jdbcbased.repository.MultiTableRepository;
 import ua.axiom.persistance.jdbcbased.repository.impl.*;
+import ua.axiom.persistance.ormbased.SessionFactoryProvider;
+import ua.axiom.persistance.ormbased.repository.impl.DriverRepositoryORM;
 import ua.axiom.service.*;
 import ua.axiom.service.buisness.CarService;
 import ua.axiom.service.buisness.ClientPageService;
@@ -71,7 +73,9 @@ public interface ApplicationConfiguration {
                     IdGenerationQuery.class,
                     MultiTableRepository.class,
                     ClientFactory.class,
-                    OrderFactory.class
+                    OrderFactory.class,
+
+                    SessionFactoryProvider.class
 
 
             ));
@@ -105,7 +109,7 @@ public interface ApplicationConfiguration {
     Map<Class<?>, Class<?>> INTERFACE_TO_IMPLEMENTATION_MAP = new MapBuilder<Class<?>, Class<?>>()
             .addPair(DBConnectionProvider.class, SimpleDBConnectionProvider.class)
             .addPair(AdminDao.class, AdminRepositoryJDBC.class)
-            .addPair(DriverDao.class, DriverRepositoryJDBC.class)
+            .addPair(DriverDao.class, DriverRepositoryORM.class)
             .addPair(OrderDao.class, OrderRepositoryJDBC.class)
             .addPair(ClientDao.class, ClientRepositoryJDBC.class)
             .build();
