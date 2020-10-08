@@ -1,6 +1,8 @@
 package ua.axiom.core.annotations.processors;
 
 import ua.axiom.controller.Command;
+import ua.axiom.core.App;
+import ua.axiom.core.ApplicationConfiguration;
 import ua.axiom.core.annotations.core.AnnotationProcessor;
 import ua.axiom.core.annotations.CommandMappingService;
 import ua.axiom.core.annotations.RequestMapping;
@@ -15,18 +17,18 @@ import java.util.Set;
 @AnnotationProcessor(CommandMappingService.class)
 public class CommandMappingServiceAnnotationService implements AnnotationProcessorI {
     @Override
-    public void process(Object object, ApplicationContextAnnotatedClassesProvider context) {
+    public void process(Object object, ApplicationContext context, ApplicationConfiguration configuration) {
         if(object.getClass().getAnnotation(CommandMappingService.class) == null) {
             return;
         }
 
         CommandToRequestMappingService mappingService = (CommandToRequestMappingService)object;
 
-        Set<Class<? extends Command<?>>> commandClasses = GenericCollectionsUtil.toCollection(HashSet::new, context.getClassesAnnotatedWith(RequestMapping.class));
+        Set<Class<? extends Command<?>>> commandClasses = GenericCollectionsUtil.toCollection(HashSet::new, configuration.getClassesAnnotatedWith(RequestMapping.class));
 
         for (Class<? extends Command<?>> cClass : commandClasses) {
             try {
-                Command<?> command = ApplicationContext.getInstance().getObject(cClass);
+                Command<?> command = App.getApp().getObject(cClass);
                 mappingService.addCommand(getURLPathFromAnnotation(cClass), command);
             } catch (Throwable t) {
                 t.printStackTrace();

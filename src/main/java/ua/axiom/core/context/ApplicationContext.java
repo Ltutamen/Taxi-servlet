@@ -1,73 +1,37 @@
 package ua.axiom.core.context;
 
 import org.apache.log4j.Logger;
-import ua.axiom.core.ApplicationConfiguration;
+import ua.axiom.core.TypeMapper;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Context holds instantiated and configured classes
+ */
 public class ApplicationContext {
-    private static ApplicationContext instance;
     private static Logger logger = Logger.getLogger(ApplicationContext.class);
 
-    private ApplicationContextAnnotatedClassesProvider annotationsContext;
-    private ObjectFactory factory;
-    private Map<Class<?>, Object> impCache = new ConcurrentHashMap<>();
+    private Map<Class<?>, Object> implementationCache = new ConcurrentHashMap<>();
+    private TypeMapper mapper;
 
-    public static void init() {
-        //  yes, I had do write MY OWN singleton!
-        if(instance == null) {
-            synchronized (ApplicationContext.class) {
-                if (instance == null) {
-                    instance = new ApplicationContext();
-
-                }
-            }
-        }
-    }
-
-    public static ApplicationContext getInstance() {
-        return instance;
-    }
-
-    public ApplicationContext() {
+    public ApplicationContext(TypeMapper mapper) {
         logger.info("<" + getClass()  + "> constructor");
-        this.annotationsContext = new HardcodedAnnotatedClassesProvider();
-        this.factory = new ObjectFactory(annotationsContext);
+        this.mapper = mapper;
     }
 
-    public <T> T getObject(Class<T> type) {
+    public boolean hasImplementation(Class<?> tClass) {
+        Class<?> implType = mapper.getImplType(tClass);
+        return implementationCache.containsKey(implType);
+    }
+
+    public <T> T getImplementation(Class<T> type) {
         logger.info("<" + type + "> getObject request");
-        if (impCache.containsKey(type)) {
-            logger.info("<" + type + "> getObject request from cache");
-            return (T) impCache.get(type);
-        }
-
-        Class<? extends T> implClass = getImplType(type);
-        logger.info("<" + implClass + "> is an implementation class for class <" + type + ">");
-
-        //  already implemented
-/*        if (type.isInterface()) {
-            throw new RuntimeException("Wiring interface types not implemented yet");
-        }*/
-
-        T t = null;
-        try {
-            t = factory.createObject(implClass);
-        } catch (Throwable tr) {
-            System.err.println(tr.getMessage());
-            logger.error(tr.getCause() + "for class <" + implClass + ">");
-            throw new RuntimeException(tr.getCause());
-        }
-
-        impCache.put(type, t);
-
-
-        return t;
+        Class<? extends T> implType = mapper.getImplType(type);
+        return (T)implementationCache.get(implType);
     }
 
-    private <T> Class<? extends T> getImplType(Class<T> intOrImplType) {
-        return (Class<? extends T>) ApplicationConfiguration.INTERFACE_TO_IMPLEMENTATION_MAP.getOrDefault(intOrImplType, intOrImplType);
+    public <T> void addImplementation(Class<T> forClass, T implementation) {
+        implementationCache.put(forClass, implementation);
     }
-
 }

@@ -4,10 +4,12 @@ import ua.axiom.model.Role;
 
 import javax.ejb.Local;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "drivers")
 public class Driver extends User {
 
     private long car_id;

@@ -1,5 +1,6 @@
 package ua.axiom.service;
 
+import ua.axiom.core.App;
 import ua.axiom.core.context.ApplicationContext;
 import ua.axiom.model.Role;
 import ua.axiom.model.actors.User;
@@ -19,7 +20,7 @@ public class SessionContextService {
      * I don't know how to @Autowire static fields (and Spring does not too)
      */
     private static void initStaticFields() {
-        userRepository = ApplicationContext.getInstance().getObject(UsersRepositoryJDBC.class);
+        userRepository = App.getApp().getObject(UsersRepositoryJDBC.class);
     }
 
     public static Long getCurrentUserId(HttpSession session) {

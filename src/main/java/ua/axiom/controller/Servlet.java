@@ -1,7 +1,6 @@
 package ua.axiom.controller;
 
-import org.hibernate.SessionFactory;
-import ua.axiom.core.context.ApplicationContext;
+import ua.axiom.core.App;
 import ua.axiom.service.CommandToRequestMappingService;
 
 import javax.servlet.ServletException;
@@ -19,8 +18,7 @@ public class Servlet extends HttpServlet {
 
     //  the only Context lookup
     {
-        ApplicationContext.init();
-        commandProviderService = ApplicationContext.getInstance().getObject(CommandToRequestMappingService.class);
+        commandProviderService = App.getApp().getObject(CommandToRequestMappingService.class);
     }
 
     private CommandToRequestMappingService commandProviderService;

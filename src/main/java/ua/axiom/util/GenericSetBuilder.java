@@ -18,6 +18,12 @@ public class GenericSetBuilder<T> {
         this(HashSet::new);
     }
 
+    public GenericSetBuilder<T> addAllWithCast(Iterable i) {
+        i.forEach(o -> presentElements.add((T)o));
+
+        return this;
+    }
+
     public GenericSetBuilder<T> addElement(T elm) {
         presentElements.add(elm);
         return this;
