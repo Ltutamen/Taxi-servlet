@@ -23,7 +23,7 @@ public class OrderFactory implements Fabric<Order> {
             order.setcClass((Car.Class) GeneralDepersistion.getObject(Car.class.getDeclaredField("aClass"), params[2]));
             order.setStatus((Order.Status)GeneralDepersistion.getObject(Order.class.getDeclaredField("status"), params[9]));
         } catch (NoSuchFieldException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Exception in <" + this.getClass() + ">, no fields named <" + e.getMessage() + ">");
         }
         order.setConfirmedByClient(params[3].equals("1"));
         order.setConfirmedByDriver(params[4].equals("1"));

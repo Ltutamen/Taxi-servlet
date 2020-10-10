@@ -19,6 +19,9 @@ public class GenericSetBuilder<T> {
     }
 
     public GenericSetBuilder<T> addAllWithCast(Iterable i) {
+        if(i == null) {
+            throw new NullPointerException("Null iterable in: " + getClass());
+        }
         i.forEach(o -> presentElements.add((T)o));
 
         return this;

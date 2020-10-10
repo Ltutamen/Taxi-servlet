@@ -7,8 +7,11 @@ import java.util.Set;
 /**
  * Provides information about annotated classes and about implementation classes
  */
-public interface ApplicationConfiguration {
-    <T> Collection<Class<? extends T>> getImplementationForInterface(Class<T> tClass);
+public interface ApplicationConfiguration extends TypeMapper {
+/*    <T> Collection<Class<? extends T>> getImplementationForInterface(Class<T> tClass);*/
+
+    @Override
+    <T> Class<? extends T> getImplType(Class<T> forClass);
 
     Set<Class<?>> getClassesAnnotatedWith(Class<? extends Annotation> tClass) ;
 }

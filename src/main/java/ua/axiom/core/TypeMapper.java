@@ -1,5 +1,7 @@
 package ua.axiom.core;
 
+import java.util.Collection;
+
 /**
  * Maps interface type to implementaion type
  */

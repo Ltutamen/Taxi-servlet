@@ -3,11 +3,10 @@ package ua.axiom.core.annotations.processors;
 import ua.axiom.controller.Command;
 import ua.axiom.core.App;
 import ua.axiom.core.ApplicationConfiguration;
-import ua.axiom.core.annotations.core.AnnotationProcessor;
 import ua.axiom.core.annotations.CommandMappingService;
 import ua.axiom.core.annotations.RequestMapping;
+import ua.axiom.core.annotations.core.AnnotationProcessor;
 import ua.axiom.core.context.ApplicationContext;
-import ua.axiom.core.context.ApplicationContextAnnotatedClassesProvider;
 import ua.axiom.service.CommandToRequestMappingService;
 import ua.axiom.util.GenericCollectionsUtil;
 
@@ -17,6 +16,7 @@ import java.util.Set;
 @AnnotationProcessor(CommandMappingService.class)
 public class CommandMappingServiceAnnotationService implements AnnotationProcessorI {
     @Override
+    //  todo move out
     public void process(Object object, ApplicationContext context, ApplicationConfiguration configuration) {
         if(object.getClass().getAnnotation(CommandMappingService.class) == null) {
             return;

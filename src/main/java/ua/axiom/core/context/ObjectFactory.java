@@ -1,31 +1,28 @@
 package ua.axiom.core.context;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import ua.axiom.core.ApplicationConfiguration;
 import ua.axiom.core.annotations.Component;
-import ua.axiom.core.annotations.core.AnnotationProcessingOrder;
-import ua.axiom.core.annotations.core.AnnotationProcessor;
-import ua.axiom.core.annotations.processors.AnnotationProcessorI;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import java.util.function.ToIntFunction;
 
 /**
  * Creates and configures objects
  */
 @Component
 public class ObjectFactory {
-    //  AppContext holds already created instances;
-
-    private static final int DEFAULT_ANNOTATION_PROCESSING_ORDER = 1;
-
+    private static Logger logger = Logger.getLogger(ObjectFactory.class.getName());
 
     private ObjectConfigurator configurator;
 
-    public ObjectFactory() {
+    public ObjectFactory(ApplicationContext context, ApplicationConfiguration configuration) {
+        configurator = new ObjectConfigurator(context, configuration);
     }
 
-    public <T> T createObject(Class<T> implClass) {
+    public <T> T createObject(Class<T> implClass) throws Throwable{
+
+        logger.log(Level.TRACE, "create object of type: " + implClass);
 
         T t = create(implClass);
 
@@ -34,14 +31,7 @@ public class ObjectFactory {
         return t;
     }
 
-    private <T> T create(Class<T> implClass) {
-        try {
-            return implClass.getDeclaredConstructor().newInstance();
-        } catch (InvocationTargetException | InstantiationException | NoSuchMethodException e) {
-            throw new RuntimeException(e.getCause() + "for class <" + implClass + ">");
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e.getCause());
-        }
+    private <T> T create(Class<T> implClass) throws Throwable {
+        return implClass.getDeclaredConstructor().newInstance();
     }
 }

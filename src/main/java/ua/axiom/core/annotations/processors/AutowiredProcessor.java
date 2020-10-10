@@ -22,7 +22,6 @@ public class AutowiredProcessor implements AnnotationProcessorI {
                         field.setAccessible(true);
                         field.set(object, App.getApp().getObject(field.getType()));
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
                         throw new RuntimeException(e.getCause());
                     }
                 });

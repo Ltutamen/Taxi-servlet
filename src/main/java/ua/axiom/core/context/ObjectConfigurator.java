@@ -8,7 +8,6 @@ import ua.axiom.core.exceptions.AnnotationProcessorConstructorException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +20,13 @@ public class ObjectConfigurator {
     private static final Comparator<AnnotationProcessorI> ANNOTATION_PROCESSING_ORDER_COMPARATOR = (entry1, entry2) -> {
         //  function to extract order from AnnotationProcessorImpl
         ToIntFunction<AnnotationProcessorI> orderFromAnnotationExtractionFunc = (entry) -> {
-            Optional<AnnotationProcessingOrder> optionalAnnotationProcessingOrder = Optional.ofNullable(
-                    entry.getClass().getAnnotation(AnnotationProcessor.class).value().getAnnotation(AnnotationProcessingOrder.class));
+            Optional<AnnotationProcessingOrder> optionalAnnotationProcessingOrder = null;
+            try {
+                optionalAnnotationProcessingOrder = Optional.ofNullable(
+                        entry.getClass().getAnnotation(AnnotationProcessor.class).value().getAnnotation(AnnotationProcessingOrder.class));
+            } catch (NullPointerException npe) {
+                throw new RuntimeException("Mapping error for class: " + entry +", check configuration");
+            }
 
             return optionalAnnotationProcessingOrder.map(AnnotationProcessingOrder::value).orElse(DEFAULT_ANNOTATION_PROCESSING_ORDER);
         };
@@ -33,6 +37,7 @@ public class ObjectConfigurator {
     private final ApplicationContext applicationContext;
 
     private final ApplicationConfiguration applicationConfiguration;
+
 
     private final List<AnnotationProcessorI> configurators;
 
