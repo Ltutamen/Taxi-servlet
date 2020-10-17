@@ -2,7 +2,7 @@ package ua.axiom.model.actors;
 
 import ua.axiom.model.Role;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
@@ -10,18 +10,21 @@ import java.util.Date;
 @Entity
 public class Client extends User {
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "birth_date")
     private Date birthDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastDiscountGiven;
 
     private BigDecimal money;
 
+    @OneToMany(fetch = FetchType.LAZY, targetEntity = Discount.class)
     private Collection<Discount> discount;
 
     private boolean receivedBDayPromoToday;
 
-    public Client(long id) {
-        super(id);
+    public Client() {
     }
 
     @Override
@@ -68,4 +71,10 @@ public class Client extends User {
     public void setReceivedBDayPromoToday(boolean receivedBDayPromoToday) {
         this.receivedBDayPromoToday = receivedBDayPromoToday;
     }
+
+
+
+
+
+
 }

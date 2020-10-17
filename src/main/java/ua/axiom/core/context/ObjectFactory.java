@@ -1,7 +1,8 @@
 package ua.axiom.core.context;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.axiom.core.ApplicationConfiguration;
 import ua.axiom.core.annotations.Component;
 
@@ -12,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 @Component
 public class ObjectFactory {
-    private static Logger logger = Logger.getLogger(ObjectFactory.class.getName());
+    private static Logger logger = LogManager.getLogger(ObjectFactory.class.getName());
 
     private ObjectConfigurator configurator;
 
@@ -20,7 +21,7 @@ public class ObjectFactory {
         configurator = new ObjectConfigurator(context, configuration);
     }
 
-    public <T> T createObject(Class<T> implClass) throws Throwable{
+    public <T> T createObject(Class<T> implClass) throws Throwable {
 
         logger.log(Level.TRACE, "create object of type: " + implClass);
 

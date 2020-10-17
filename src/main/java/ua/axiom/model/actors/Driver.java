@@ -2,38 +2,32 @@ package ua.axiom.model.actors;
 
 import ua.axiom.model.Role;
 
-import javax.ejb.Local;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "drivers")
 public class Driver extends User {
 
-    private long car_id;
+    public Driver() {
+    }
 
-    @NotNull
+    @Column(name = "car_id")
+    private long carId;
+
     private BigDecimal balance;
 
-    @NotNull
-    private Long current_order_id;
-
-    public long getCarId() {
-        return car_id;
-    }
-
-    public void setCarId(long carId) {
-        this.car_id = carId;
-    }
+    @Column(name = "current_order_id")
+    private Long currentOrderId;
 
     public long getCurrentOrderId() {
-        return current_order_id;
+        return currentOrderId;
     }
 
     public void setCurrentOrderId(Long currentOrderId) {
-        this.current_order_id = currentOrderId;
+        this.currentOrderId = currentOrderId;
     }
 
     public BigDecimal getMoney() {
@@ -44,13 +38,25 @@ public class Driver extends User {
         this.balance = money;
     }
 
-    public Driver(long id) {
-        super(id);
-    }
-
     @Override
     public Role getRole() {
         return Role.DRIVER;
+    }
+
+    public void setCarId(long carId) {
+        this.carId = carId;
+    }
+
+    public long getCarId() {
+        return carId;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
 }

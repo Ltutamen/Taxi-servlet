@@ -1,12 +1,14 @@
 package ua.axiom.service;
 
 import ua.axiom.core.annotations.Autowired;
+import ua.axiom.core.annotations.Component;
 import ua.axiom.model.actors.Order;
 import ua.axiom.service.buisness.OrderService;
 
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
+import java.util.Collection;
 
+@Component
 public class DriverSessionContextService {
     @Autowired
     private OrderService orderService;
@@ -14,9 +16,8 @@ public class DriverSessionContextService {
     public boolean hasOrder(HttpSession session) {
         long driverId = SessionContextService.getCurrentUserId(session);
 
-        Optional<Order> order = orderService.getOrderForDriver(driverId);
+        Collection<Order> orders = orderService.getOrderForDriverAndStatus(driverId, Order.Status.TAKEN);
 
-        return order.isPresent() && order.get().getDriver_id() == driverId;
-
+        return orders.size() == 1 && orders.iterator().next().getDriverId() == driverId;
     }
 }

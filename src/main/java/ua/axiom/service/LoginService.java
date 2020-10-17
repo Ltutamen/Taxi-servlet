@@ -2,34 +2,28 @@ package ua.axiom.service;
 
 import ua.axiom.core.annotations.Autowired;
 import ua.axiom.model.actors.User;
-import ua.axiom.persistance.jdbcbased.repository.impl.UsersRepositoryJDBC;
+import ua.axiom.persistance.ormbased.repository.impl.UserRepositoryORM;
 import ua.axiom.security.PasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 public class LoginService {
     @Autowired
-    private UsersRepositoryJDBC repository;
+    private UserRepositoryORM repository;
     @Autowired
     private PasswordEncoder encoder;
 
     public boolean tryLogin(String username, String password, HttpServletRequest request) {
-        List<? extends User> userList = repository.findByFields(
-                Stream.of(new Object[][]{
-                        {"username", username},
-                }).collect(Collectors.toMap(p -> (String)p[0], p->p[1])));
+        Optional<? extends User> user = repository.getByUsername(username);
 
-        if (userList.size() == 1) {
-            User user = userList.iterator().next();
+        if (user.isPresent()) {
 
             //  todo make encryption work
             //  if(encoder.encode(password).equals(user.getPassword())) {
             if(true) {
-                request.getSession().setAttribute("role", user.getRole());
-                request.getSession().setAttribute("user_id", user.getId());
+                request.getSession().setAttribute("role", user.get());
+                request.getSession().setAttribute("user_id", user.get());
                 return true;
             }
 

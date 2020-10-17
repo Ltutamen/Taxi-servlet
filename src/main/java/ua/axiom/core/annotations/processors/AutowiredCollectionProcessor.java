@@ -1,7 +1,8 @@
 package ua.axiom.core.annotations.processors;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.axiom.core.ApplicationConfiguration;
 import ua.axiom.core.annotations.AutowiredCollection;
 import ua.axiom.core.annotations.core.AnnotationProcessor;
@@ -11,7 +12,7 @@ import java.util.Arrays;
 
 @AnnotationProcessor(AutowiredCollection.class)
 public class AutowiredCollectionProcessor implements AnnotationProcessorI {
-    private final Logger logger = Logger.getLogger(AutowiredCollectionProcessor.class);
+    private final Logger logger = LogManager.getLogger(AutowiredCollectionProcessor.class);
 
     @Override
     public void process(Object object, ApplicationContext context, ApplicationConfiguration configuration) {

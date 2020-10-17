@@ -3,15 +3,13 @@ package ua.axiom.persistance.ormbased.repository.impl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ua.axiom.core.annotations.Autowired;
-import ua.axiom.core.annotations.Component;
 import ua.axiom.core.annotations.InitMethod;
-import ua.axiom.model.actors.Driver;
-import ua.axiom.persistance.dao.DriverDao;
+import ua.axiom.model.actors.Admin;
+import ua.axiom.persistance.dao.AdminDao;
 import ua.axiom.persistance.ormbased.SessionFactoryProvider;
 import ua.axiom.persistance.ormbased.repository.AbstractORMRepository;
 
-@Component
-    public class DriverRepositoryORM extends AbstractORMRepository<Long, Driver> implements DriverDao {
+public class AdminRepositoryORM extends AbstractORMRepository<Long, Admin> implements AdminDao {
 
     @Autowired
     private SessionFactoryProvider sessionFactoryProvider;
@@ -29,8 +27,7 @@ import ua.axiom.persistance.ormbased.repository.AbstractORMRepository;
     }
 
     @Override
-    protected Class<Driver> getEntryType() {
-        return Driver.class;
+    protected Class<Admin> getEntryType() {
+        return Admin.class;
     }
-
 }

@@ -27,6 +27,7 @@ public class InitMethodAnnotationProcessor implements AnnotationProcessorI {
                     try {
                         method.invoke(object);
                     } catch (InvalidKeyException | IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
                         throw new RuntimeException("Exception calling init method <" + method.getName() + "> for class <" + object.getClass() + "> with cause: <\n" + e.getCause() + "\n>");
                     }
                 });

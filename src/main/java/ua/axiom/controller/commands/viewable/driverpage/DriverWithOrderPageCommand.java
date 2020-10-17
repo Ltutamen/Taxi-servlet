@@ -30,13 +30,13 @@ public class DriverWithOrderPageCommand extends Command<Driver> {
     }
 
     @Override
-    protected void userSpecificDataFill(Map<String, Object> model, Driver user) {
-        guiService.userSpecificModelPopulation(model, user);
+    protected void userSpecificDataFill(Map<String, Object> model, Driver driver) {
+        guiService.userSpecificModelPopulation(model, driver);
 
-        model.put("balance", user.getMoney());
-        model.put("car", carService.getCarById(user.getCarId()));
+        model.put("balance", driver.getMoney());
+        model.put("car", carService.getCarById(driver.getCarId()));
 
-        Order order = orderService.getOrderForDriver(user.getId()).get();
+        Order order = orderService.getOrderForDriverAndStatus(driver.getId(), Order.Status.PENDING).iterator().next();
         model.put("order", order);
     }
 

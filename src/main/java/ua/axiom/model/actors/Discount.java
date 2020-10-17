@@ -1,11 +1,9 @@
 package ua.axiom.model.actors;
 
-import ua.axiom.persistance.jdbcbased.Persistent;
-
 import javax.persistence.*;
 
 @Entity
-public class Discount extends Persistent<Long> {
+public class Discount {
 
     public enum DiscountType{B_DAY, RANDOM;}
 
@@ -22,9 +20,20 @@ public class Discount extends Persistent<Long> {
     private DiscountType type;
 
     public Discount(long id, Client client, float v, DiscountType random) {
-        super(id);
+        this.id = id;
         this.client = client;
         this.multiplier = v;
         this.type = random;
+    }
+
+    public Discount() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

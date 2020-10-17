@@ -2,30 +2,31 @@ package ua.axiom.model.actors;
 
 import ua.axiom.model.Role;
 import ua.axiom.model.UserLocale;
-import ua.axiom.persistance.jdbcbased.Persistent;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-public abstract class User extends Persistent<Long> {
+@MappedSuperclass
+public abstract class User {
+    @Id
+    @GeneratedValue()
+    private Long id;
 
-    @NotNull
-    @Size(max = 40, min = 5)
+    public User() {
+    }
+
     protected String username;
-
-    @Size(max = 40, min = 5)
+    
     protected String password;
 
     public abstract Role getRole();
 
-    @NotNull
     protected UserLocale locale;
 
-    protected boolean is_banned;
-
-    public User(long id) {
-        super(id);
-    }
+    @Column(name = "is_banned")
+    protected boolean isBanned;
 
     public String getUsername() {
         return username;
@@ -52,10 +53,20 @@ public abstract class User extends Persistent<Long> {
     }
 
     public boolean isBanned() {
-        return is_banned;
+        return isBanned;
     }
 
     public void setBanned(boolean banned) {
-        is_banned = banned;
+        isBanned = banned;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
 }

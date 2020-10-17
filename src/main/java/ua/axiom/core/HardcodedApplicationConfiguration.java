@@ -16,25 +16,9 @@ import ua.axiom.core.annotations.processors.*;
 import ua.axiom.model.actors.Admin;
 import ua.axiom.model.actors.Client;
 import ua.axiom.model.actors.Driver;
-import ua.axiom.model.actors.factories.AdminFactory;
-import ua.axiom.model.actors.factories.ClientFactory;
-import ua.axiom.model.actors.factories.DriverFactory;
-import ua.axiom.model.actors.factories.OrderFactory;
-import ua.axiom.persistance.dao.AdminDao;
-import ua.axiom.persistance.dao.ClientDao;
-import ua.axiom.persistance.dao.DriverDao;
-import ua.axiom.persistance.dao.OrderDao;
-import ua.axiom.persistance.jdbcbased.Persistent;
-import ua.axiom.persistance.jdbcbased.database.DBConnectionProvider;
-import ua.axiom.persistance.jdbcbased.database.SimpleDBConnectionProvider;
-import ua.axiom.persistance.jdbcbased.query.IdGenerationQuery;
-import ua.axiom.persistance.jdbcbased.repository.MultiTableRepository;
-import ua.axiom.persistance.jdbcbased.repository.impl.AdminRepositoryJDBC;
-import ua.axiom.persistance.jdbcbased.repository.impl.ClientRepositoryJDBC;
-import ua.axiom.persistance.jdbcbased.repository.impl.DriverRepositoryJDBC;
-import ua.axiom.persistance.jdbcbased.repository.impl.OrderRepositoryJDBC;
+import ua.axiom.persistance.dao.*;
 import ua.axiom.persistance.ormbased.SessionFactoryProvider;
-import ua.axiom.persistance.ormbased.repository.impl.DriverRepositoryORM;
+import ua.axiom.persistance.ormbased.repository.impl.*;
 import ua.axiom.service.*;
 import ua.axiom.service.buisness.CarService;
 import ua.axiom.service.buisness.ClientPageService;
@@ -101,14 +85,6 @@ public class HardcodedApplicationConfiguration implements ApplicationConfigurati
 
     private Set<Class<?>> COMPONENT_ANNOTATED_OBJECTS_CLASSES = Collections.unmodifiableSet(new HashSet<>(
             Arrays.asList(
-                    DriverRepositoryJDBC.class,
-                    DriverFactory.class,
-                    ClientRepositoryJDBC.class,
-                    ClientFactory.class,
-                    OrderRepositoryJDBC.class,
-                    OrderFactory.class,
-                    AdminFactory.class,
-                    AdminRepositoryJDBC.class,
 
                     OrderService.class,
                     ClientPageService.class,
@@ -118,12 +94,12 @@ public class HardcodedApplicationConfiguration implements ApplicationConfigurati
                     LocalisationService.class,
                     DriverSessionContextService.class,
                     CarService.class,
-                    IdGenerationQuery.class,
-                    MultiTableRepository.class,
-                    ClientFactory.class,
-                    OrderFactory.class,
-
-                    SessionFactoryProvider.class
+                    SessionFactoryProvider.class,
+                    DriverSessionContextService.class,
+                    OrderRepositoryORM.class,
+                    DriverRepositoryORM.class,
+                    ClientRepositoryORM.class,
+                    AdminRepositoryORM.class
             )));
 
     private Set<Class<?>> REQUEST_MAPPING_ANNOTATED_CLASSES = Collections.unmodifiableSet(new GenericSetBuilder<Class<?>>()
@@ -154,16 +130,14 @@ public class HardcodedApplicationConfiguration implements ApplicationConfigurati
             .build();
 
     private Map<Class<?>, Class<?>> INTERFACE_TO_IMPLEMENTATION_MAP = new MapBuilder<Class<?>, Class<?>>()
-            .addPair(DBConnectionProvider.class, SimpleDBConnectionProvider.class)
-            .addPair(AdminDao.class, AdminRepositoryJDBC.class)
+            .addPair(AdminDao.class, AdminRepositoryORM.class)
             .addPair(DriverDao.class, DriverRepositoryORM.class)
-            .addPair(OrderDao.class, OrderRepositoryJDBC.class)
-            .addPair(ClientDao.class, ClientRepositoryJDBC.class)
-            .addPair(DBConnectionProvider.class, SimpleDBConnectionProvider.class)
+            .addPair(OrderDao.class, OrderRepositoryORM.class)
+            .addPair(ClientDao.class, ClientRepositoryORM.class)
+            .addPair(UserDao.class, UserRepositoryORM.class)
             .build();
 
-    private Map<Class<?>, Collection<Class<?>>> SUB_TYPES_MAP = new MapBuilder<Class<?>, Set<Class<?>>>()
-            .addPair(Persistent.class, new GenericSetBuilder().addElement(Driver.class).addElement(Client.class).addElement(Admin.class).build())
+    private Map<Class<?>, Collection<Class<?>>> SUB_TYPES_MAP = new MapBuilder<Class<?>, Collection<Class<?>>>()
             .build();
 
 }

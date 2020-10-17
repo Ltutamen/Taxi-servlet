@@ -5,12 +5,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import ua.axiom.model.actors.Car;
 import ua.axiom.model.actors.Order;
-import ua.axiom.persistance.jdbcbased.database.SimpleDBConnectionProvider;
-import ua.axiom.persistance.jdbcbased.query.InQuery;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
+/*
 @Ignore
 public class InQueryTest {
     private InQuery<Long, Order> inOrderQuery;
@@ -25,15 +23,17 @@ public class InQueryTest {
 
     @Test
     public void restInsert() {
-        Order order = new Order(1L);
+        Order order = new Order();
+        order.setID(1L);
         order.setcClass(Car.Class.PREMIUM);
         order.setDeparture("Multiplayer");
         order.setDestination("Singleplayer");
         order.setStatus(Order.Status.PENDING);
         order.setPrice(new BigDecimal("1100.0"));
         order.setDate(new Date());
-        order.setClient_id(1L);
+        order.setClientId(1L);
 
         inOrderQuery.execute(order, order.getId());
     }
 }
+*/

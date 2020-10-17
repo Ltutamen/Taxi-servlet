@@ -1,71 +1,65 @@
 package ua.axiom.model.actors;
 
-import ua.axiom.persistance.jdbcbased.Persistent;
-import ua.axiom.persistance.jdbcbased.misc.annotations.PersistingStrategy;
-import ua.axiom.persistance.jdbcbased.misc.representation.PersistingDepersistingStrategyProvider;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Order extends Persistent<Long> {
-    public Order(Long id) {
-        super(id);
-    }
-
+@Table(name = "orders")
+public class Order {
     public enum Status{PENDING, TAKEN, FINISHED, CANCELLED};
 
-    @NotNull
-    private Long client_id;
+    @Id
+    private Long id;
 
-    @NotNull
-    private Long driver_id;
+    public Order() {
+    }
 
-    @NotNull
-    @PersistingStrategy(strategy = PersistingDepersistingStrategyProvider.ORDINAL)
+    private Long clientId;
+
+    private Long driverId;
+
+    // @PersistingStrategy(strategy = PersistingDepersistingStrategyProvider.ORDINAL)
     private Status status;
 
-    @NotNull
     private BigDecimal price;
 
-    @NotNull
     private Date date;
 
-    @NotNull
-    @PersistingStrategy(strategy = PersistingDepersistingStrategyProvider.ORDINAL)
-    private Car.Class c_class;
+    //  @PersistingStrategy(strategy = PersistingDepersistingStrategyProvider.ORDINAL)
+    @Column(name = "c_class")
+    private Car.Class cClass;
 
-    @NotNull
-    @Size(min = 5, max = 40)
     private String departure;
 
-    @NotNull
-    @Size(min = 5, max = 40)
     private String destination;
 
-    private boolean confirmed_by_client;
+    @Column(name = "confirmed_by_client")
+    private boolean confirmedByClient;
 
-    private boolean confirmed_by_driver;
+    @Column(name = "confirmed_by_driver")
+    private boolean confirmedByDriver;
 
-    public Long getClient_id() {
-        return client_id;
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setClient_id(Long client_id) {
-        this.client_id = client_id;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
-    public Long getDriver_id() {
-        return driver_id;
+    public Long getDriverId() {
+        return driverId;
     }
 
-    public void setDriver_id(Long driver_id) {
-        this.driver_id = driver_id;
+    public void setDriverId(Long driver_id) {
+        this.clientId = driver_id;
     }
 
     public Status getStatus() {
@@ -93,11 +87,11 @@ public class Order extends Persistent<Long> {
     }
 
     public Car.Class getcClass() {
-        return c_class;
+        return cClass;
     }
 
     public void setcClass(Car.Class cClass) {
-        this.c_class = cClass;
+        this.cClass = cClass;
     }
 
     public String getDeparture() {
@@ -117,23 +111,31 @@ public class Order extends Persistent<Long> {
     }
 
     public boolean isConfirmedByClient() {
-        return confirmed_by_client;
+        return confirmedByClient;
     }
 
     public void setConfirmedByClient(boolean confirmedByClient) {
-        this.confirmed_by_client = confirmedByClient;
+        this.confirmedByClient = confirmedByClient;
     }
 
     public boolean isConfirmedByDriver() {
-        return confirmed_by_driver;
+        return confirmedByDriver;
     }
 
     public void setConfirmedByDriver(boolean confirmedByDriver) {
-        this.confirmed_by_driver = confirmedByDriver;
+        this.confirmedByDriver = confirmedByDriver;
     }
 
     public static List<OrderInputDescription> getOrderInputDescriptions() {
         return OrderInputDescription.inputDescription;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     private static class OrderInputDescription {

@@ -1,18 +1,19 @@
 package ua.axiom.core;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 import ua.axiom.core.context.ApplicationContext;
 import ua.axiom.core.context.ObjectFactory;
 
 import java.lang.reflect.Modifier;
+import org.apache.logging.log4j.Logger;
 
 
 /**
  * App class, singleton that controlls object creation, holds created objects, entry point
  */
 public class App {
-    private static final Logger logger = Logger.getLogger(App.class.getName());
+    private static final Logger logger = LogManager.getLogger(App.class.getName());
     private static App app;
 
     private ApplicationContext context;
@@ -60,7 +61,7 @@ public class App {
                 obj = factory.createObject(implClass);
             } catch (Throwable tr) {
                 logger.log(Level.ERROR, "exception creating class: " + implClass + "\n,exception: " + tr.getCause() + "\n, message: " + tr.getMessage());
-                throw new RuntimeException(tr.getCause());
+                throw new RuntimeException(tr.getMessage());
             }
 
             logger.log(Level.DEBUG, "Object: " + tClass + " created");

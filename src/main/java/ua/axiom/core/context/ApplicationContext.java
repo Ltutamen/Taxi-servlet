@@ -1,16 +1,16 @@
 package ua.axiom.core.context;
 
-import org.apache.log4j.Logger;
 import ua.axiom.core.TypeMapper;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 /**
  * Context holds instantiated and configured classes
  */
 public class ApplicationContext {
-    private static Logger logger = Logger.getLogger(ApplicationContext.class);
+    private static Logger logger = LogManager.getLogger(ApplicationContext.class);
 
     private Map<Class<?>, Object> implementationCache = new ConcurrentHashMap<>();
     private TypeMapper mapper;

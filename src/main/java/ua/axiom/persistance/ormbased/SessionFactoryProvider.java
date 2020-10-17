@@ -1,25 +1,19 @@
 package ua.axiom.persistance.ormbased;
 
+
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import ua.axiom.core.annotations.Autowired;
-import ua.axiom.core.annotations.AutowiredCollection;
 import ua.axiom.core.annotations.Component;
 import ua.axiom.core.annotations.InitMethod;
-import ua.axiom.persistance.jdbcbased.Persistent;
-
-import java.util.Set;
+import ua.axiom.model.actors.*;
 
 @Component
 public class SessionFactoryProvider {
     private StandardServiceRegistry serviceRegistry;
     private SessionFactory sessionFactory;
-
-    @AutowiredCollection(Persistent.class)
-    private Set<Class<?>> persistedClasses;
 
     @InitMethod
     private void init() {
@@ -31,6 +25,13 @@ public class SessionFactoryProvider {
         MetadataSources metadataSources = new MetadataSources(serviceRegistry);
 
         Metadata metadata = metadataSources
+                .addAnnotatedClass(Driver.class)
+                .addAnnotatedClass(User.class)
+/*                .addAnnotatedClass(Client.class)
+                .addAnnotatedClass(Admin.class)
+                .addAnnotatedClass(Car.class)
+                .addAnnotatedClass(Order.class)
+                .addAnnotatedClass(Discount.class)*/
                 .getMetadataBuilder()
                 .build();
 
@@ -49,5 +50,4 @@ public class SessionFactoryProvider {
             StandardServiceRegistryBuilder.destroy(serviceRegistry);
         }
     }
-
 }

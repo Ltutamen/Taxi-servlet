@@ -1,16 +1,9 @@
 package ua.axiom.model.actors;
 
-import ua.axiom.persistance.jdbcbased.Persistent;
-
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
 
 @Entity
-public class Car extends Persistent<Long> {
+public class Car {
     public enum Class{
         BUDGET(0.75F),
         BUSINESS(1.F),
@@ -23,15 +16,13 @@ public class Car extends Persistent<Long> {
         }
     };
 
-    public Car(long id) {
-        super(id);
+    public Car() {
     }
 
-    @NotNull
-    @Size(min = 4, max = 40)
-    private String modelName;
+    @Id
+    private Long id;
 
-    @NotNull
+    private String modelName;
     @Enumerated(EnumType.STRING)
     private Class aClass;
 
@@ -49,5 +40,13 @@ public class Car extends Persistent<Long> {
 
     public void setaClass(Class aClass) {
         this.aClass = aClass;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

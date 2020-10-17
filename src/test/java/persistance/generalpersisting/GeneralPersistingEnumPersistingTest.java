@@ -2,9 +2,6 @@ package persistance.generalpersisting;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ua.axiom.persistance.jdbcbased.misc.annotations.PersistingStrategy;
-import ua.axiom.persistance.jdbcbased.misc.representation.persision.GeneralPersisting;
-import ua.axiom.persistance.jdbcbased.misc.representation.PersistingDepersistingStrategyProvider;
 
 import java.lang.reflect.Field;
 
@@ -14,7 +11,7 @@ public class GeneralPersistingEnumPersistingTest {
         FieldB;
     }
 
-    @PersistingStrategy(strategy = PersistingDepersistingStrategyProvider.ORDINAL)
+  /*  @PersistingStrategy(strategy = PersistingDepersistingStrategyProvider.ORDINAL)
     public TestEnum ordinalTestEnum = TestEnum.FieldA;
 
     @PersistingStrategy(strategy = PersistingDepersistingStrategyProvider.STRING)
@@ -38,5 +35,5 @@ public class GeneralPersistingEnumPersistingTest {
         Object representation = GeneralPersisting.getRepresentation(field, fieldValue);
 
         Assert.assertEquals("FieldA", representation);
-    }
+    }*/
 }

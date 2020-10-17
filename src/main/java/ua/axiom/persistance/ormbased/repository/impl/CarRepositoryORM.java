@@ -5,14 +5,13 @@ import org.hibernate.SessionFactory;
 import ua.axiom.core.annotations.Autowired;
 import ua.axiom.core.annotations.Component;
 import ua.axiom.core.annotations.InitMethod;
-import ua.axiom.model.actors.Driver;
-import ua.axiom.persistance.dao.DriverDao;
+import ua.axiom.model.actors.Car;
+import ua.axiom.persistance.dao.CarDao;
 import ua.axiom.persistance.ormbased.SessionFactoryProvider;
 import ua.axiom.persistance.ormbased.repository.AbstractORMRepository;
 
 @Component
-    public class DriverRepositoryORM extends AbstractORMRepository<Long, Driver> implements DriverDao {
-
+public class CarRepositoryORM extends AbstractORMRepository<Long, Car> implements CarDao {
     @Autowired
     private SessionFactoryProvider sessionFactoryProvider;
 
@@ -29,8 +28,7 @@ import ua.axiom.persistance.ormbased.repository.AbstractORMRepository;
     }
 
     @Override
-    protected Class<Driver> getEntryType() {
-        return Driver.class;
+    protected Class<Car> getEntryType() {
+        return Car.class;
     }
-
 }
